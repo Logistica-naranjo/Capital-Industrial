@@ -8,8 +8,6 @@
 <meta name="apple-mobile-web-app-title" content="LN Dashboard">
 <title>Logística Naranjo — Avance del Proyecto</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
@@ -28,54 +26,38 @@
   --shadow-md:0 4px 12px rgba(0,0,0,.10),0 2px 4px rgba(0,0,0,.06);
 }
 body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-height:100vh;}
-
-/* ── HEADER ── */
-.header{background:var(--txt);color:#fff;padding:0;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md);}
+.header{background:#1A1A1A;color:#fff;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md);}
 .header-inner{max-width:500px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:10px;}
 .header-logo{width:36px;height:36px;background:var(--or);border-radius:var(--r);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .header-logo i{font-size:20px;color:#fff;}
 .header-titles{flex:1;}
-.header-name{font-size:15px;font-weight:600;letter-spacing:-.01em;}
-.header-sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:1px;}
+.header-name{font-size:15px;font-weight:600;}
+.header-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:1px;}
 .header-update{text-align:right;}
 .update-lbl{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;}
-.update-val{font-size:11px;color:rgba(255,255,255,.7);margin-top:1px;}
-
-/* ── NAV ── */
+.update-val{font-size:11px;color:rgba(255,255,255,.65);margin-top:1px;}
 .nav{background:var(--bg);border-bottom:1px solid var(--brd);position:sticky;top:64px;z-index:90;overflow-x:auto;scrollbar-width:none;}
 .nav::-webkit-scrollbar{display:none;}
 .nav-inner{max-width:500px;margin:0 auto;display:flex;padding:0 8px;}
 .nav-btn{padding:12px 14px;font-size:12px;font-weight:500;color:var(--txt2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;display:flex;align-items:center;gap:5px;transition:all .15s;}
 .nav-btn i{font-size:15px;}
 .nav-btn.active{color:var(--or);border-bottom-color:var(--or);}
-
-/* ── MAIN ── */
 .main{max-width:500px;margin:0 auto;padding:16px 14px 32px;}
 .screen{display:none;}
 .screen.on{display:block;}
-
-/* ── LOADING ── */
 .loading{text-align:center;padding:60px 20px;}
 .loading-spinner{width:36px;height:36px;border:3px solid var(--brd);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loading-txt{font-size:13px;color:var(--txt2);}
-
-/* ── KPI GRID ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
 .kpi-card{background:var(--bg);border-radius:var(--rl);padding:14px 16px;box-shadow:var(--shadow);border:0.5px solid var(--brd);}
 .kpi-val{font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1;}
-.kpi-lbl{font-size:11px;color:var(--txt2);margin-top:4px;font-weight:400;}
+.kpi-lbl{font-size:11px;color:var(--txt2);margin-top:4px;}
 .kpi-icon{font-size:18px;margin-bottom:6px;}
-
-/* ── SECTION TITLE ── */
 .sec{font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.07em;margin:20px 0 10px;display:flex;align-items:center;gap:6px;}
 .sec::after{content:'';flex:1;height:0.5px;background:var(--brd);}
-
-/* ── PROGRESS BARS ── */
-.pbar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.pbar{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;}
 .pfill{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1);}
-
-/* ── DISTRICT CARDS ── */
 .dist-card{background:var(--bg);border-radius:var(--rl);padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow);border:0.5px solid var(--brd);cursor:pointer;}
 .dist-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .dist-ico{width:38px;height:38px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
@@ -88,16 +70,13 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .cl-list{border-top:0.5px solid var(--brd);margin-top:10px;padding-top:10px;display:none;}
 .cl-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--brd);cursor:pointer;}
 .cl-row:last-child{border-bottom:none;}
-.cl-row:active{background:var(--bg2);}
 .cl-name{font-size:13px;font-weight:500;flex:1;}
 .cl-bar-w{width:80px;}
 .cl-pct{font-size:11px;color:var(--txt2);text-align:right;margin-bottom:3px;}
-
-/* ── BODEGA GRID ── */
 .back-btn{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--txt2);cursor:pointer;margin-bottom:14px;padding:8px 10px;background:var(--bg);border-radius:var(--r);border:0.5px solid var(--brd);width:fit-content;}
 .back-btn:active{background:var(--bg2);}
 .bodegas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-.bod-card{background:var(--bg);border-radius:var(--rl);padding:12px;box-shadow:var(--shadow);border:0.5px solid var(--brd);}
+.bod-card{background:var(--bg);border-radius:var(--rl);padding:12px;box-shadow:var(--shadow);border:0.5px solid var(--brd);cursor:pointer;}
 .bod-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
 .bod-name{font-size:13px;font-weight:600;}
 .bod-badge{font-size:11px;font-weight:500;padding:3px 8px;border-radius:999px;}
@@ -109,8 +88,6 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .bod-proc-lbl{font-size:10px;color:var(--txt2);width:14px;text-align:center;flex-shrink:0;}
 .bod-proc-track{flex:1;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;}
 .bod-proc-pct{font-size:10px;color:var(--txt2);width:24px;text-align:right;}
-
-/* ── DETALLE BODEGA ── */
 .bod-detail-hdr{background:var(--bg);border-radius:var(--rl);padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);border:0.5px solid var(--brd);}
 .bod-detail-name{font-size:16px;font-weight:600;margin-bottom:2px;}
 .bod-detail-sub{font-size:12px;color:var(--txt2);}
@@ -134,8 +111,6 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .tag-risk{background:var(--amber2);color:var(--amber3);}
 .tag-late{background:var(--red2);color:var(--red3);}
 .tag-pend{background:var(--bg3);color:var(--txt2);}
-
-/* ── REPORTE ── */
 .chart-card{background:var(--bg);border-radius:var(--rl);padding:14px 16px;box-shadow:var(--shadow);border:0.5px solid var(--brd);margin-bottom:12px;}
 .chart-title{font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
 .proc-stat-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
@@ -146,13 +121,11 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .rnk-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid var(--brd);}
 .rnk-row:last-child{border-bottom:none;}
 .rnk-n{font-size:11px;color:var(--txt3);width:18px;text-align:right;flex-shrink:0;}
-.rnk-name{font-size:12px;flex:1;}
+.rnk-name{font-size:11px;flex:1;}
 .rnk-bar-w{width:64px;}
 .rnk-bar{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:3px;}
 .rnk-pct{font-size:11px;text-align:right;}
-
-/* ── SEMÁFORO ── */
-.semaforo-card{background:var(--bg);border-radius:var(--rl);padding:12px 14px;margin-bottom:8px;box-shadow:var(--shadow);border:0.5px solid var(--brd);display:flex;align-items:center;gap:10px;}
+.semaforo-card{background:var(--bg);border-radius:var(--rl);padding:12px 14px;margin-bottom:8px;box-shadow:var(--shadow);border:0.5px solid var(--brd);display:flex;align-items:center;gap:10px;cursor:pointer;}
 .sem-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;}
 .sem-info{flex:1;}
 .sem-name{font-size:13px;font-weight:500;}
@@ -163,23 +136,19 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .sb-risk{background:var(--amber2);color:var(--amber3);}
 .sb-ok{background:var(--green2);color:var(--green3);}
 .sb-pend{background:var(--bg3);color:var(--txt2);}
-
-/* ── ESTADO CHIPS ── */
 .estado-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
-.estado-chip{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid transparent;}
+.estado-chip{display:flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid transparent;cursor:pointer;}
 .ec-all{background:var(--bg);border-color:var(--brd2);color:var(--txt2);}
-.ec-all.sel{background:var(--txt);border-color:var(--txt);color:#fff;}
+.ec-all.sel{background:#1A1A1A;border-color:#1A1A1A;color:#fff;}
 .ec-late{background:var(--red2);border-color:var(--red2);color:var(--red3);}
 .ec-late.sel{background:var(--red);border-color:var(--red);color:#fff;}
 .ec-risk{background:var(--amber2);border-color:var(--amber2);color:var(--amber3);}
 .ec-risk.sel{background:var(--amber);border-color:var(--amber);color:#fff;}
 .ec-ok{background:var(--green2);border-color:var(--green2);color:var(--green3);}
 .ec-ok.sel{background:var(--green);border-color:var(--green);color:#fff;}
-
-/* ── RESPONSIVE & MISC ── */
+.error-box{background:var(--red2);border-radius:var(--rl);padding:16px;text-align:center;color:var(--red3);margin-bottom:12px;}
+.refresh-btn{display:flex;align-items:center;justify-content:center;gap:6px;margin:12px auto 0;padding:8px 16px;background:var(--or);color:#fff;border:none;border-radius:999px;font-size:12px;font-weight:500;cursor:pointer;}
 @media(max-width:360px){.kpi-val{font-size:22px;}.bodegas-grid{grid-template-columns:1fr;}}
-.error-box{background:var(--red2);border-radius:var(--rl);padding:16px;text-align:center;color:var(--red3);}
-.error-box i{font-size:28px;margin-bottom:8px;display:block;}
 </style>
 </head>
 <body>
@@ -198,20 +167,12 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
   </div>
 </header>
 
-<nav class="nav" role="navigation" aria-label="Secciones del dashboard">
+<nav class="nav">
   <div class="nav-inner">
-    <button class="nav-btn active" id="nb-resumen" onclick="showTab('resumen')" aria-label="Resumen">
-      <i class="ti ti-home" aria-hidden="true"></i>Resumen
-    </button>
-    <button class="nav-btn" id="nb-bodegas" onclick="showTab('bodegas')" aria-label="Bodegas">
-      <i class="ti ti-building" aria-hidden="true"></i>Bodegas
-    </button>
-    <button class="nav-btn" id="nb-semaforo" onclick="showTab('semaforo')" aria-label="Semáforo">
-      <i class="ti ti-traffic-lights" aria-hidden="true"></i>Semáforo
-    </button>
-    <button class="nav-btn" id="nb-reporte" onclick="showTab('reporte')" aria-label="Reporte">
-      <i class="ti ti-chart-bar" aria-hidden="true"></i>Reporte
-    </button>
+    <button class="nav-btn active" id="nb-resumen" onclick="showTab('resumen')"><i class="ti ti-home" aria-hidden="true"></i>Resumen</button>
+    <button class="nav-btn" id="nb-bodegas" onclick="showTab('bodegas')"><i class="ti ti-building" aria-hidden="true"></i>Bodegas</button>
+    <button class="nav-btn" id="nb-semaforo" onclick="showTab('semaforo')"><i class="ti ti-traffic-lights" aria-hidden="true"></i>Semáforo</button>
+    <button class="nav-btn" id="nb-reporte" onclick="showTab('reporte')"><i class="ti ti-chart-bar" aria-hidden="true"></i>Reporte</button>
   </div>
 </nav>
 
@@ -221,75 +182,42 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
     <div class="loading-txt">Cargando datos del proyecto…</div>
   </div>
 
-  <!-- RESUMEN -->
   <div class="screen" id="s-resumen">
     <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:var(--or);"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
-        <div class="kpi-val" id="k-total" style="color:var(--or);">—</div>
-        <div class="kpi-lbl">Avance total del proyecto</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:var(--green);"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
-        <div class="kpi-val" id="k-done" style="color:var(--green);">—</div>
-        <div class="kpi-lbl">Bodegas completadas</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:var(--blue);"><i class="ti ti-building-warehouse" aria-hidden="true"></i></div>
-        <div class="kpi-val" style="color:var(--blue);">56</div>
-        <div class="kpi-lbl">Total bodegas del proyecto</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:var(--red);"><i class="ti ti-alert-circle" aria-hidden="true"></i></div>
-        <div class="kpi-val" id="k-late" style="color:var(--red);">—</div>
-        <div class="kpi-lbl">Procesos con atraso</div>
-      </div>
+      <div class="kpi-card"><div class="kpi-icon" style="color:var(--or);"><i class="ti ti-trending-up" aria-hidden="true"></i></div><div class="kpi-val" id="k-total" style="color:var(--or);">—</div><div class="kpi-lbl">Avance total</div></div>
+      <div class="kpi-card"><div class="kpi-icon" style="color:var(--green);"><i class="ti ti-circle-check" aria-hidden="true"></i></div><div class="kpi-val" id="k-done" style="color:var(--green);">—</div><div class="kpi-lbl">Bodegas completadas</div></div>
+      <div class="kpi-card"><div class="kpi-icon" style="color:var(--blue);"><i class="ti ti-building-warehouse" aria-hidden="true"></i></div><div class="kpi-val" style="color:var(--blue);">56</div><div class="kpi-lbl">Total bodegas</div></div>
+      <div class="kpi-card"><div class="kpi-icon" style="color:var(--red);"><i class="ti ti-alert-circle" aria-hidden="true"></i></div><div class="kpi-val" id="k-late" style="color:var(--red);">—</div><div class="kpi-lbl">Procesos con atraso</div></div>
     </div>
-
     <div class="sec">Avance por distrito</div>
-
-    <div class="dist-card" id="dist-A-card" onclick="toggleDist('A')">
+    <div class="dist-card" onclick="toggleDist('A')">
       <div class="dist-top">
         <div class="dist-ico" style="background:var(--or2);color:var(--or3);"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
-        <div class="dist-info">
-          <div class="dist-name">Distrito A</div>
-          <div class="dist-sub">9 clusters · 36 bodegas</div>
-        </div>
+        <div class="dist-info"><div class="dist-name">Distrito A</div><div class="dist-sub">9 clusters · 36 bodegas</div></div>
         <div class="dist-pct" id="dpct-A" style="color:var(--or);">—</div>
         <i class="ti ti-chevron-down chev" id="chv-A" aria-hidden="true"></i>
       </div>
       <div class="pbar"><div class="pfill" id="dbar-A" style="width:0%;background:var(--or);"></div></div>
       <div class="cl-list" id="cl-A"></div>
     </div>
-
-    <div class="dist-card" id="dist-B-card" onclick="toggleDist('B')">
+    <div class="dist-card" onclick="toggleDist('B')">
       <div class="dist-top">
         <div class="dist-ico" style="background:var(--blue2);color:var(--blue3);"><i class="ti ti-map-pin" aria-hidden="true"></i></div>
-        <div class="dist-info">
-          <div class="dist-name">Distrito B</div>
-          <div class="dist-sub">5 clusters · 20 bodegas</div>
-        </div>
+        <div class="dist-info"><div class="dist-name">Distrito B</div><div class="dist-sub">5 clusters · 20 bodegas</div></div>
         <div class="dist-pct" id="dpct-B" style="color:var(--blue);">—</div>
         <i class="ti ti-chevron-down chev" id="chv-B" aria-hidden="true"></i>
       </div>
       <div class="pbar"><div class="pfill" id="dbar-B" style="width:0%;background:var(--blue);"></div></div>
       <div class="cl-list" id="cl-B"></div>
     </div>
-
-    <div class="sec">Avance por proceso — promedio general</div>
-    <div class="chart-card">
-      <div id="proc-avg-bars"></div>
-    </div>
+    <div class="sec">Avance por proceso</div>
+    <div class="chart-card"><div id="proc-avg-bars"></div></div>
   </div>
 
-  <!-- BODEGAS -->
-  <div class="screen" id="s-bodegas">
-    <div id="bodegas-content"></div>
-  </div>
+  <div class="screen" id="s-bodegas"><div id="bodegas-content"></div></div>
 
-  <!-- SEMÁFORO -->
   <div class="screen" id="s-semaforo">
-    <div class="estado-chips" id="estado-chips">
+    <div class="estado-chips">
       <button class="estado-chip ec-all sel" onclick="setSF('all')"><i class="ti ti-list" style="font-size:13px;" aria-hidden="true"></i>Todos</button>
       <button class="estado-chip ec-late" onclick="setSF('late')"><i class="ti ti-alert-circle" style="font-size:13px;" aria-hidden="true"></i>Atrasados</button>
       <button class="estado-chip ec-risk" onclick="setSF('risk')"><i class="ti ti-alert-triangle" style="font-size:13px;" aria-hidden="true"></i>En riesgo</button>
@@ -298,246 +226,100 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
     <div id="semaforo-list"></div>
   </div>
 
-  <!-- REPORTE -->
   <div class="screen" id="s-reporte">
-    <div class="chart-card">
-      <div class="chart-title">Avance por cluster</div>
-      <canvas id="bar-chart" height="200" role="img" aria-label="Avance por cluster">Gráfica de barras con el porcentaje de avance por cluster.</canvas>
-    </div>
+    <div class="chart-card"><div class="chart-title">Avance por cluster</div><canvas id="bar-chart" height="200"></canvas></div>
     <div class="chart-card">
       <div class="chart-title">Distribución de estados</div>
-      <canvas id="donut-chart" height="200" role="img" aria-label="Distribución de estados de pasos">Gráfica de dona con distribución de pasos por estado.</canvas>
+      <canvas id="donut-chart" height="180"></canvas>
       <div id="donut-legend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:center;"></div>
     </div>
     <div class="sec">Ranking de bodegas</div>
-    <div class="chart-card">
-      <div id="ranking-list"></div>
-    </div>
+    <div class="chart-card"><div id="ranking-list"></div></div>
   </div>
-
 </main>
 
 <script>
-// ─────────────────────────────────────────────
-// DATOS ESTÁTICOS DEL PROYECTO (fechas del plan)
-// ─────────────────────────────────────────────
+// ── CONFIGURACIÓN JSONBIN ──────────────────────────────
+const JSONBIN_ID   = '6a3c9276da38895dfefac700';
+const JSONBIN_KEY  = '$2a$10$DwHz6Jtxrvs2W/z/YGZUlOpr/071m3e6qYHcx3P/yYJ7IGgult4Y2';
+const JSONBIN_URL  = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`;
+
+// ── DATOS DE PLAN (fechas proyectadas) ────────────────
 const TODAY = new Date();
-const PROC_NAMES = ['Mezanines y Techados','Estructura Principal','Acabados'];
+const PROC_NAMES  = ['Mezanines y Techados','Estructura Principal','Acabados'];
 const PROC_COLORS = ['#E07B2A','#185FA5','#1D9E75'];
+const STEP_LABELS = [
+  ['Montaje de estructura','Losacero','Electromalla','Fundición'],
+  ['Tijeras','Costaneras','Canales','Enlaminado'],
+  ['Tablayeso + ventanas','Piso','Pintura','Puertas']
+];
 
-const DB_PLAN = {
-"Distrito A":{
-"Cluster 1":{"Bodega 34":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 33":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 32":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 31":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]}},
-"Cluster 2":{"Bodega 30":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 29":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 28":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 27":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]}},
-"Cluster 3":{"Bodega 26":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]},"Bodega 25":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]},"Bodega 24":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]},"Bodega 23":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]}},
-"Cluster 4":{"Bodega 22":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]},"Bodega 21":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]},"Bodega 20":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]},"Bodega 19":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]}},
-"Cluster 5":{"Bodega 18":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 17":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 16":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 15":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]}},
-"Cluster 6":{"Bodega 14":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 13":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 12":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 11":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]}},
-"Cluster 7":{"Bodega 10":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 7":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 8":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 9":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]}},
-"Cluster 8":{"Bodega 3":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 4":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 5":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 6":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]}},
-"Cluster 9":{"Bodega 1":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 2":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 35":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 36":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]}}},
-"Distrito B":{
-"Cluster 1":{"Bodega 1":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]},"Bodega 2":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]},"Bodega 3":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]},"Bodega 4":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]}},
-"Cluster 2":{"Bodega 5":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]},"Bodega 6":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]},"Bodega 7":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]},"Bodega 8":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]}},
-"Cluster 3":{"Bodega 9":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]},"Bodega 10":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]},"Bodega 11":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]},"Bodega 12":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]}},
-"Cluster 4":{"Bodega 13":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]},"Bodega 14":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]},"Bodega 15":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]},"Bodega 16":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]}},
-"Cluster 5":{"Bodega 17":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]},"Bodega 18":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]},"Bodega 19":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]},"Bodega 20":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]}}
-}};
+const DB_PLAN = {"Distrito A":{"Cluster 1":{"Bodega 34":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 33":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 32":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 31":{p0:[["2026-06-22","2026-06-24"],["2026-06-25","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-29"]],p1:[["2026-06-26","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]}},"Cluster 2":{"Bodega 30":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 29":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 28":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]},"Bodega 27":{p0:[["2026-06-24","2026-06-26"],["2026-06-27","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-01"]],p1:[["2026-06-29","2026-06-29"],["2026-06-30","2026-07-01"],["2026-07-02","2026-07-03"],["2026-07-04","2026-07-05"]],p2:[["2026-06-30","2026-07-12"],["2026-07-13","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]]}},"Cluster 3":{"Bodega 26":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]},"Bodega 25":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]},"Bodega 24":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]},"Bodega 23":{p0:[["2026-06-26","2026-06-28"],["2026-06-29","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-03"]],p1:[["2026-07-02","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-28"],["2026-07-29","2026-08-01"],["2026-08-02","2026-08-03"]]}},"Cluster 4":{"Bodega 22":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]},"Bodega 21":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]},"Bodega 20":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]},"Bodega 19":{p0:[["2026-06-28","2026-06-30"],["2026-07-01","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-05"]],p1:[["2026-07-05","2026-07-05"],["2026-07-06","2026-07-07"],["2026-07-08","2026-07-09"],["2026-07-10","2026-07-11"]],p2:[["2026-07-13","2026-07-25"],["2026-07-26","2026-07-29"],["2026-07-30","2026-07-31"],["2026-08-01","2026-08-02"]]}},"Cluster 5":{"Bodega 18":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 17":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 16":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 15":{p0:[["2026-06-30","2026-07-02"],["2026-07-03","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-07"]],p1:[["2026-07-08","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]}},"Cluster 6":{"Bodega 14":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 13":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 12":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 11":{p0:[["2026-07-02","2026-07-04"],["2026-07-05","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-09"]],p1:[["2026-07-11","2026-07-11"],["2026-07-12","2026-07-13"],["2026-07-14","2026-07-15"],["2026-07-16","2026-07-17"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]}},"Cluster 7":{"Bodega 10":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 7":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 8":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]},"Bodega 9":{p0:[["2026-07-04","2026-07-06"],["2026-07-07","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-11"]],p1:[["2026-07-14","2026-07-14"],["2026-07-15","2026-07-16"],["2026-07-17","2026-07-18"],["2026-07-19","2026-07-20"]],p2:[["2026-07-26","2026-08-07"],["2026-08-08","2026-08-11"],["2026-08-12","2026-08-13"],["2026-08-14","2026-08-15"]]}},"Cluster 8":{"Bodega 3":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 4":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 5":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 6":{p0:[["2026-07-06","2026-07-08"],["2026-07-09","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-13"]],p1:[["2026-07-17","2026-07-17"],["2026-07-18","2026-07-19"],["2026-07-20","2026-07-21"],["2026-07-22","2026-07-23"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]}},"Cluster 9":{"Bodega 1":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 2":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 35":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]},"Bodega 36":{p0:[["2026-07-08","2026-07-10"],["2026-07-11","2026-07-12"],["2026-07-13","2026-07-14"],["2026-07-15","2026-07-15"]],p1:[["2026-07-20","2026-07-20"],["2026-07-21","2026-07-22"],["2026-07-23","2026-07-24"],["2026-07-25","2026-07-26"]],p2:[["2026-08-08","2026-08-20"],["2026-08-21","2026-08-24"],["2026-08-25","2026-08-26"],["2026-08-27","2026-08-28"]]}}},"Distrito B":{"Cluster 1":{"Bodega 1":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]},"Bodega 2":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]},"Bodega 3":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]},"Bodega 4":{p0:[["2026-07-22","2026-07-24"],["2026-07-25","2026-07-26"],["2026-07-27","2026-07-28"],["2026-07-29","2026-07-29"]],p1:[["2026-07-30","2026-07-30"],["2026-07-31","2026-08-01"],["2026-08-02","2026-08-03"],["2026-08-04","2026-08-05"]],p2:[["2026-08-06","2026-08-18"],["2026-08-19","2026-08-22"],["2026-08-23","2026-08-24"],["2026-08-25","2026-08-26"]]}},"Cluster 2":{"Bodega 5":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]},"Bodega 6":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]},"Bodega 7":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]},"Bodega 8":{p0:[["2026-07-29","2026-07-31"],["2026-08-01","2026-08-02"],["2026-08-03","2026-08-04"],["2026-08-05","2026-08-05"]],p1:[["2026-08-07","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-13"]],p2:[["2026-08-14","2026-08-26"],["2026-08-27","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]]}},"Cluster 3":{"Bodega 9":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]},"Bodega 10":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]},"Bodega 11":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]},"Bodega 12":{p0:[["2026-08-05","2026-08-07"],["2026-08-08","2026-08-09"],["2026-08-10","2026-08-11"],["2026-08-12","2026-08-12"]],p1:[["2026-08-14","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-20"]],p2:[["2026-08-21","2026-09-02"],["2026-09-03","2026-09-06"],["2026-09-07","2026-09-08"],["2026-09-09","2026-09-10"]]}},"Cluster 4":{"Bodega 13":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]},"Bodega 14":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]},"Bodega 15":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]},"Bodega 16":{p0:[["2026-08-12","2026-08-14"],["2026-08-15","2026-08-16"],["2026-08-17","2026-08-18"],["2026-08-19","2026-08-19"]],p1:[["2026-08-21","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-27"]],p2:[["2026-08-28","2026-09-09"],["2026-09-10","2026-09-13"],["2026-09-14","2026-09-15"],["2026-09-16","2026-09-17"]]}},"Cluster 5":{"Bodega 17":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]},"Bodega 18":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]},"Bodega 19":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]},"Bodega 20":{p0:[["2026-08-19","2026-08-21"],["2026-08-22","2026-08-23"],["2026-08-24","2026-08-25"],["2026-08-26","2026-08-26"]],p1:[["2026-08-28","2026-08-28"],["2026-08-29","2026-08-30"],["2026-08-31","2026-09-01"],["2026-09-02","2026-09-03"]],p2:[["2026-09-04","2026-09-16"],["2026-09-17","2026-09-20"],["2026-09-21","2026-09-22"],["2026-09-23","2026-09-24"]]}}}};
 
-// ─────────────────────────────────────────────
-// ESTADO LIVE (viene de data.json)
-// ─────────────────────────────────────────────
-let liveData = {};
-let sfFilter = 'all';
-let curView = 'dist'; // 'dist' | 'cluster' | 'bodega'
-let curDist = null, curCluster = null, curBodega = null;
-let barChart = null, donutChart = null;
+// ── ESTADO LIVE ───────────────────────────────
+let liveData={bodegas:{}};
+let sfFilter='all',curView='dist',curDist=null,curCluster=null,curBodega=null;
+let barChart=null,donutChart=null;
 
-function dt(s){ return new Date(s+'T00:00:00'); }
-function fmt(s){ if(!s) return '—'; return dt(s).toLocaleDateString('es-GT',{day:'2-digit',month:'short'}); }
+function dt(s){return new Date(s+'T00:00:00');}
+function fmt(s){if(!s)return '—';return dt(s).toLocaleDateString('es-GT',{day:'2-digit',month:'short'});}
 
-function getStepStatus(ini, fin, avance){
-  const f=dt(fin), i=dt(ini);
-  if(avance>=100) return 'done';
-  if(TODAY<i) return 'pend';
-  if(TODAY>f) return 'late';
+function getStepStatus(ini,fin,avance){
+  const f=dt(fin),i=dt(ini);
+  if(avance>=100)return 'done';
+  if(TODAY<i)return 'pend';
+  if(TODAY>f)return 'late';
   const el=(TODAY-i)/(f-i);
   const exp=Math.round(Math.min(100,el*100));
-  if(avance>=exp) return 'ok';
-  if(avance>=exp*0.65) return 'risk';
+  if(avance>=exp)return 'ok';
+  if(avance>=exp*.65)return 'risk';
   return 'late';
 }
-
 function getProcAvg(d,cl,b,pi){
   const key=`${d}|${cl}|${b}`;
   const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];
   return Math.round(vals.reduce((a,v)=>a+v,0)/vals.length);
 }
-function getWHPct(d,cl,b){
-  return Math.round((['p0','p1','p2'].reduce((s,pi)=>s+getProcAvg(d,cl,b,pi),0))/3);
-}
-function getClPct(d,cl){
-  const bs=Object.keys(DB_PLAN[d][cl]);
-  return Math.round(bs.reduce((s,b)=>s+getWHPct(d,cl,b),0)/bs.length);
-}
-function getDistPct(d){
-  const cls=Object.keys(DB_PLAN[d]);
-  return Math.round(cls.reduce((s,cl)=>s+getClPct(d,cl),0)/cls.length);
-}
-function getTotalPct(){
-  return Math.round((getDistPct('Distrito A')*36+getDistPct('Distrito B')*20)/56);
-}
-function countDone(){
-  let n=0;
-  for(const d of ['Distrito A','Distrito B'])
-    for(const cl of Object.keys(DB_PLAN[d]))
-      for(const b of Object.keys(DB_PLAN[d][cl]))
-        if(getWHPct(d,cl,b)===100) n++;
-  return n;
-}
-function countLate(){
-  let n=0;
-  for(const d of ['Distrito A','Distrito B'])
-    for(const cl of Object.keys(DB_PLAN[d]))
-      for(const b of Object.keys(DB_PLAN[d][cl]))
-        ['p0','p1','p2'].forEach((pi,idx)=>{
-          const key=`${d}|${cl}|${b}`;
-          const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];
-          const plan=DB_PLAN[d][cl][b][pi]||[];
-          vals.forEach((av,si)=>{
-            const dates=plan[si];
-            if(dates && getStepStatus(dates[0],dates[1],av)==='late') n++;
-          });
-        });
-  return n;
-}
-function getWHStatus(d,cl,b){
-  let late=0,risk=0,ok=0;
-  ['p0','p1','p2'].forEach((pi,idx)=>{
-    const key=`${d}|${cl}|${b}`;
-    const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];
-    const plan=DB_PLAN[d][cl][b][pi]||[];
-    vals.forEach((av,si)=>{
-      const dates=plan[si];
-      if(!dates) return;
-      const s=getStepStatus(dates[0],dates[1],av);
-      if(s==='late') late++;
-      else if(s==='risk') risk++;
-      else if(s==='ok'||s==='done') ok++;
-    });
-  });
-  if(late>0) return 'late';
-  if(risk>0) return 'risk';
-  if(ok>0) return 'ok';
-  return 'pend';
-}
+function getWHPct(d,cl,b){return Math.round((['p0','p1','p2'].reduce((s,pi)=>s+getProcAvg(d,cl,b,pi),0))/3);}
+function getClPct(d,cl){const bs=Object.keys(DB_PLAN[d][cl]);return Math.round(bs.reduce((s,b)=>s+getWHPct(d,cl,b),0)/bs.length);}
+function getDistPct(d){const cls=Object.keys(DB_PLAN[d]);return Math.round(cls.reduce((s,cl)=>s+getClPct(d,cl),0)/cls.length);}
+function getTotalPct(){return Math.round((getDistPct('Distrito A')*36+getDistPct('Distrito B')*20)/56);}
+function countDone(){let n=0;for(const d of['Distrito A','Distrito B'])for(const cl of Object.keys(DB_PLAN[d]))for(const b of Object.keys(DB_PLAN[d][cl]))if(getWHPct(d,cl,b)===100)n++;return n;}
+function countLate(){let n=0;for(const d of['Distrito A','Distrito B'])for(const cl of Object.keys(DB_PLAN[d]))for(const b of Object.keys(DB_PLAN[d][cl]))['p0','p1','p2'].forEach((pi,idx)=>{const key=`${d}|${cl}|${b}`;const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];const plan=DB_PLAN[d][cl][b][pi]||[];vals.forEach((av,si)=>{const dates=plan[si];if(dates&&getStepStatus(dates[0],dates[1],av)==='late')n++;});});return n;}
+function getWHStatus(d,cl,b){let late=0,risk=0,ok=0;['p0','p1','p2'].forEach((pi,idx)=>{const key=`${d}|${cl}|${b}`;const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];const plan=DB_PLAN[d][cl][b][pi]||[];vals.forEach((av,si)=>{const dates=plan[si];if(!dates)return;const s=getStepStatus(dates[0],dates[1],av);if(s==='late')late++;else if(s==='risk')risk++;else if(s==='ok'||s==='done')ok++;});});if(late>0)return 'late';if(risk>0)return 'risk';if(ok>0)return 'ok';return 'pend';}
 
-// ─────────────────────────────────────────────
-// RENDER RESUMEN
-// ─────────────────────────────────────────────
 function renderResumen(){
   document.getElementById('k-total').textContent=getTotalPct()+'%';
   document.getElementById('k-done').textContent=countDone()+'/56';
   document.getElementById('k-late').textContent=countLate();
-  ['A','B'].forEach(d=>{
-    const dd='Distrito '+d;
-    const pct=getDistPct(dd);
-    document.getElementById('dpct-'+d).textContent=pct+'%';
-    document.getElementById('dbar-'+d).style.width=pct+'%';
-  });
-  // Barras de proceso
-  const cont=document.getElementById('proc-avg-bars');
+  ['A','B'].forEach(d=>{const dd='Distrito '+d,pct=getDistPct(dd);document.getElementById('dpct-'+d).textContent=pct+'%';document.getElementById('dbar-'+d).style.width=pct+'%';});
   let html='';
-  ['p0','p1','p2'].forEach((pi,idx)=>{
-    let tot=0,cnt=0;
-    for(const d of ['Distrito A','Distrito B'])
-      for(const cl of Object.keys(DB_PLAN[d]))
-        for(const b of Object.keys(DB_PLAN[d][cl])){
-          const key=`${d}|${cl}|${b}`;
-          const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];
-          vals.forEach(v=>{tot+=v;cnt++;});
-        }
-    const avg=cnt?Math.round(tot/cnt):0;
-    html+=`<div class="proc-stat-row">
-      <span class="proc-stat-name" style="font-size:11px;">${PROC_NAMES[idx]}</span>
-      <div class="proc-stat-bar"><div style="height:100%;width:${avg}%;background:${PROC_COLORS[idx]};border-radius:4px;"></div></div>
-      <span class="proc-stat-pct" style="color:${PROC_COLORS[idx]};">${avg}%</span>
-    </div>`;
-  });
-  cont.innerHTML=html;
+  ['p0','p1','p2'].forEach((pi,idx)=>{let tot=0,cnt=0;for(const d of['Distrito A','Distrito B'])for(const cl of Object.keys(DB_PLAN[d]))for(const b of Object.keys(DB_PLAN[d][cl])){const key=`${d}|${cl}|${b}`;const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];vals.forEach(v=>{tot+=v;cnt++;});}
+  const avg=cnt?Math.round(tot/cnt):0;
+  html+=`<div class="proc-stat-row"><span class="proc-stat-name" style="font-size:11px;">${PROC_NAMES[idx]}</span><div class="proc-stat-bar"><div style="height:100%;width:${avg}%;background:${PROC_COLORS[idx]};border-radius:4px;"></div></div><span class="proc-stat-pct" style="color:${PROC_COLORS[idx]};">${avg}%</span></div>`;});
+  document.getElementById('proc-avg-bars').innerHTML=html;
 }
 
 function toggleDist(d){
-  const cl=document.getElementById('cl-'+d);
-  const chv=document.getElementById('chv-'+d);
+  const cl=document.getElementById('cl-'+d),chv=document.getElementById('chv-'+d);
   const open=cl.style.display==='block';
   cl.style.display=open?'none':'block';
   chv.classList.toggle('open',!open);
   if(!open){
-    const dd='Distrito '+d;
-    const color=d==='A'?'var(--or)':'var(--blue)';
-    cl.innerHTML=Object.keys(DB_PLAN[dd]).map(cluster=>{
-      const pct=getClPct(dd,cluster);
-      return `<div class="cl-row" onclick="openCluster('${dd}','${cluster}')">
-        <span class="cl-name">${cluster}</span>
-        <div class="cl-bar-w">
-          <div class="cl-pct">${pct}%</div>
-          <div class="cl-bar-inner" style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;">
-            <div style="height:100%;width:${pct}%;background:${color};border-radius:2px;"></div>
-          </div>
-        </div>
-        <i class="ti ti-chevron-right" style="font-size:13px;color:var(--txt3);margin-left:4px;" aria-hidden="true"></i>
-      </div>`;
-    }).join('');
+    const dd='Distrito '+d,color=d==='A'?'var(--or)':'var(--blue)';
+    cl.innerHTML=Object.keys(DB_PLAN[dd]).map(cluster=>{const pct=getClPct(dd,cluster);return`<div class="cl-row" onclick="openCluster('${dd}','${cluster}')"><span class="cl-name">${cluster}</span><div class="cl-bar-w"><div class="cl-pct">${pct}%</div><div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${color};border-radius:2px;"></div></div></div><i class="ti ti-chevron-right" style="font-size:13px;color:var(--txt3);margin-left:4px;" aria-hidden="true"></i></div>`;}).join('');
   }
 }
 
-// ─────────────────────────────────────────────
-// RENDER BODEGAS
-// ─────────────────────────────────────────────
-function openCluster(d,cl){
-  curDist=d; curCluster=cl; curView='cluster';
-  showTab('bodegas');
-}
-function openBodega(d,cl,b){
-  curDist=d; curCluster=cl; curBodega=b; curView='bodega';
-  showTab('bodegas');
-}
+function openCluster(d,cl){curDist=d;curCluster=cl;curView='cluster';showTab('bodegas');}
+function openBodega(d,cl,b){curDist=d;curCluster=cl;curBodega=b;curView='bodega';showTab('bodegas');}
 
 function renderBodegas(){
   const cont=document.getElementById('bodegas-content');
-  if(curView==='dist'){
-    cont.innerHTML=`<p style="font-size:13px;color:var(--txt2);padding:20px;text-align:center;">Selecciona un Distrito y Cluster desde la pestaña Resumen</p>`;
-    return;
-  }
+  if(curView==='dist'){cont.innerHTML=`<p style="font-size:13px;color:var(--txt2);padding:20px;text-align:center;">Selecciona un distrito desde la pestaña Resumen</p>`;return;}
   if(curView==='cluster'){
     const bods=Object.keys(DB_PLAN[curDist][curCluster]);
-    cont.innerHTML=`
-      <div class="back-btn" onclick="curView='dist';showTab('resumen')">
-        <i class="ti ti-arrow-left" aria-hidden="true"></i> ${curDist} — ${curCluster}
-      </div>
-      <div class="bodegas-grid">
-        ${bods.map(b=>{
-          const pct=getWHPct(curDist,curCluster,b);
-          const bc=pct===100?'bd-done':pct>0?'bd-prog':'bd-pend';
-          const label=pct===100?'Completa':pct>0?pct+'%':'Pendiente';
-          const mbars=['p0','p1','p2'].map((pi,i)=>{
-            const avg=getProcAvg(curDist,curCluster,b,pi);
-            return `<div class="bod-proc-row">
-              <span class="bod-proc-lbl">${i+1}</span>
-              <div class="bod-proc-track"><div style="height:100%;width:${avg}%;background:${PROC_COLORS[i]};border-radius:2px;"></div></div>
-              <span class="bod-proc-pct">${avg}%</span>
-            </div>`;
-          }).join('');
-          return `<div class="bod-card" onclick="openBodega('${curDist}','${curCluster}','${b}')">
-            <div class="bod-top">
-              <span class="bod-name">${b}</span>
-              <span class="bod-badge ${bc}">${label}</span>
-            </div>
-            <div class="bod-procs">${mbars}</div>
-          </div>`;
-        }).join('')}
-      </div>`;
+    cont.innerHTML=`<div class="back-btn" onclick="curView='dist';showTab('resumen')"><i class="ti ti-arrow-left" aria-hidden="true"></i>${curDist} — ${curCluster}</div><div class="bodegas-grid">${bods.map(b=>{const pct=getWHPct(curDist,curCluster,b);const bc=pct===100?'bd-done':pct>0?'bd-prog':'bd-pend';const label=pct===100?'Completa':pct>0?pct+'%':'Pendiente';const mbars=['p0','p1','p2'].map((pi,i)=>{const avg=getProcAvg(curDist,curCluster,b,pi);return`<div class="bod-proc-row"><span class="bod-proc-lbl">${i+1}</span><div class="bod-proc-track"><div style="height:100%;width:${avg}%;background:${PROC_COLORS[i]};border-radius:2px;"></div></div><span class="bod-proc-pct">${avg}%</span></div>`;}).join('');return`<div class="bod-card" onclick="openBodega('${curDist}','${curCluster}','${b}')"><div class="bod-top"><span class="bod-name">${b}</span><span class="bod-badge ${bc}">${label}</span></div><div class="bod-procs">${mbars}</div></div>`;}).join('')}</div>`;
     return;
   }
   if(curView==='bodega'){
@@ -548,52 +330,13 @@ function renderBodegas(){
       const avg=getProcAvg(curDist,curCluster,curBodega,pi);
       const plan=DB_PLAN[curDist][curCluster][curBodega][pi]||[];
       const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];
-      const STEP_LABELS=[
-        ['Montaje de estructura','Losacero','Electromalla','Fundición'],
-        ['Tijeras','Costaneras','Canales','Enlaminado'],
-        ['Tablayeso + ventanas','Piso','Pintura','Puertas']
-      ];
-      const steps=vals.map((av,si)=>{
-        const dates=plan[si]||['',''];
-        const st=getStepStatus(dates[0],dates[1],av);
-        const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
-        const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
-        return `<div class="step-item">
-          <span class="step-name">${STEP_LABELS[idx][si]}</span>
-          <div class="step-pct-wrap">
-            <div class="step-track"><div style="height:100%;width:${av}%;background:${PROC_COLORS[idx]};border-radius:2px;"></div></div>
-            <span class="step-pct" style="color:${PROC_COLORS[idx]};">${av}%</span>
-            <span class="step-tag ${tagClass}">${tagLabel}</span>
-          </div>
-        </div>`;
-      }).join('');
-      procHtml+=`<div class="proc-card">
-        <div class="proc-hdr">
-          <div class="proc-num" style="background:${PROC_COLORS[idx]}22;color:${PROC_COLORS[idx]};">${idx+1}</div>
-          <span class="proc-title">${PROC_NAMES[idx]}</span>
-          <span class="proc-pct" style="color:${PROC_COLORS[idx]};">${avg}%</span>
-        </div>
-        <div class="proc-mini-bar"><div style="height:100%;width:${avg}%;background:${PROC_COLORS[idx]};border-radius:2px;"></div></div>
-        <div class="step-list">${steps}</div>
-      </div>`;
+      const steps=vals.map((av,si)=>{const dates=plan[si]||['',''];const st=getStepStatus(dates[0],dates[1],av);const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];return`<div class="step-item"><span class="step-name">${STEP_LABELS[idx][si]}</span><div class="step-pct-wrap"><div class="step-track"><div style="height:100%;width:${av}%;background:${PROC_COLORS[idx]};border-radius:2px;"></div></div><span class="step-pct" style="color:${PROC_COLORS[idx]};">${av}%</span><span class="step-tag ${tagClass}">${tagLabel}</span></div></div>`;}).join('');
+      procHtml+=`<div class="proc-card"><div class="proc-hdr"><div class="proc-num" style="background:${PROC_COLORS[idx]}22;color:${PROC_COLORS[idx]};">${idx+1}</div><span class="proc-title">${PROC_NAMES[idx]}</span><span class="proc-pct" style="color:${PROC_COLORS[idx]};">${avg}%</span></div><div class="proc-mini-bar"><div style="height:100%;width:${avg}%;background:${PROC_COLORS[idx]};border-radius:2px;"></div></div><div class="step-list">${steps}</div></div>`;
     });
-    cont.innerHTML=`
-      <div class="back-btn" onclick="curView='cluster';renderBodegas()">
-        <i class="ti ti-arrow-left" aria-hidden="true"></i> ${curCluster} — bodegas
-      </div>
-      <div class="bod-detail-hdr">
-        <div class="bod-detail-name">${curBodega}</div>
-        <div class="bod-detail-sub">${curDist} · ${curCluster}</div>
-        <div class="bod-detail-pct" style="color:${pct===100?'var(--green)':pct>0?'var(--or)':'var(--txt2)'};">${pct}%</div>
-        <div class="pbar" style="margin-top:8px;"><div class="pfill" style="width:${pct}%;background:${pct===100?'var(--green)':'var(--or)'};"></div></div>
-      </div>
-      ${procHtml}`;
+    cont.innerHTML=`<div class="back-btn" onclick="curView='cluster';renderBodegas()"><i class="ti ti-arrow-left" aria-hidden="true"></i>${curCluster}</div><div class="bod-detail-hdr"><div class="bod-detail-name">${curBodega}</div><div class="bod-detail-sub">${curDist} · ${curCluster}</div><div class="bod-detail-pct" style="color:${pct===100?'var(--green)':pct>0?'var(--or)':'var(--txt2)'};">${pct}%</div><div class="pbar" style="margin-top:8px;"><div class="pfill" style="width:${pct}%;background:${pct===100?'var(--green)':'var(--or)'};"></div></div></div>${procHtml}`;
   }
 }
 
-// ─────────────────────────────────────────────
-// RENDER SEMÁFORO
-// ─────────────────────────────────────────────
 function setSF(f){
   sfFilter=f;
   document.querySelectorAll('.estado-chip').forEach(b=>b.classList.remove('sel'));
@@ -601,152 +344,80 @@ function setSF(f){
   document.querySelector(map[f]).classList.add('sel');
   renderSemaforo();
 }
-
 function renderSemaforo(){
   const items=[];
-  for(const d of ['Distrito A','Distrito B'])
-    for(const cl of Object.keys(DB_PLAN[d]))
-      for(const b of Object.keys(DB_PLAN[d][cl])){
-        const pct=getWHPct(d,cl,b);
-        const status=getWHStatus(d,cl,b);
-        if(sfFilter!=='all'&&sfFilter!==status&&!(sfFilter==='ok'&&status==='pend')) continue;
-        const dotColor=status==='late'?'var(--red)':status==='risk'?'var(--amber)':status==='ok'?'var(--green)':'var(--txt3)';
-        const badgeClass=status==='late'?'sb-crit':status==='risk'?'sb-risk':status==='ok'?'sb-ok':'sb-pend';
-        const badgeLabel=status==='late'?'Atrasado':status==='risk'?'En riesgo':status==='ok'?'Al día':'Sin iniciar';
-        items.push({d,cl,b,pct,status,dotColor,badgeClass,badgeLabel});
-      }
-  items.sort((a,b)=>{
-    const o={late:0,risk:1,ok:2,pend:3};
-    return (o[a.status]||3)-(o[b.status]||3)||b.pct-a.pct;
-  });
-  const cont=document.getElementById('semaforo-list');
-  if(!items.length){
-    cont.innerHTML=`<div style="text-align:center;padding:32px;color:var(--txt2);font-size:13px;">Sin bodegas con ese estado</div>`;
-    return;
+  for(const d of['Distrito A','Distrito B'])for(const cl of Object.keys(DB_PLAN[d]))for(const b of Object.keys(DB_PLAN[d][cl])){
+    const pct=getWHPct(d,cl,b),status=getWHStatus(d,cl,b);
+    if(sfFilter!=='all'&&sfFilter!==status&&!(sfFilter==='ok'&&status==='pend'))continue;
+    const dotColor=status==='late'?'var(--red)':status==='risk'?'var(--amber)':status==='ok'?'var(--green)':'var(--txt3)';
+    const badgeClass=status==='late'?'sb-crit':status==='risk'?'sb-risk':status==='ok'?'sb-ok':'sb-pend';
+    const badgeLabel=status==='late'?'Atrasado':status==='risk'?'En riesgo':status==='ok'?'Al día':'Sin iniciar';
+    items.push({d,cl,b,pct,status,dotColor,badgeClass,badgeLabel});
   }
-  cont.innerHTML=items.map(it=>`
-    <div class="semaforo-card" onclick="openBodega('${it.d}','${it.cl}','${it.b}');showTab('bodegas');" style="cursor:pointer;">
-      <div class="sem-dot" style="background:${it.dotColor};"></div>
-      <div class="sem-info">
-        <div class="sem-name">${it.b}</div>
-        <div class="sem-sub">${it.d.replace('Distrito ','D')} · ${it.cl}</div>
-      </div>
-      <span class="sem-badge ${it.badgeClass}">${it.badgeLabel}</span>
-      <span class="sem-pct" style="color:${it.dotColor};">${it.pct}%</span>
-      <i class="ti ti-chevron-right" style="font-size:14px;color:var(--txt3);" aria-hidden="true"></i>
-    </div>`).join('');
+  items.sort((a,b)=>{const o={late:0,risk:1,ok:2,pend:3};return(o[a.status]||3)-(o[b.status]||3)||b.pct-a.pct;});
+  const cont=document.getElementById('semaforo-list');
+  if(!items.length){cont.innerHTML=`<div style="text-align:center;padding:32px;color:var(--txt2);font-size:13px;">Sin bodegas con ese estado</div>`;return;}
+  cont.innerHTML=items.map(it=>`<div class="semaforo-card" onclick="openBodega('${it.d}','${it.cl}','${it.b}');showTab('bodegas');"><div class="sem-dot" style="background:${it.dotColor};"></div><div class="sem-info"><div class="sem-name">${it.b}</div><div class="sem-sub">${it.d.replace('Distrito ','D')} · ${it.cl}</div></div><span class="sem-badge ${it.badgeClass}">${it.badgeLabel}</span><span class="sem-pct" style="color:${it.dotColor};">${it.pct}%</span><i class="ti ti-chevron-right" style="font-size:14px;color:var(--txt3);" aria-hidden="true"></i></div>`).join('');
 }
 
-// ─────────────────────────────────────────────
-// RENDER REPORTE
-// ─────────────────────────────────────────────
 function renderReporte(){
-  // Gráfica de barras por cluster
   const labels=[],data=[],colors=[];
-  for(const d of ['Distrito A','Distrito B'])
-    for(const cl of Object.keys(DB_PLAN[d])){
-      labels.push(`${d.slice(-1)}·${cl.replace('Cluster ','C')}`);
-      data.push(getClPct(d,cl));
-      colors.push(d==='Distrito A'?'#E07B2A':'#185FA5');
-    }
+  for(const d of['Distrito A','Distrito B'])for(const cl of Object.keys(DB_PLAN[d])){labels.push(`${d.slice(-1)}·${cl.replace('Cluster ','C')}`);data.push(getClPct(d,cl));colors.push(d==='Distrito A'?'#E07B2A':'#185FA5');}
   const bCtx=document.getElementById('bar-chart').getContext('2d');
-  if(barChart) barChart.destroy();
-  barChart=new Chart(bCtx,{
-    type:'bar',
-    data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:5,borderSkipped:false}]},
-    options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.raw)+'%'}}},scales:{y:{max:100,ticks:{callback:v=>v+'%',font:{size:10},color:'#9E9E9B'},grid:{color:'rgba(0,0,0,0.05)'},border:{display:false}},x:{ticks:{font:{size:9},color:'#9E9E9B',maxRotation:45},grid:{display:false},border:{display:false}}}}
-  });
-
-  // Dona de estados
+  if(barChart)barChart.destroy();
+  barChart=new Chart(bCtx,{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:5,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>Math.round(c.raw)+'%'}}},scales:{y:{max:100,ticks:{callback:v=>v+'%',font:{size:10},color:'#9E9E9B'},grid:{color:'rgba(0,0,0,0.05)'},border:{display:false}},x:{ticks:{font:{size:9},color:'#9E9E9B',maxRotation:45},grid:{display:false},border:{display:false}}}}});
   let late=0,risk=0,ok=0,done=0,pend=0;
-  for(const d of ['Distrito A','Distrito B'])
-    for(const cl of Object.keys(DB_PLAN[d]))
-      for(const b of Object.keys(DB_PLAN[d][cl]))
-        ['p0','p1','p2'].forEach((pi,idx)=>{
-          const key=`${d}|${cl}|${b}`;
-          const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];
-          const plan=DB_PLAN[d][cl][b][pi]||[];
-          vals.forEach((av,si)=>{
-            const dates=plan[si];
-            if(!dates){pend++;return;}
-            const s=getStepStatus(dates[0],dates[1],av);
-            if(s==='late')late++;else if(s==='risk')risk++;else if(s==='ok')ok++;else if(s==='done')done++;else pend++;
-          });
-        });
+  for(const d of['Distrito A','Distrito B'])for(const cl of Object.keys(DB_PLAN[d]))for(const b of Object.keys(DB_PLAN[d][cl]))['p0','p1','p2'].forEach((pi,idx)=>{const key=`${d}|${cl}|${b}`;const vals=liveData.bodegas?.[key]?.[pi]||[0,0,0,0];const plan=DB_PLAN[d][cl][b][pi]||[];vals.forEach((av,si)=>{const dates=plan[si];if(!dates){pend++;return;}const s=getStepStatus(dates[0],dates[1],av);if(s==='late')late++;else if(s==='risk')risk++;else if(s==='ok')ok++;else if(s==='done')done++;else pend++;});});
   const dCtx=document.getElementById('donut-chart').getContext('2d');
-  if(donutChart) donutChart.destroy();
-  donutChart=new Chart(dCtx,{
-    type:'doughnut',
-    data:{labels:['Atrasado','En riesgo','En tiempo','Listo','Sin iniciar'],datasets:[{data:[late,risk,ok,done,pend],backgroundColor:['#F09595','#FAC775','#9FE1CB','#1D9E75','#E0E0DD'],borderWidth:0}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}`}}}}
-  });
-  const legEntries=[['#F09595','Atrasado',late],['#FAC775','En riesgo',risk],['#9FE1CB','En tiempo',ok],['#1D9E75','Listo',done],['#E0E0DD','Sin iniciar',pend]];
-  document.getElementById('donut-legend').innerHTML=legEntries.map(([c,l,v])=>`<span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#6B6B6B;"><span style="width:10px;height:8px;border-radius:2px;background:${c};display:inline-block;flex-shrink:0;"></span>${l} (${v})</span>`).join('');
-
-  // Ranking
+  if(donutChart)donutChart.destroy();
+  donutChart=new Chart(dCtx,{type:'doughnut',data:{labels:['Atrasado','En riesgo','En tiempo','Listo','Sin iniciar'],datasets:[{data:[late,risk,ok,done,pend],backgroundColor:['#F09595','#FAC775','#9FE1CB','#1D9E75','#E0E0DD'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}`}}}}});
+  document.getElementById('donut-legend').innerHTML=[['#F09595','Atrasado',late],['#FAC775','En riesgo',risk],['#9FE1CB','En tiempo',ok],['#1D9E75','Listo',done],['#E0E0DD','Sin iniciar',pend]].map(([c,l,v])=>`<span style="display:flex;align-items:center;gap:4px;font-size:10px;color:#6B6B6B;"><span style="width:10px;height:8px;border-radius:2px;background:${c};display:inline-block;"></span>${l} (${v})</span>`).join('');
   const entries=[];
-  for(const d of ['Distrito A','Distrito B'])
-    for(const cl of Object.keys(DB_PLAN[d]))
-      for(const b of Object.keys(DB_PLAN[d][cl]))
-        entries.push({label:`${d.replace('Distrito ','D')} · ${cl.replace('Cluster ','C')} · ${b}`,pct:getWHPct(d,cl,b),d,cl,b});
+  for(const d of['Distrito A','Distrito B'])for(const cl of Object.keys(DB_PLAN[d]))for(const b of Object.keys(DB_PLAN[d][cl]))entries.push({label:`${d.replace('Distrito ','D')}·${cl.replace('Cluster ','C')}·${b}`,pct:getWHPct(d,cl,b)});
   entries.sort((a,b)=>b.pct-a.pct);
   const colFn=p=>p===100?'var(--green)':p>0?'var(--amber)':'var(--txt3)';
-  document.getElementById('ranking-list').innerHTML=entries.map((e,i)=>`
-    <div class="rnk-row">
-      <span class="rnk-n">${i+1}</span>
-      <span class="rnk-name">${e.label}</span>
-      <div class="rnk-bar-w">
-        <div class="rnk-bar"><div style="height:100%;width:${e.pct}%;background:${colFn(e.pct)};border-radius:2px;"></div></div>
-        <div class="rnk-pct" style="color:${colFn(e.pct)};">${e.pct}%</div>
-      </div>
-    </div>`).join('');
+  document.getElementById('ranking-list').innerHTML=entries.map((e,i)=>`<div class="rnk-row"><span class="rnk-n">${i+1}</span><span class="rnk-name">${e.label}</span><div class="rnk-bar-w"><div class="rnk-bar"><div style="height:100%;width:${e.pct}%;background:${colFn(e.pct)};border-radius:2px;"></div></div><div class="rnk-pct" style="color:${colFn(e.pct)};">${e.pct}%</div></div></div>`).join('');
 }
 
-// ─────────────────────────────────────────────
-// NAVEGACIÓN
-// ─────────────────────────────────────────────
 function showTab(tab){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('s-'+tab).classList.add('on');
   document.getElementById('nb-'+tab).classList.add('active');
-  if(tab==='resumen') renderResumen();
-  else if(tab==='bodegas') renderBodegas();
-  else if(tab==='semaforo') renderSemaforo();
-  else if(tab==='reporte') renderReporte();
+  if(tab==='resumen')renderResumen();
+  else if(tab==='bodegas')renderBodegas();
+  else if(tab==='semaforo')renderSemaforo();
+  else if(tab==='reporte')renderReporte();
 }
 
-// ─────────────────────────────────────────────
-// CARGA DE DATA.JSON
-// ─────────────────────────────────────────────
+// ── CARGA DESDE JSONBIN ───────────────────────
 async function loadData(){
   try{
-    const res=await fetch('data.json?t='+Date.now());
+    const res=await fetch(JSONBIN_URL,{
+      headers:{'X-Master-Key':JSONBIN_KEY,'X-Bin-Meta':false}
+    });
     if(!res.ok) throw new Error('HTTP '+res.status);
-    liveData=await res.json();
-    // Mostrar fecha de actualización
+    const json=await res.json();
+    // JSONBin envuelve el contenido en { record: {...} }
+    liveData=json.record||json;
     const upd=liveData.ultima_actualizacion;
     if(upd){
       const d=new Date(upd);
-      document.getElementById('update-val').textContent=
-        d.toLocaleDateString('es-GT',{day:'2-digit',month:'short'})+' '+
-        d.toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('update-val').textContent=d.toLocaleDateString('es-GT',{day:'2-digit',month:'short'})+' '+d.toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'});
     } else {
-      document.getElementById('update-val').textContent='Pendiente';
+      document.getElementById('update-val').textContent='En vivo';
     }
-  } catch(e){
-    console.warn('No se pudo cargar data.json, usando datos en cero.',e);
-    liveData={bodegas:{},urbanizacion:{}};
-    document.getElementById('update-val').textContent='Sin datos aún';
+  }catch(e){
+    console.warn('Error cargando JSONBin:',e);
+    liveData={bodegas:{}};
+    document.getElementById('update-val').textContent='Sin datos';
   }
-  // Ocultar loader y mostrar app
   document.getElementById('loading-state').style.display='none';
   showTab('resumen');
-  // Refrescar cada 5 minutos automáticamente
-  setTimeout(()=>location.reload(), 5*60*1000);
+  // Auto-refresh cada 10 minutos
+  setTimeout(()=>location.reload(),10*60*1000);
 }
 
-// Iniciar
 loadData();
 </script>
 </body>
