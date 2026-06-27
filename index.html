@@ -1197,174 +1197,121 @@ loadData();
 
 // ── EXPORTAR PDF ──
 function exportPDF(){
-  const d=new Date();
-  const fecha=d.toLocaleDateString('es-GT',{day:'2-digit',month:'long',year:'numeric'});
-  const hora=d.toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'});
-  const totalPct=getTotalPct();
-  const done=countDone();
-  const late=countLate();
-  const distAPct=getDistPct('Distrito A');
-  const distBPct=getDistPct('Distrito B');
+  var d=new Date();
+  var fecha=d.toLocaleDateString('es-GT',{day:'2-digit',month:'long',year:'numeric'});
+  var hora=d.toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'});
+  var totalPct=getTotalPct();
+  var done=countDone();
+  var late=countLate();
+  var distAPct=getDistPct('Distrito A');
+  var distBPct=getDistPct('Distrito B');
 
-  // Build cluster table rows
-  let clRows='';
-  for(const dist of ['Distrito A','Distrito B']){
-    for(const cl of Object.keys(DB[dist])){
-      const pct=getClPct(dist,cl);
-      const col=pct===100?'#1D9E75':pct>=50?'#E07B2A':'#BA7517';
-      clRows+=`<tr><td>${dist}</td><td>${cl}</td><td style="text-align:center;font-weight:600;color:${col};">${pct}%</td><td><div style="width:${pct}%;height:8px;background:${col};border-radius:4px;"></div></td></tr>`;
+  // Cluster rows
+  var clRows='';
+  for(var dist of ['Distrito A','Distrito B']){
+    for(var cl of Object.keys(DB[dist])){
+      var pct=getClPct(dist,cl);
+      var col=pct===100?'#1D9E75':pct>=50?'#E07B2A':'#BA7517';
+      clRows+='<tr><td>'+dist+'</td><td>'+cl+'</td><td style="text-align:center;font-weight:600;color:'+col+';">'+pct+'%</td><td><div style="width:'+pct+'%;height:8px;background:'+col+';border-radius:4px;"></div></td></tr>';
     }
   }
 
-  // Build top 10 bodegas
-  const entries=[];
-  for(const d2 of ['Distrito A','Distrito B'])
-    for(const cl of Object.keys(DB[d2]))
-      for(const b of DB[d2][cl])
-        entries.push({d:d2,cl,b,pct:getWHPct(d2,cl,b)});
-  entries.sort((a,b)=>b.pct-a.pct);
-  let bodRows='';
-  entries.slice(0,15).forEach((e,i)=>{
-    const col=e.pct===100?'#1D9E75':e.pct>0?'#E07B2A':'#ABABAB';
-    bodRows+=`<tr><td style="text-align:center;">${i+1}</td><td>${e.b}</td><td>${e.d.replace('Distrito ','D')}</td><td>${e.cl}</td><td style="text-align:center;font-weight:600;color:${col};">${e.pct}%</td></tr>`;
+  // Top 15 bodegas
+  var entries=[];
+  for(var d2 of ['Distrito A','Distrito B'])
+    for(var cl2 of Object.keys(DB[d2]))
+      for(var b of DB[d2][cl2])
+        entries.push({d:d2,cl:cl2,b:b,pct:getWHPct(d2,cl2,b)});
+  entries.sort(function(a,b){return b.pct-a.pct;});
+  var bodRows='';
+  entries.slice(0,15).forEach(function(e,i){
+    var col=e.pct===100?'#1D9E75':e.pct>0?'#E07B2A':'#ABABAB';
+    bodRows+='<tr><td style="text-align:center;">'+(i+1)+'</td><td>'+e.b+'</td><td>'+e.d.replace('Distrito ','D')+'</td><td>'+e.cl+'</td><td style="text-align:center;font-weight:600;color:'+col+';">'+e.pct+'%</td></tr>';
   });
 
   // Proc averages
-  let procRows='';
-  PROC_NAMES.forEach((n,pi)=>{
-    let tot=0,cnt=0;
-    for(const d2 of ['Distrito A','Distrito B'])
-      for(const cl of Object.keys(DB[d2]))
-        for(const b of DB[d2][cl]){
-          const avg=getProcAvg(d2,cl,b,pi);
-          tot+=avg;cnt++;
-        }
-    const avg=cnt?Math.round(tot/cnt):0;
-    procRows+=`<tr><td>${n}</td><td style="text-align:center;font-weight:600;color:${PROC_COLORS[pi]};">${avg}%</td><td><div style="width:${avg}%;height:8px;background:${PROC_COLORS[pi]};border-radius:4px;"></div></td></tr>`;
+  var procRows='';
+  PROC_NAMES.forEach(function(n,pi){
+    var tot=0,cnt=0;
+    for(var d3 of ['Distrito A','Distrito B'])
+      for(var cl3 of Object.keys(DB[d3]))
+        for(var b3 of DB[d3][cl3]){tot+=getProcAvg(d3,cl3,b3,pi);cnt++;}
+    var avg=cnt?Math.round(tot/cnt):0;
+    procRows+='<tr><td>'+n+'</td><td style="text-align:center;font-weight:600;color:'+PROC_COLORS[pi]+';">'+avg+'%</td><td><div style="width:'+avg+'%;height:8px;background:'+PROC_COLORS[pi]+';border-radius:4px;"></div></td></tr>';
   });
 
-  // Notes section — collect all non-empty notes
-  let notasRows='';
-  (liveData.filas||[]).filter(r=>r['Notas']&&r['Notas'].trim()).forEach(r=>{
-    notasRows+=`<tr><td>${r['Distrito']||''}</td><td>${r['Bodega']||''}</td><td>${r['Proceso']||''}</td><td>${r['Paso']||''}</td><td>${r['Notas']||''}</td><td style="font-size:10px;color:#999;">${r['Supervisor']||''}</td></tr>`;
+  // Notas
+  var notasRows='';
+  (liveData.filas||[]).filter(function(r){return r['Notas']&&r['Notas'].trim();}).forEach(function(r){
+    notasRows+='<tr><td>'+(r['Distrito']||'')+'</td><td>'+(r['Bodega']||'')+'</td><td>'+(r['Proceso']||'')+'</td><td>'+(r['Paso']||'')+'</td><td>'+(r['Notas']||'')+'</td><td style="font-size:10px;color:#999;">'+(r['Supervisor']||'')+'</td></tr>';
   });
 
-  const html=`<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Reporte Capital Industrial — ${fecha}</title>
-<style>
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:Arial,sans-serif;color:#1A1A1A;font-size:12px;background:#fff;}
-  .page{max-width:800px;margin:0 auto;padding:32px;}
-  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #E07B2A;padding-bottom:16px;margin-bottom:24px;}
-  .logo-area h1{font-size:22px;font-weight:700;color:#1A1A1A;}
-  .logo-area h2{font-size:14px;color:#6B6B6B;font-weight:400;margin-top:4px;}
-  .fecha-area{text-align:right;color:#6B6B6B;font-size:11px;}
-  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
-  .kpi{background:#F7F7F5;border-radius:8px;padding:12px;text-align:center;border:1px solid #E5E5E3;}
-  .kpi-val{font-size:24px;font-weight:700;margin-bottom:4px;}
-  .kpi-lbl{font-size:10px;color:#6B6B6B;text-transform:uppercase;letter-spacing:.05em;}
-  .section{margin-bottom:24px;}
-  .section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6B6B6B;border-bottom:1px solid #E5E5E3;padding-bottom:6px;margin-bottom:12px;}
-  .dist-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-  .dist-card{background:#F7F7F5;border-radius:8px;padding:12px;border:1px solid #E5E5E3;}
-  .dist-name{font-size:13px;font-weight:600;margin-bottom:4px;}
-  .dist-pct{font-size:20px;font-weight:700;color:#E07B2A;margin-bottom:6px;}
-  .pbar{height:6px;background:#EFEFED;border-radius:3px;overflow:hidden;}
-  .pfill{height:100%;border-radius:3px;}
-  table{width:100%;border-collapse:collapse;font-size:11px;}
-  th{background:#1A1A1A;color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
-  td{padding:6px 10px;border-bottom:1px solid #F0F0EE;}
-  tr:nth-child(even) td{background:#F9F9F7;}
-  .footer{margin-top:32px;border-top:1px solid #E5E5E3;padding-top:12px;color:#999;font-size:10px;display:flex;justify-content:space-between;}
-  @media print{body{font-size:11px;}.page{padding:20px;max-width:100%;}}
-</style>
-</head>
-<body>
-<div class="page">
-  <div class="header">
-    <div class="logo-area">
-      <h1>Capital Industrial</h1>
-      <h2>Logística Naranjo — Reporte de avance del proyecto</h2>
-    </div>
-    <div class="fecha-area">
-      <div style="font-size:13px;font-weight:600;color:#1A1A1A;">${fecha}</div>
-      <div>${hora} hrs</div>
-      <div style="margin-top:4px;">Generado por Constructora E4 SA</div>
-    </div>
-  </div>
+  var notasSection=notasRows?('<div class="section"><div class="section-title">Notas de campo</div><table><tr><th>Distrito</th><th>Bodega</th><th>Proceso</th><th>Paso</th><th>Nota</th><th>Supervisor</th></tr>'+notasRows+'</table></div>'):'';
+  var updStr=(liveData.ultima_actualizacion||'').replace('T',' ').substring(0,16);
 
-  <div class="kpi-row">
-    <div class="kpi"><div class="kpi-val" style="color:#E07B2A;">${totalPct}%</div><div class="kpi-lbl">Avance total</div></div>
-    <div class="kpi"><div class="kpi-val" style="color:#1D9E75;">${done}/56</div><div class="kpi-lbl">Bodegas completas</div></div>
-    <div class="kpi"><div class="kpi-val" style="color:#185FA5;">56</div><div class="kpi-lbl">Total bodegas</div></div>
-    <div class="kpi"><div class="kpi-val" style="color:#A32D2D;">${late}</div><div class="kpi-lbl">Pasos atrasados</div></div>
-  </div>
+  var html='<!DOCTYPE html>'
+    +'<html lang="es"><head><meta charset="UTF-8">'
+    +'<title>Reporte Capital Industrial</title>'
+    +'<style>'
+    +'*{box-sizing:border-box;margin:0;padding:0;}'
+    +'body{font-family:Arial,sans-serif;color:#1A1A1A;font-size:12px;}'
+    +'.page{max-width:800px;margin:0 auto;padding:32px;}'
+    +'.header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #E07B2A;padding-bottom:16px;margin-bottom:24px;}'
+    +'h1{font-size:22px;font-weight:700;}'
+    +'h2{font-size:14px;color:#6B6B6B;font-weight:400;margin-top:4px;}'
+    +'.fecha{text-align:right;color:#6B6B6B;font-size:11px;}'
+    +'.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}'
+    +'.kpi{background:#F7F7F5;border-radius:8px;padding:12px;text-align:center;border:1px solid #E5E5E3;}'
+    +'.kv{font-size:24px;font-weight:700;margin-bottom:4px;}'
+    +'.kl{font-size:10px;color:#6B6B6B;text-transform:uppercase;letter-spacing:.05em;}'
+    +'.section{margin-bottom:24px;}'
+    +'.st{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6B6B6B;border-bottom:1px solid #E5E5E3;padding-bottom:6px;margin-bottom:12px;}'
+    +'.dist-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}'
+    +'.dc{background:#F7F7F5;border-radius:8px;padding:12px;border:1px solid #E5E5E3;}'
+    +'.dn{font-size:13px;font-weight:600;margin-bottom:4px;}'
+    +'.dp{font-size:20px;font-weight:700;margin-bottom:6px;}'
+    +'.pb{height:6px;background:#EFEFED;border-radius:3px;overflow:hidden;}'
+    +'table{width:100%;border-collapse:collapse;font-size:11px;}'
+    +'th{background:#1A1A1A;color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase;}'
+    +'td{padding:6px 10px;border-bottom:1px solid #F0F0EE;}'
+    +'tr:nth-child(even) td{background:#F9F9F7;}'
+    +'.footer{margin-top:32px;border-top:1px solid #E5E5E3;padding-top:12px;color:#999;font-size:10px;display:flex;justify-content:space-between;}'
+    +'@media print{.page{padding:20px;}}'
+    +'</style></head><body>'
+    +'<div class="page">'
+    +'<div class="header">'
+    +'<div><h1>Capital Industrial</h1><h2>Logistica Naranjo — Reporte de avance</h2></div>'
+    +'<div class="fecha"><div style="font-size:13px;font-weight:600;color:#1A1A1A;">'+fecha+'</div><div>'+hora+' hrs</div><div style="margin-top:4px;">Constructora E4 SA</div></div>'
+    +'</div>'
+    +'<div class="kpi-row">'
+    +'<div class="kpi"><div class="kv" style="color:#E07B2A;">'+totalPct+'%</div><div class="kl">Avance total</div></div>'
+    +'<div class="kpi"><div class="kv" style="color:#1D9E75;">'+done+'/56</div><div class="kl">Bodegas completas</div></div>'
+    +'<div class="kpi"><div class="kv" style="color:#185FA5;">56</div><div class="kl">Total bodegas</div></div>'
+    +'<div class="kpi"><div class="kv" style="color:#A32D2D;">'+late+'</div><div class="kl">Pasos atrasados</div></div>'
+    +'</div>'
+    +'<div class="section"><div class="st">Avance por distrito</div>'
+    +'<div class="dist-row">'
+    +'<div class="dc"><div class="dn">Distrito A — 9 clusters · 36 bodegas</div><div class="dp" style="color:#E07B2A;">'+distAPct+'%</div><div class="pb"><div style="width:'+distAPct+'%;height:100%;background:#E07B2A;border-radius:3px;"></div></div></div>'
+    +'<div class="dc"><div class="dn">Distrito B — 5 clusters · 20 bodegas</div><div class="dp" style="color:#185FA5;">'+distBPct+'%</div><div class="pb"><div style="width:'+distBPct+'%;height:100%;background:#185FA5;border-radius:3px;"></div></div></div>'
+    +'</div></div>'
+    +'<div class="section"><div class="st">Avance por proceso</div>'
+    +'<table><tr><th>Proceso</th><th style="width:80px;text-align:center;">Avance</th><th>Barra</th></tr>'+procRows+'</table></div>'
+    +'<div class="section"><div class="st">Avance por cluster</div>'
+    +'<table><tr><th>Distrito</th><th>Cluster</th><th style="width:80px;text-align:center;">Avance</th><th>Barra</th></tr>'+clRows+'</table></div>'
+    +'<div class="section"><div class="st">Ranking de bodegas — Top 15</div>'
+    +'<table><tr><th style="width:30px;">#</th><th>Bodega</th><th>Distrito</th><th>Cluster</th><th style="width:80px;text-align:center;">Avance</th></tr>'+bodRows+'</table></div>'
+    +notasSection
+    +'<div class="footer"><span>Constructora E4 SA — Sistema Capital Industrial</span><span>Actualizado: '+updStr+'</span></div>'
+    +'</div>'
+    +'<script>window.onload=function(){window.print();}<\/script>'
+    +'</body></html>';
 
-  <div class="section">
-    <div class="section-title">Avance por distrito</div>
-    <div class="dist-row">
-      <div class="dist-card">
-        <div class="dist-name">Distrito A — 9 clusters · 36 bodegas</div>
-        <div class="dist-pct">${distAPct}%</div>
-        <div class="pbar"><div class="pfill" style="width:${distAPct}%;background:#E07B2A;"></div></div>
-      </div>
-      <div class="dist-card">
-        <div class="dist-name">Distrito B — 5 clusters · 20 bodegas</div>
-        <div class="dist-pct" style="color:#185FA5;">${distBPct}%</div>
-        <div class="pbar"><div class="pfill" style="width:${distBPct}%;background:#185FA5;"></div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Avance por proceso</div>
-    <table>
-      <tr><th>Proceso</th><th style="width:80px;text-align:center;">Avance</th><th>Barra</th></tr>
-      ${procRows}
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Avance por cluster</div>
-    <table>
-      <tr><th>Distrito</th><th>Cluster</th><th style="width:80px;text-align:center;">Avance</th><th>Barra</th></tr>
-      ${clRows}
-    </table>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Ranking de bodegas — Top 15</div>
-    <table>
-      <tr><th style="width:30px;">#</th><th>Bodega</th><th>Distrito</th><th>Cluster</th><th style="width:80px;text-align:center;">Avance</th></tr>
-      ${bodRows}
-    </table>
-  </div>
-
-  ${notasRows?`<div class="section">
-    <div class="section-title">Notas de campo registradas</div>
-    <table>
-      <tr><th>Distrito</th><th>Bodega</th><th>Proceso</th><th>Paso</th><th>Nota</th><th>Supervisor</th></tr>
-      ${notasRows}
-    </table>
-  </div>`:''}
-
-  <div class="footer">
-    <span>Constructora E4 SA — Sistema Capital Industrial</span>
-    <span>Datos actualizados: ${(liveData.ultima_actualizacion||'').replace('T',' ').substring(0,16)}</span>
-  </div>
-</div>
-<script>window.onload=function(){window.print();}</script>
-</body>
-</html>`;
-
-  const win=window.open('','_blank');
-  win.document.write(html);
-  win.document.close();
+  var win=window.open('','_blank');
+  if(win){win.document.write(html);win.document.close();}
+  else{alert('Permite las ventanas emergentes en tu navegador para exportar el PDF.');}
 }
 
+loadData();
 </script>
 </body>
 </html>
