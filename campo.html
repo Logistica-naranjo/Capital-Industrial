@@ -85,9 +85,6 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .pct-val{font-size:13px;font-weight:600;width:36px;text-align:center;color:var(--or);}
 .notes-inp{width:100%;border:.5px solid var(--brd2);border-radius:var(--r);padding:8px 10px;font-size:12px;font-family:'Inter',sans-serif;color:var(--txt);resize:none;background:var(--bg);margin-bottom:9px;}
 .notes-inp:focus{outline:none;border-color:var(--or);}
-.photo-btn{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px dashed var(--brd2);border-radius:var(--r);cursor:pointer;color:var(--txt2);font-size:12px;width:100%;background:none;}
-.photo-preview{display:none;margin-top:7px;position:relative;}
-.photo-preview img{width:100%;border-radius:var(--r);max-height:160px;object-fit:cover;}
 .photo-remove{position:absolute;top:6px;right:6px;width:26px;height:26px;background:rgba(0,0,0,.6);border:none;border-radius:50%;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 /* Urbanización */
 .urba-step{background:var(--bg);border:.5px solid var(--brd);border-radius:var(--rl);padding:12px 13px;margin-bottom:9px;box-shadow:var(--shadow);}
@@ -176,7 +173,6 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
   </div>
 </div>
 <div class="toast" id="toast"></div>
-<input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none;" onchange="handlePhoto(event)"/>
 <script>
 const WORKER_URL="https://logistica-naranjo-api.j-solares.workers.dev";
 const GITHUB_USER="Logistica-naranjo",GITHUB_REPO="Capital-Industrial";
@@ -610,7 +606,6 @@ const OG_DB = {
 let supervisor='',supRol='';
 let curDist='Distrito A',curCluster=null,curBodega=null;
 let curMode='bodegas',curUrbaD='A';
-let state={},photoData={},curPhotoStep=null,liveData={};
 
 function login(){
   const name=document.getElementById('login-name').value.trim();
@@ -808,7 +803,6 @@ function buildBodegaRegistro(){
 function buildStepBlock(name,pKey,pct,ini,fin,nota,color,onPct,onIni,onFin,onNota){
   const tagClass=pct>=100?'tag-done':pct>0?'tag-prog':'tag-pend';
   const tagLabel=pct>=100?'Listo':pct>0?pct+'%':'Pendiente';
-  const hasPhoto=!!photoData[pKey];
   const id=pKey.replace(/\|/g,'_');
   return `<div class="step-block">
     <div class="step-name-row">
@@ -826,13 +820,9 @@ function buildStepBlock(name,pKey,pct,ini,fin,nota,color,onPct,onIni,onFin,onNot
         style="background:linear-gradient(to right,${color} 0%,${color} ${pct}%,#EFEFED ${pct}%,#EFEFED 100%)"/>
       <span class="pct-val" id="pv_${id}" style="color:${color};">${pct}%</span>
     </div>
-    <textarea class="notes-inp" rows="2" placeholder="Notas del paso…" onchange="(${onNota.toString()})(this.value)">${nota}</textarea>
-    <button class="photo-btn" onclick="triggerPhoto('${pKey}')">
+    <textarea class="notes-inp" rows="2" placeholder="Notas del paso…" oninput="(${onNota.toString()})(this.value)">${nota}</textarea>
       <i class="ti ti-camera"></i>
-      <span id="plbl_${id}">${hasPhoto?'Ver / cambiar foto':'Adjuntar foto'}</span>
     </button>
-    <div class="photo-preview" id="pprev_${id}">
-      ${hasPhoto?`<img src="${photoData[pKey]}" alt="foto"/><button class="photo-remove" onclick="removePhoto('${pKey}')"><i class="ti ti-x"></i></button>`:''}
     </div>
   </div>`;
 }
@@ -903,13 +893,9 @@ function buildUrbaRegistro(){
           style="background:linear-gradient(to right,#185FA5 0%,#185FA5 ${ps.av}%,#EFEFED ${ps.av}%,#EFEFED 100%)"/>
         <span class="pct-val" id="pv_${id}" style="color:#185FA5;">${ps.av}%</span>
       </div>
-      <textarea class="notes-inp" rows="2" placeholder="Notas…" onchange="state['${k}'][${i}].nota=this.value">${ps.nota}</textarea>
-      <button class="photo-btn" onclick="triggerPhoto('${pKey}')">
+      <textarea class="notes-inp" rows="2" placeholder="Notas…" oninput="state['${k}'][${i}].nota=this.value">${ps.nota}</textarea>
         <i class="ti ti-camera"></i>
-        <span id="plbl_${id}">${photoData[pKey]?'Ver / cambiar foto':'Adjuntar foto'}</span>
       </button>
-      <div class="photo-preview" id="pprev_${id}">
-        ${photoData[pKey]?`<img src="${photoData[pKey]}" alt="foto"/><button class="photo-remove" onclick="removePhoto('${pKey}')"><i class="ti ti-x"></i></button>`:''}
       </div>
     </div>`;
   }).join('');
@@ -933,31 +919,46 @@ function onSlUrba(el,id,stateKey,idx){
 }
 
 // ── FOTOS ──
-function triggerPhoto(pKey){curPhotoStep=pKey;document.getElementById('photo-input').click();}
-function handlePhoto(e){
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
   reader.onload=ev=>{
-    photoData[curPhotoStep]=ev.target.result;
     const id=curPhotoStep.replace(/\|/g,'_');
-    const prev=document.getElementById('pprev_'+id);
-    const lbl=document.getElementById('plbl_'+id);
-    if(prev){prev.style.display='block';prev.innerHTML=`<img src="${ev.target.result}" alt="foto"/><button class="photo-remove" onclick="removePhoto('${curPhotoStep}')"><i class="ti ti-x"></i></button>`;}
     if(lbl)lbl.textContent='Ver / cambiar foto';
     showToast('Foto adjuntada','ok');
   };
   reader.readAsDataURL(file);e.target.value='';
 }
-function removePhoto(pKey){
-  delete photoData[pKey];
   const id=pKey.replace(/\|/g,'_');
-  const prev=document.getElementById('pprev_'+id);const lbl=document.getElementById('plbl_'+id);
   if(prev){prev.style.display='none';prev.innerHTML='';}
   if(lbl)lbl.textContent='Adjuntar foto';
 }
 
 // ── GUARDAR ──
+
+function captureNotasFromDOM(){
+  // Capture all textarea values into state before saving
+  // This ensures notes are saved even if oninput didn't fire on mobile
+  document.querySelectorAll('.step-block').forEach(block=>{
+    const ta = block.querySelector('textarea.notes-inp');
+    if(!ta || !ta.value) return;
+    // Find the pKey from the nearby slider or tag
+    const sl = block.querySelector('input[type=range]');
+    if(!sl) return;
+    const id = sl.id.replace('sl_','');
+    const pKey = id.replace(/_/g,'|');
+    if(window._stepCbs && window._stepCbs[pKey]){
+      window._stepCbs[pKey].onNota(ta.value);
+    }
+  });
+  // Also capture urbanización textareas
+  document.querySelectorAll('.urba-step textarea').forEach((ta,i)=>{
+    const k=skUrba();
+    if(state[k]&&state[k][i]) state[k][i].nota=ta.value;
+  });
+}
+
 async function guardar(){
+  captureNotasFromDOM();
   const btn=document.getElementById('btn-save');
   btn.classList.add('saving');
   btn.innerHTML='<i class="ti ti-loader" style="animation:spin .8s linear infinite;"></i> Guardando…';
@@ -978,7 +979,6 @@ async function guardar(){
             'Proceso':PROC_KEYS[pi],'Paso':['Montaje de estructura','Instalación de losacero','Armado de electromalla','Fundición','Montaje de tijeras','Costaneras','Canales','Enlaminado','Tablayeso + ventanas','Piso','Pintura','Puertas'][pi*4+si],
             '% Avance':String(s['p'+pi][si]||0),
             'Inicio Real':s['ini'+pi][si]||'','Fin Real':s['fin'+pi][si]||'',
-            'Notas':s['notas'+pi][si]||'','Foto Evidencia':photoData[pKey]||'',
             'Supervisor':supervisor,'Rol':supRol,
             'Ultima actualizacion':new Date().toISOString()
           });
@@ -995,7 +995,6 @@ async function guardar(){
             'Proceso':proc,'Paso':paso.p,
             '% Avance':String(ps.av||0),
             'Inicio Real':ps.ini||'','Fin Real':ps.fin||'',
-            'Notas':ps.nota||'','Foto Evidencia':photoData[pKey]||'',
             'Supervisor':supervisor,'Rol':supRol,
             'Ultima actualizacion':new Date().toISOString()
           });
@@ -1014,7 +1013,6 @@ async function guardar(){
           'Proceso':'Urbanización','Paso':paso.n,
           '% Avance':String(ps.av||0),
           'Inicio Real':ps.ini||'','Fin Real':ps.fin||'',
-          'Notas':ps.nota||'','Foto Evidencia':photoData[pKey]||'',
           'Supervisor':supervisor,'Rol':supRol,
           'Ultima actualizacion':new Date().toISOString()
         });
@@ -1042,6 +1040,23 @@ async function guardar(){
 function goBack(){showScreen('selector');document.getElementById('save-bar').style.display='none';buildClusters();if(curCluster)buildBodegas();}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('s-'+id).classList.add('on');}
 function showToast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show toast-'+type;setTimeout(()=>t.classList.remove('show'),2800);}
+
+function stepCb(pKey,type,val){
+  if(window._stepCbs&&window._stepCbs[pKey]){
+    if(type==='ini') window._stepCbs[pKey].onIni(val);
+    else if(type==='fin') window._stepCbs[pKey].onFin(val);
+    else if(type==='nota') window._stepCbs[pKey].onNota(val);
+  }
+}
+function onSl2(el,id,color,pKey){
+  const val=parseInt(el.value);
+  el.style.background=`linear-gradient(to right,${color} 0%,${color} ${val}%,#EFEFED ${val}%,#EFEFED 100%)`;
+  document.getElementById('pv_'+id).textContent=val+'%';
+  const tag=document.getElementById('tag_'+id);
+  if(tag){tag.className='tag '+(val>=100?'tag-done':val>0?'tag-prog':'tag-pend');tag.textContent=val>=100?'Listo':val>0?val+'%':'Pendiente';}
+  if(window._stepCbs&&window._stepCbs[pKey]) window._stepCbs[pKey].onPct(val);
+  updateBodHdr();
+}
 </script>
 </body>
 </html>

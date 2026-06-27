@@ -113,8 +113,6 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .step-meta{display:flex;gap:8px;align-items:center;margin-bottom:4px;}
 .step-date{font-size:10px;color:var(--txt3);}
 .step-nota{font-size:11px;color:var(--txt2);font-style:italic;padding:5px 8px;background:var(--bg2);border-radius:var(--r);margin-top:4px;border-left:2px solid var(--brd2);}
-.step-foto{margin-top:6px;}
-.step-foto img{width:100%;border-radius:var(--r);max-height:180px;object-fit:cover;cursor:pointer;}
 .chart-card{background:var(--bg);border-radius:var(--rl);padding:14px;box-shadow:var(--shadow);border:.5px solid var(--brd);margin-bottom:12px;}
 .chart-title{font-size:11px;font-weight:600;color:var(--txt2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
 .proc-stat-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
@@ -155,10 +153,6 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
 .urba-btn{flex:1;padding:8px;background:none;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;color:var(--txt2);}
 .urba-btn.active{background:var(--bg);color:var(--or);border:.5px solid var(--brd);}
 /* Fotos modal */
-.foto-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.92);z-index:999;align-items:center;justify-content:center;padding:20px;}
-.foto-modal.open{display:flex;}
-.foto-modal img{max-width:100%;max-height:90vh;border-radius:var(--r);object-fit:contain;}
-.foto-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,.2);border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 /* Curva S */
 .curva-s-legend{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;justify-content:center;}
 .cs-leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--txt2);}
@@ -186,6 +180,7 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
     <button class="nb" id="nb-urba" onclick="showTab('urba')"><i class="ti ti-road"></i>Urbanización</button>
     <button class="nb" id="nb-semaforo" onclick="showTab('semaforo')"><i class="ti ti-traffic-lights"></i>Semáforo</button>
     <button class="nb" id="nb-reporte" onclick="showTab('reporte')"><i class="ti ti-chart-line"></i>Reporte</button>
+    <button class="nb" id="nb-pdf" onclick="exportPDF()"><i class="ti ti-file-type-pdf"></i>PDF</button>
   </div>
 </nav>
 <main class="main" id="main">
@@ -261,9 +256,6 @@ body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-h
   </div>
 </main>
 <!-- Modal de foto -->
-<div class="foto-modal" id="foto-modal" onclick="closeFoto()">
-  <button class="foto-close" onclick="closeFoto()"><i class="ti ti-x"></i></button>
-  <img id="foto-modal-img" src="" alt="Foto de avance"/>
 </div>
 <script>
 const GITHUB_USER="Logistica-naranjo",GITHUB_REPO="Capital-Industrial";
@@ -875,13 +867,11 @@ function renderBodegas(){
         const iniR=row['Inicio Real']||'';
         const finR=row['Fin Real']||'';
         const nota=row['Notas']||'';
-        const foto=row['Foto Evidencia']||'';
         const st=ini&&fin?getStepStatus(ini,fin,av):'pend';
         const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
         const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
         const datesHtml=(iniR||finR)?`<div class="step-meta"><span class="step-date"><i class="ti ti-calendar" style="font-size:10px;"></i> Inicio real: ${iniR||'—'}</span><span class="step-date"><i class="ti ti-calendar-check" style="font-size:10px;"></i> Fin real: ${finR||'—'}</span></div>`:'';
         const notaHtml=nota?`<div class="step-nota"><i class="ti ti-note" style="font-size:10px;"></i> ${nota}</div>`:'';
-        const fotoHtml=foto?`<div class="step-foto"><img src="${foto}" alt="Foto" onclick="openFoto('${foto}')"/></div>`:'';
         return `<div class="step-item">
           <div class="step-top">
             <span class="step-name">${sname}</span>
@@ -920,12 +910,10 @@ function renderBodegas(){
         tot+=av;
         const ini=paso.i||'';const fin=paso.f||'';
         const iniR=row['Inicio Real']||'';const finR=row['Fin Real']||'';
-        const nota=row['Notas']||'';const foto=row['Foto Evidencia']||'';
         const st=ini&&fin?getStepStatus(ini,fin,av):'pend';
         const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
         const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
         const notaHtml=nota?`<div class="step-nota"><i class="ti ti-note" style="font-size:10px;"></i> ${nota}</div>`:'';
-        const fotoHtml=foto?`<div class="step-foto"><img src="${foto}" alt="Foto" onclick="openFoto('${foto}')"/></div>`:'';
         return `<div class="step-item">
           <div class="step-top">
             <span class="step-name">${paso.p}</span>
@@ -993,9 +981,7 @@ function renderUrba(){
     const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
     const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
     const nota=row['Notas']||'';
-    const foto=row['Foto Evidencia']||'';
     const notaHtml=nota?`<div class="step-nota" style="margin-top:5px;"><i class="ti ti-note" style="font-size:10px;"></i> ${nota}</div>`:'';
-    const fotoHtml=foto?`<div class="step-foto" style="margin-top:6px;"><img src="${foto}" alt="Foto" onclick="openFoto('${foto}')"/></div>`:'';
     return `<div class="proc-card" style="margin-bottom:8px;">
       <div style="padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
@@ -1173,11 +1159,7 @@ function renderRanking(){
 }
 
 // ── FOTOS ──
-function openFoto(src){
-  document.getElementById('foto-modal-img').src=src;
-  document.getElementById('foto-modal').classList.add('open');
 }
-function closeFoto(){document.getElementById('foto-modal').classList.remove('open');}
 
 // ── NAV ──
 function showTab(tab){
@@ -1212,6 +1194,177 @@ async function loadData(){
   setTimeout(()=>location.reload(),5*60*1000);
 }
 loadData();
+
+// ── EXPORTAR PDF ──
+function exportPDF(){
+  const d=new Date();
+  const fecha=d.toLocaleDateString('es-GT',{day:'2-digit',month:'long',year:'numeric'});
+  const hora=d.toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'});
+  const totalPct=getTotalPct();
+  const done=countDone();
+  const late=countLate();
+  const distAPct=getDistPct('Distrito A');
+  const distBPct=getDistPct('Distrito B');
+
+  // Build cluster table rows
+  let clRows='';
+  for(const dist of ['Distrito A','Distrito B']){
+    for(const cl of Object.keys(DB[dist])){
+      const pct=getClPct(dist,cl);
+      const col=pct===100?'#1D9E75':pct>=50?'#E07B2A':'#BA7517';
+      clRows+=`<tr><td>${dist}</td><td>${cl}</td><td style="text-align:center;font-weight:600;color:${col};">${pct}%</td><td><div style="width:${pct}%;height:8px;background:${col};border-radius:4px;"></div></td></tr>`;
+    }
+  }
+
+  // Build top 10 bodegas
+  const entries=[];
+  for(const d2 of ['Distrito A','Distrito B'])
+    for(const cl of Object.keys(DB[d2]))
+      for(const b of DB[d2][cl])
+        entries.push({d:d2,cl,b,pct:getWHPct(d2,cl,b)});
+  entries.sort((a,b)=>b.pct-a.pct);
+  let bodRows='';
+  entries.slice(0,15).forEach((e,i)=>{
+    const col=e.pct===100?'#1D9E75':e.pct>0?'#E07B2A':'#ABABAB';
+    bodRows+=`<tr><td style="text-align:center;">${i+1}</td><td>${e.b}</td><td>${e.d.replace('Distrito ','D')}</td><td>${e.cl}</td><td style="text-align:center;font-weight:600;color:${col};">${e.pct}%</td></tr>`;
+  });
+
+  // Proc averages
+  let procRows='';
+  PROC_NAMES.forEach((n,pi)=>{
+    let tot=0,cnt=0;
+    for(const d2 of ['Distrito A','Distrito B'])
+      for(const cl of Object.keys(DB[d2]))
+        for(const b of DB[d2][cl]){
+          const avg=getProcAvg(d2,cl,b,pi);
+          tot+=avg;cnt++;
+        }
+    const avg=cnt?Math.round(tot/cnt):0;
+    procRows+=`<tr><td>${n}</td><td style="text-align:center;font-weight:600;color:${PROC_COLORS[pi]};">${avg}%</td><td><div style="width:${avg}%;height:8px;background:${PROC_COLORS[pi]};border-radius:4px;"></div></td></tr>`;
+  });
+
+  // Notes section — collect all non-empty notes
+  let notasRows='';
+  (liveData.filas||[]).filter(r=>r['Notas']&&r['Notas'].trim()).forEach(r=>{
+    notasRows+=`<tr><td>${r['Distrito']||''}</td><td>${r['Bodega']||''}</td><td>${r['Proceso']||''}</td><td>${r['Paso']||''}</td><td>${r['Notas']||''}</td><td style="font-size:10px;color:#999;">${r['Supervisor']||''}</td></tr>`;
+  });
+
+  const html=`<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reporte Capital Industrial — ${fecha}</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:Arial,sans-serif;color:#1A1A1A;font-size:12px;background:#fff;}
+  .page{max-width:800px;margin:0 auto;padding:32px;}
+  .header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #E07B2A;padding-bottom:16px;margin-bottom:24px;}
+  .logo-area h1{font-size:22px;font-weight:700;color:#1A1A1A;}
+  .logo-area h2{font-size:14px;color:#6B6B6B;font-weight:400;margin-top:4px;}
+  .fecha-area{text-align:right;color:#6B6B6B;font-size:11px;}
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+  .kpi{background:#F7F7F5;border-radius:8px;padding:12px;text-align:center;border:1px solid #E5E5E3;}
+  .kpi-val{font-size:24px;font-weight:700;margin-bottom:4px;}
+  .kpi-lbl{font-size:10px;color:#6B6B6B;text-transform:uppercase;letter-spacing:.05em;}
+  .section{margin-bottom:24px;}
+  .section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#6B6B6B;border-bottom:1px solid #E5E5E3;padding-bottom:6px;margin-bottom:12px;}
+  .dist-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+  .dist-card{background:#F7F7F5;border-radius:8px;padding:12px;border:1px solid #E5E5E3;}
+  .dist-name{font-size:13px;font-weight:600;margin-bottom:4px;}
+  .dist-pct{font-size:20px;font-weight:700;color:#E07B2A;margin-bottom:6px;}
+  .pbar{height:6px;background:#EFEFED;border-radius:3px;overflow:hidden;}
+  .pfill{height:100%;border-radius:3px;}
+  table{width:100%;border-collapse:collapse;font-size:11px;}
+  th{background:#1A1A1A;color:#fff;padding:7px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.05em;}
+  td{padding:6px 10px;border-bottom:1px solid #F0F0EE;}
+  tr:nth-child(even) td{background:#F9F9F7;}
+  .footer{margin-top:32px;border-top:1px solid #E5E5E3;padding-top:12px;color:#999;font-size:10px;display:flex;justify-content:space-between;}
+  @media print{body{font-size:11px;}.page{padding:20px;max-width:100%;}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="logo-area">
+      <h1>Capital Industrial</h1>
+      <h2>Logística Naranjo — Reporte de avance del proyecto</h2>
+    </div>
+    <div class="fecha-area">
+      <div style="font-size:13px;font-weight:600;color:#1A1A1A;">${fecha}</div>
+      <div>${hora} hrs</div>
+      <div style="margin-top:4px;">Generado por Constructora E4 SA</div>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val" style="color:#E07B2A;">${totalPct}%</div><div class="kpi-lbl">Avance total</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#1D9E75;">${done}/56</div><div class="kpi-lbl">Bodegas completas</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#185FA5;">56</div><div class="kpi-lbl">Total bodegas</div></div>
+    <div class="kpi"><div class="kpi-val" style="color:#A32D2D;">${late}</div><div class="kpi-lbl">Pasos atrasados</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Avance por distrito</div>
+    <div class="dist-row">
+      <div class="dist-card">
+        <div class="dist-name">Distrito A — 9 clusters · 36 bodegas</div>
+        <div class="dist-pct">${distAPct}%</div>
+        <div class="pbar"><div class="pfill" style="width:${distAPct}%;background:#E07B2A;"></div></div>
+      </div>
+      <div class="dist-card">
+        <div class="dist-name">Distrito B — 5 clusters · 20 bodegas</div>
+        <div class="dist-pct" style="color:#185FA5;">${distBPct}%</div>
+        <div class="pbar"><div class="pfill" style="width:${distBPct}%;background:#185FA5;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Avance por proceso</div>
+    <table>
+      <tr><th>Proceso</th><th style="width:80px;text-align:center;">Avance</th><th>Barra</th></tr>
+      ${procRows}
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Avance por cluster</div>
+    <table>
+      <tr><th>Distrito</th><th>Cluster</th><th style="width:80px;text-align:center;">Avance</th><th>Barra</th></tr>
+      ${clRows}
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Ranking de bodegas — Top 15</div>
+    <table>
+      <tr><th style="width:30px;">#</th><th>Bodega</th><th>Distrito</th><th>Cluster</th><th style="width:80px;text-align:center;">Avance</th></tr>
+      ${bodRows}
+    </table>
+  </div>
+
+  ${notasRows?`<div class="section">
+    <div class="section-title">Notas de campo registradas</div>
+    <table>
+      <tr><th>Distrito</th><th>Bodega</th><th>Proceso</th><th>Paso</th><th>Nota</th><th>Supervisor</th></tr>
+      ${notasRows}
+    </table>
+  </div>`:''}
+
+  <div class="footer">
+    <span>Constructora E4 SA — Sistema Capital Industrial</span>
+    <span>Datos actualizados: ${(liveData.ultima_actualizacion||'').replace('T',' ').substring(0,16)}</span>
+  </div>
+</div>
+<script>window.onload=function(){window.print();}</script>
+</body>
+</html>`;
+
+  const win=window.open('','_blank');
+  win.document.write(html);
+  win.document.close();
+}
+
 </script>
 </body>
 </html>
