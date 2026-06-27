@@ -978,7 +978,7 @@ async function guardar(){
             'Proceso':PROC_KEYS[pi],'Paso':['Montaje de estructura','Instalación de losacero','Armado de electromalla','Fundición','Montaje de tijeras','Costaneras','Canales','Enlaminado','Tablayeso + ventanas','Piso','Pintura','Puertas'][pi*4+si],
             '% Avance':String(s['p'+pi][si]||0),
             'Inicio Real':s['ini'+pi][si]||'','Fin Real':s['fin'+pi][si]||'',
-            'Notas':s['notas'+pi][si]||'','Foto':photoData[pKey]||'',
+            'Notas':s['notas'+pi][si]||'','Foto Evidencia':photoData[pKey]||'',
             'Supervisor':supervisor,'Rol':supRol,
             'Ultima actualizacion':new Date().toISOString()
           });
@@ -995,7 +995,7 @@ async function guardar(){
             'Proceso':proc,'Paso':paso.p,
             '% Avance':String(ps.av||0),
             'Inicio Real':ps.ini||'','Fin Real':ps.fin||'',
-            'Notas':ps.nota||'','Foto':photoData[pKey]||'',
+            'Notas':ps.nota||'','Foto Evidencia':photoData[pKey]||'',
             'Supervisor':supervisor,'Rol':supRol,
             'Ultima actualizacion':new Date().toISOString()
           });
@@ -1014,7 +1014,7 @@ async function guardar(){
           'Proceso':'Urbanización','Paso':paso.n,
           '% Avance':String(ps.av||0),
           'Inicio Real':ps.ini||'','Fin Real':ps.fin||'',
-          'Notas':ps.nota||'','Foto':photoData[pKey]||'',
+          'Notas':ps.nota||'','Foto Evidencia':photoData[pKey]||'',
           'Supervisor':supervisor,'Rol':supRol,
           'Ultima actualizacion':new Date().toISOString()
         });

@@ -875,7 +875,7 @@ function renderBodegas(){
         const iniR=row['Inicio Real']||'';
         const finR=row['Fin Real']||'';
         const nota=row['Notas']||'';
-        const foto=row['Foto']||'';
+        const foto=row['Foto Evidencia']||'';
         const st=ini&&fin?getStepStatus(ini,fin,av):'pend';
         const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
         const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
@@ -920,7 +920,7 @@ function renderBodegas(){
         tot+=av;
         const ini=paso.i||'';const fin=paso.f||'';
         const iniR=row['Inicio Real']||'';const finR=row['Fin Real']||'';
-        const nota=row['Notas']||'';const foto=row['Foto']||'';
+        const nota=row['Notas']||'';const foto=row['Foto Evidencia']||'';
         const st=ini&&fin?getStepStatus(ini,fin,av):'pend';
         const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
         const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
@@ -993,7 +993,7 @@ function renderUrba(){
     const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
     const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
     const nota=row['Notas']||'';
-    const foto=row['Foto']||'';
+    const foto=row['Foto Evidencia']||'';
     const notaHtml=nota?`<div class="step-nota" style="margin-top:5px;"><i class="ti ti-note" style="font-size:10px;"></i> ${nota}</div>`:'';
     const fotoHtml=foto?`<div class="step-foto" style="margin-top:6px;"><img src="${foto}" alt="Foto" onclick="openFoto('${foto}')"/></div>`:'';
     return `<div class="proc-card" style="margin-bottom:8px;">
@@ -1060,52 +1060,69 @@ function renderReporte(){
 }
 
 function renderCurvaS(){
-  // Generar puntos de la curva S proyectada y real
+  // Fechas del plan completo del proyecto
   const startDate=new Date('2026-06-22');
   const endDate=new Date('2026-09-24');
   const totalDays=Math.ceil((endDate-startDate)/(1000*60*60*24));
-  const INTERVAL=7; // puntos semanales
+  const INTERVAL=7;
   const labels=[],projected=[],real=[];
 
-  // Total de pasos y su distribución en el tiempo
+  // ── CURVA PROYECTADA FIJA ──
+  // Basada en el cronograma original: distribución lineal por clusters
+  // Distrito A: 9 clusters arrancando escalonado desde junio
+  // Distrito B: 5 clusters arrancando desde julio
+  // Total: 56 bodegas × 3 procesos × 4 pasos = 672 pasos
+  // Distribuimos los pasos según las fechas del plan en DB_PLAN embebido
+  const PLAN_START_A='2026-06-22', PLAN_END_A='2026-08-28';
+  const PLAN_START_B='2026-07-22', PLAN_END_B='2026-09-24';
+  const totalPasos=672; // 56 bodegas × 12 pasos
+
+  function projPctAtDate(d){
+    // Pasos de Distrito A completados a fecha d
+    const dA=new Date(PLAN_START_A+'T00:00:00');
+    const fA=new Date(PLAN_END_A+'T00:00:00');
+    const dB=new Date(PLAN_START_B+'T00:00:00');
+    const fB=new Date(PLAN_END_B+'T00:00:00');
+    // 36 bodegas × 12 pasos = 432 de DA, 20×12=240 de DB
+    let pA=0;
+    if(d>=dA){
+      const tA=Math.min(1,(d-dA)/(fA-dA));
+      pA=Math.round(tA*432);
+    }
+    let pB=0;
+    if(d>=dB){
+      const tB=Math.min(1,(d-dB)/(fB-dB));
+      pB=Math.round(tB*240);
+    }
+    return Math.min(100,Math.round((pA+pB)/totalPasos*100));
+  }
+
+  // ── CURVA REAL ACUMULADA ──
+  // Solo hasta hoy; usa los % de avance registrados en data.json
   const allRows=liveData.filas||[];
-  let totalSteps=0;
+
+  // Pre-calcular avance real total actual
+  let realTotalPasos=0,realAvancePasos=0;
+  allRows.forEach(r=>{
+    const av=parseFloat(r['% Avance']||0);
+    realTotalPasos++;
+    realAvancePasos+=av/100;
+  });
+  const realPctActual=realTotalPasos?Math.round(realAvancePasos/realTotalPasos*100):0;
 
   for(let day=0;day<=totalDays;day+=INTERVAL){
     const d=new Date(startDate.getTime()+day*86400000);
-    const label=d.toLocaleDateString('es-GT',{day:'2-digit',month:'short'});
-    labels.push(label);
+    labels.push(d.toLocaleDateString('es-GT',{day:'2-digit',month:'short'}));
+    projected.push(projPctAtDate(d));
 
-    // Proyectado: % de pasos cuya fecha fin proyectada ya pasó
-    let projDone=0,projTotal=0;
-    for(const dist of ['Distrito A','Distrito B'])
-      for(const cl of Object.keys(DB[dist]))
-        for(const b of DB[dist][cl]){
-          PROC_KEYS.forEach(pk=>{
-            const rows=allRows.filter(r=>r['Distrito']===dist&&r['Cluster']===cl&&r['Bodega']===b&&(r['Proceso']||'').includes(pk));
-            rows.forEach(r=>{
-              projTotal++;
-              const fp=r['Fin Proyectado']||'';
-              if(fp&&new Date(fp+'T00:00:00')<=d) projDone++;
-            });
-          });
-        }
-    const projPct=projTotal?Math.round(projDone/projTotal*100):0;
-    projected.push(projPct);
-
-    // Real: % de pasos con avance registrado hasta hoy
     if(d<=TODAY){
-      let realDone=0,realTotal=0;
-      allRows.forEach(r=>{
-        const av=parseFloat(r['% Avance']||0);
-        const iniR=r['Inicio Real']||'';
-        if(!iniR||new Date(iniR+'T00:00:00')>d) return;
-        realTotal++;
-        realDone+=av/100;
-      });
-      real.push(realTotal?Math.round(realDone/realTotal*100):0);
+      // Interpolamos la curva real: asumimos crecimiento proporcional
+      // desde 0 hasta el valor actual conocido
+      const elapsed=(d-startDate)/(TODAY-startDate);
+      const interpolated=Math.round(Math.min(1,elapsed)*realPctActual);
+      real.push(Math.max(0,interpolated));
     } else {
-      real.push(null);
+      real.push(null); // futuro: no dibuja
     }
   }
 
