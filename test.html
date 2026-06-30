@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Test</title></head>
+<body>
+<h1 style="color:green;">GitHub Pages funciona ✓</h1>
+<p id="json"></p>
+<script>
+fetch('data.json?t='+Date.now())
+  .then(r=>r.json())
+  .then(d=>document.getElementById('json').textContent='data.json OK: '+JSON.stringify(d))
+  .catch(e=>document.getElementById('json').textContent='Error data.json: '+e);
+</script>
+</body>
+</html>
