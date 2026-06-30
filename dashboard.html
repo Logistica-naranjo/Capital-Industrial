@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Capital Industrial">
+<title>Logística Naranjo — Capital Industrial</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --or:#E07B2A;--or2:#FFF3E8;--or3:#A85A18;
+  --bg:#fff;--bg2:#F7F7F5;--bg3:#EFEFED;
+  --txt:#1A1A1A;--txt2:#6B6B6B;--txt3:#ABABAB;
+  --brd:#E5E5E3;--brd2:#D0D0CE;
+  --r:8px;--rl:14px;
+  --green:#1D9E75;--green2:#E1F5EE;--green3:#0F6E56;
+  --red:#A32D2D;--red2:#FCEBEB;--red3:#791F1F;
+  --amber:#BA7517;--amber2:#FAEEDA;--amber3:#854F0B;
+  --blue:#185FA5;--blue2:#E6F1FB;--blue3:#0C447C;
+  --purple:#534AB7;--purple2:#EEEDFE;--purple3:#3C3489;
+  --shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 12px rgba(0,0,0,.10);
+}
+body{font-family:'Inter',sans-serif;color:var(--txt);background:var(--bg2);min-height:100vh;}
+.header{background:#1A1A1A;color:#fff;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-md);}
+.header-inner{max-width:520px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.logo-img{width:36px;height:32px;object-fit:contain;border-radius:4px;}
+.header-titles{flex:1;}
+.header-name{font-size:15px;font-weight:600;}
+.header-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:1px;}
+.update-wrap{text-align:right;}
+.update-lbl{font-size:9px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;}
+.update-val{font-size:11px;color:rgba(255,255,255,.7);margin-top:1px;}
+.nav{background:var(--bg);border-bottom:1px solid var(--brd);position:sticky;top:60px;z-index:90;overflow-x:auto;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav-inner{max-width:520px;margin:0 auto;display:flex;padding:0 6px;}
+.nb{padding:11px 12px;font-size:12px;font-weight:500;color:var(--txt2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;display:flex;align-items:center;gap:5px;}
+.nb i{font-size:14px;}
+.nb.active{color:var(--or);border-bottom-color:var(--or);}
+.main{max-width:520px;margin:0 auto;padding:14px 14px 32px;}
+.scr{display:none;}
+.scr.on{display:block;}
+.loading{text-align:center;padding:60px 20px;}
+.spin{width:34px;height:34px;border:3px solid var(--brd);border-top-color:var(--or);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;}
+.kpi{background:var(--bg);border-radius:var(--rl);padding:14px;box-shadow:var(--shadow);border:.5px solid var(--brd);}
+.kpi-icon{font-size:17px;margin-bottom:5px;}
+.kpi-val{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1;}
+.kpi-lbl{font-size:11px;color:var(--txt2);margin-top:3px;}
+.sec{font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.07em;margin:18px 0 10px;display:flex;align-items:center;gap:6px;}
+.sec::after{content:'';flex:1;height:.5px;background:var(--brd);}
+.pbar{height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.pfill{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1);}
+.dist-card{background:var(--bg);border-radius:var(--rl);padding:13px 15px;margin-bottom:10px;box-shadow:var(--shadow);border:.5px solid var(--brd);cursor:pointer;}
+.dist-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.dist-ico{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.dist-name{font-size:14px;font-weight:600;flex:1;}
+.dist-sub{font-size:11px;color:var(--txt2);margin-top:2px;}
+.dist-pct{font-size:19px;font-weight:600;}
+.chev{font-size:15px;color:var(--txt3);transition:transform .2s;}
+.chev.open{transform:rotate(180deg);}
+.cl-list{border-top:.5px solid var(--brd);margin-top:10px;padding-top:10px;display:none;}
+.cl-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:.5px solid var(--brd);cursor:pointer;}
+.cl-row:last-child{border-bottom:none;}
+.cl-name{font-size:13px;font-weight:500;flex:1;}
+.cl-bar-w{width:80px;}
+.cl-pct{font-size:11px;color:var(--txt2);text-align:right;margin-bottom:2px;}
+.bodegas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.bod-card{background:var(--bg);border-radius:var(--rl);padding:11px;box-shadow:var(--shadow);border:.5px solid var(--brd);cursor:pointer;}
+.bod-card:active{border-color:var(--or);}
+.bod-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.bod-name{font-size:13px;font-weight:600;}
+.bod-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:999px;}
+.bd-done{background:var(--green2);color:var(--green3);}
+.bd-prog{background:var(--amber2);color:var(--amber3);}
+.bd-pend{background:var(--bg3);color:var(--txt2);}
+.proc-bars{display:flex;flex-direction:column;gap:4px;}
+.proc-bar-row{display:flex;align-items:center;gap:5px;}
+.proc-bar-lbl{font-size:10px;color:var(--txt2);width:13px;text-align:center;flex-shrink:0;}
+.proc-bar-track{flex:1;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.proc-bar-pct{font-size:10px;color:var(--txt2);width:22px;text-align:right;}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--txt2);cursor:pointer;margin-bottom:14px;padding:7px 10px;background:var(--bg);border-radius:var(--r);border:.5px solid var(--brd);width:fit-content;}
+.wh-detail-hdr{background:var(--bg);border-radius:var(--rl);padding:14px;margin-bottom:12px;box-shadow:var(--shadow);border:.5px solid var(--brd);}
+.wh-name{font-size:16px;font-weight:600;}
+.wh-sub{font-size:12px;color:var(--txt2);margin-top:2px;}
+.wh-pct{font-size:30px;font-weight:600;margin-top:10px;}
+.proc-card{background:var(--bg);border-radius:var(--rl);margin-bottom:10px;box-shadow:var(--shadow);border:.5px solid var(--brd);overflow:hidden;}
+.proc-hdr{padding:11px 13px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.proc-hdr:active{background:var(--bg2);}
+.proc-num{width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.proc-title{flex:1;font-size:13px;font-weight:500;}
+.proc-pct{font-size:13px;font-weight:600;}
+.proc-mini-bar{height:3px;margin:0 13px 10px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.step-list{border-top:.5px solid var(--brd);}
+.step-item{padding:9px 13px;border-bottom:.5px solid var(--brd);}
+.step-item:last-child{border-bottom:none;}
+.step-top{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.step-name{font-size:12px;flex:1;}
+.step-pct-wrap{display:flex;align-items:center;gap:5px;}
+.step-track{width:48px;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.step-pct{font-size:11px;font-weight:500;width:28px;text-align:right;}
+.step-tag{font-size:9px;padding:2px 6px;border-radius:999px;}
+.tag-done{background:var(--green2);color:var(--green3);}
+.tag-ok{background:var(--green2);color:var(--green3);}
+.tag-risk{background:var(--amber2);color:var(--amber3);}
+.tag-late{background:var(--red2);color:var(--red3);}
+.tag-pend{background:var(--bg3);color:var(--txt2);}
+.step-meta{display:flex;gap:8px;align-items:center;margin-bottom:4px;}
+.step-date{font-size:10px;color:var(--txt3);}
+.step-nota{font-size:11px;color:var(--txt2);font-style:italic;padding:5px 8px;background:var(--bg2);border-radius:var(--r);margin-top:4px;border-left:2px solid var(--brd2);}
+.chart-card{background:var(--bg);border-radius:var(--rl);padding:14px;box-shadow:var(--shadow);border:.5px solid var(--brd);margin-bottom:12px;}
+.chart-title{font-size:11px;font-weight:600;color:var(--txt2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em;}
+.proc-stat-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+.proc-stat-row:last-child{margin-bottom:0;}
+.proc-stat-name{font-size:11px;font-weight:500;width:88px;flex-shrink:0;line-height:1.3;}
+.proc-stat-bar{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.proc-stat-pct{font-size:11px;font-weight:600;width:30px;text-align:right;}
+.rnk-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:.5px solid var(--brd);}
+.rnk-row:last-child{border-bottom:none;}
+.rnk-n{font-size:11px;color:var(--txt3);width:16px;text-align:right;flex-shrink:0;}
+.rnk-name{font-size:11px;flex:1;}
+.rnk-bar-w{width:60px;}
+.rnk-bar{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:2px;}
+.rnk-pct{font-size:11px;text-align:right;}
+.sem-card{background:var(--bg);border-radius:var(--rl);padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow);border:.5px solid var(--brd);display:flex;align-items:center;gap:10px;cursor:pointer;}
+.sem-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
+.sem-info{flex:1;}
+.sem-name{font-size:13px;font-weight:500;}
+.sem-sub{font-size:11px;color:var(--txt2);margin-top:2px;}
+.sem-pct{font-size:14px;font-weight:600;}
+.sem-badge{font-size:10px;font-weight:500;padding:2px 7px;border-radius:999px;}
+.sb-crit{background:var(--red2);color:var(--red3);}
+.sb-risk{background:var(--amber2);color:var(--amber3);}
+.sb-ok{background:var(--green2);color:var(--green3);}
+.sb-pend{background:var(--bg3);color:var(--txt2);}
+.ec-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.ec{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid transparent;cursor:pointer;}
+.ec-all{background:var(--bg);border-color:var(--brd2);color:var(--txt2);}
+.ec-all.sel{background:#1A1A1A;border-color:#1A1A1A;color:#fff;}
+.ec-late{background:var(--red2);color:var(--red3);}
+.ec-late.sel{background:var(--red);color:#fff;}
+.ec-risk{background:var(--amber2);color:var(--amber3);}
+.ec-risk.sel{background:var(--amber);color:#fff;}
+.ec-ok{background:var(--green2);color:var(--green3);}
+.ec-ok.sel{background:var(--green);color:#fff;}
+/* Urbanización */
+.urba-tab{display:flex;background:var(--bg3);border-radius:var(--r);padding:3px;gap:2px;margin-bottom:14px;}
+.urba-btn{flex:1;padding:8px;background:none;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;color:var(--txt2);}
+.urba-btn.active{background:var(--bg);color:var(--or);border:.5px solid var(--brd);}
+/* Fotos modal */
+/* Curva S */
+.curva-s-legend{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;justify-content:center;}
+.cs-leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--txt2);}
+.cs-dot{width:12px;height:4px;border-radius:2px;}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <img src="data:image/png;base64,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" class="logo-img" alt="E4 Logo"/>
+    <div class="header-titles">
+      <div class="header-name">Logística Naranjo</div>
+      <div class="header-sub">Capital Industrial — Dashboard de avance</div>
+    </div>
+    <div class="update-wrap">
+      <div class="update-lbl">Actualizado</div>
+      <div class="update-val" id="update-val">—</div>
+    </div>
+  </div>
+</header>
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="nb active" id="nb-resumen" onclick="showTab('resumen')"><i class="ti ti-home"></i>Resumen</button>
+    <button class="nb" id="nb-bodegas" onclick="showTab('bodegas')"><i class="ti ti-building"></i>Bodegas</button>
+    <button class="nb" id="nb-urba" onclick="showTab('urba')"><i class="ti ti-road"></i>Urbanización</button>
+    <button class="nb" id="nb-semaforo" onclick="showTab('semaforo')"><i class="ti ti-traffic-lights"></i>Semáforo</button>
+    <button class="nb" id="nb-reporte" onclick="showTab('reporte')"><i class="ti ti-chart-line"></i>Reporte</button>
+  </div>
+</nav>
+<main class="main" id="main">
+  <div class="loading" id="loading"><div class="spin"></div><div style="font-size:13px;color:var(--txt2);">Cargando datos…</div></div>
+  <!-- RESUMEN -->
+  <div class="scr" id="s-resumen">
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-icon" style="color:var(--or)"><i class="ti ti-trending-up"></i></div><div class="kpi-val" id="k-total" style="color:var(--or)">—</div><div class="kpi-lbl">Avance total</div></div>
+      <div class="kpi"><div class="kpi-icon" style="color:var(--green)"><i class="ti ti-circle-check"></i></div><div class="kpi-val" id="k-done" style="color:var(--green)">—</div><div class="kpi-lbl">Bodegas completadas</div></div>
+      <div class="kpi"><div class="kpi-icon" style="color:var(--blue)"><i class="ti ti-building-warehouse"></i></div><div class="kpi-val" style="color:var(--blue)">56</div><div class="kpi-lbl">Total bodegas</div></div>
+      <div class="kpi"><div class="kpi-icon" style="color:var(--red)"><i class="ti ti-alert-circle"></i></div><div class="kpi-val" id="k-late" style="color:var(--red)">—</div><div class="kpi-lbl">Procesos atrasados</div></div>
+    </div>
+    <div class="sec">Avance por distrito</div>
+    <div class="dist-card" onclick="toggleDist('A')">
+      <div class="dist-top">
+        <div class="dist-ico" style="background:var(--or2);color:var(--or3)"><i class="ti ti-map-pin"></i></div>
+        <div style="flex:1"><div class="dist-name">Distrito A</div><div class="dist-sub">9 clusters · 36 bodegas</div></div>
+        <div class="dist-pct" id="dpct-A" style="color:var(--or)">—</div>
+        <i class="ti ti-chevron-down chev" id="chv-A"></i>
+      </div>
+      <div class="pbar"><div class="pfill" id="dbar-A" style="width:0%;background:var(--or)"></div></div>
+      <div class="cl-list" id="cl-A"></div>
+    </div>
+    <div class="dist-card" onclick="toggleDist('B')">
+      <div class="dist-top">
+        <div class="dist-ico" style="background:var(--blue2);color:var(--blue3)"><i class="ti ti-map-pin"></i></div>
+        <div style="flex:1"><div class="dist-name">Distrito B</div><div class="dist-sub">5 clusters · 20 bodegas</div></div>
+        <div class="dist-pct" id="dpct-B" style="color:var(--blue)">—</div>
+        <i class="ti ti-chevron-down chev" id="chv-B"></i>
+      </div>
+      <div class="pbar"><div class="pfill" id="dbar-B" style="width:0%;background:var(--blue)"></div></div>
+      <div class="cl-list" id="cl-B"></div>
+    </div>
+    <div class="sec">Avance por proceso</div>
+    <div class="chart-card" id="proc-avg-bars"></div>
+  </div>
+  <!-- BODEGAS -->
+  <div class="scr" id="s-bodegas"><div id="bodegas-content"></div></div>
+  <!-- URBANIZACIÓN -->
+  <div class="scr" id="s-urba">
+    <div class="urba-tab">
+      <button class="urba-btn active" id="ub-A" onclick="setUrba('A')">Distrito A — 11 pasos</button>
+      <button class="urba-btn" id="ub-B" onclick="setUrba('B')">Distrito B — 8 pasos</button>
+    </div>
+    <div id="urba-content"></div>
+  </div>
+  <!-- SEMÁFORO -->
+  <div class="scr" id="s-semaforo">
+    <div class="ec-chips">
+      <button class="ec ec-all sel" onclick="setSF('all')"><i class="ti ti-list" style="font-size:12px"></i>Todos</button>
+      <button class="ec ec-late" onclick="setSF('late')"><i class="ti ti-alert-circle" style="font-size:12px"></i>Atrasados</button>
+      <button class="ec ec-risk" onclick="setSF('risk')"><i class="ti ti-alert-triangle" style="font-size:12px"></i>En riesgo</button>
+      <button class="ec ec-ok" onclick="setSF('ok')"><i class="ti ti-check" style="font-size:12px"></i>Al día</button>
+    </div>
+    <div id="semaforo-list"></div>
+  </div>
+  <!-- REPORTE -->
+  <div class="scr" id="s-reporte">
+    <div class="chart-card">
+      <div class="chart-title">Curva S — Avance proyectado vs real</div>
+      <canvas id="curva-s" height="220"></canvas>
+      <div class="curva-s-legend">
+        <span class="cs-leg"><span class="cs-dot" style="background:#E07B2A"></span>Avance real acumulado</span>
+        <span class="cs-leg"><span class="cs-dot" style="background:#185FA5;border:1.5px dashed #185FA5"></span>Curva proyectada</span>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Avance por cluster</div>
+      <canvas id="bar-chart" height="190"></canvas>
+    </div>
+    <div class="sec">Ranking de bodegas</div>
+    <div class="chart-card"><div id="ranking-list"></div></div>
+  </div>
+</main>
+<!-- Modal de foto -->
+</div>
+<script>
+const GITHUB_USER="Logistica-naranjo",GITHUB_REPO="Capital-Industrial";
+const DATA_URL="https://raw.githubusercontent.com/"+GITHUB_USER+"/"+GITHUB_REPO+"/main/data.json";
+const TODAY=new Date();
+const PROC_NAMES=['Mezanines y Techados','Estructura Principal','Acabados'];
+const PROC_COLORS=['#E07B2A','#185FA5','#1D9E75'];
+const PROC_KEYS=['Mezaninne y Techados','Estructura principal','Acabados'];
+const OG_PROC_NAMES=['Cimentación','Muro Cifa','Block en Fachadas','Contrapisos','Inst. Eléctrica'];
+const OG_COLORS=['#7B2FBE','#0F6E56','#854F0B','#0C447C','#A32D2D'];
+const STEP_LABELS=[
+  ['Montaje de estructura','Instalación de losacero','Armado de electromalla','Fundición'],
+  ['Montaje de tijeras','Costaneras','Canales','Enlaminado'],
+  ['Tablayeso + ventanas','Piso','Pintura','Puertas']
+];
+const URBA_A=[
+  {n:'Finalización base suelo cemento',i:'2026-06-22',f:'2026-07-12'},
+  {n:'Contrapiso de calles',i:'2026-07-07',f:'2026-08-06'},
+  {n:'Banquetas',i:'2026-06-16',f:'2026-07-31'},
+  {n:'Muro perimetral Cifarreja',i:'2026-07-01',f:'2026-08-10'},
+  {n:'Muros de contención',i:'2026-06-25',f:'2026-07-24'},
+  {n:'Pintura y señalización en calles',i:'2026-07-22',f:'2026-08-21'},
+  {n:'Garita',i:'2026-06-22',f:'2026-08-31'},
+  {n:'Trabajos de herrería',i:'2026-07-07',f:'2026-08-21'},
+  {n:'Planta de tratamiento',i:'2026-06-22',f:'2026-08-31'},
+  {n:'Cisterna',i:'2026-06-22',f:'2026-07-12'},
+  {n:'Pozo mecánico',i:'2026-06-22',f:'2026-08-21'}
+];
+const URBA_B=[
+  {n:'Finalización base suelo cemento',i:'2026-07-01',f:'2026-08-10'},
+  {n:'Contrapiso de calles',i:'2026-07-16',f:'2026-08-30'},
+  {n:'Banquetas',i:'2026-07-21',f:'2026-09-19'},
+  {n:'Muro perimetral Cifarreja',i:'2026-06-16',f:'2026-07-27'},
+  {n:'Muros de contención',i:'2026-06-30',f:'2026-09-08'},
+  {n:'Pintura y señalización',i:'2026-08-10',f:'2026-09-09'},
+  {n:'Garita',i:'2026-07-07',f:'2026-09-15'},
+  {n:'Trabajos de herrería',i:'2026-07-22',f:'2026-09-05'}
+];
+const DB={
+"Distrito A":{"Cluster 1":["Bodega 34","Bodega 33","Bodega 32","Bodega 31"],"Cluster 2":["Bodega 30","Bodega 29","Bodega 28","Bodega 27"],"Cluster 3":["Bodega 26","Bodega 25","Bodega 24","Bodega 23"],"Cluster 4":["Bodega 22","Bodega 21","Bodega 20","Bodega 19"],"Cluster 5":["Bodega 18","Bodega 17","Bodega 16","Bodega 15"],"Cluster 6":["Bodega 14","Bodega 13","Bodega 12","Bodega 11"],"Cluster 7":["Bodega 10","Bodega 7","Bodega 8","Bodega 9"],"Cluster 8":["Bodega 3","Bodega 4","Bodega 5","Bodega 6"],"Cluster 9":["Bodega 1","Bodega 2","Bodega 35","Bodega 36"]},
+"Distrito B":{"Cluster 1":["Bodega 1","Bodega 2","Bodega 3","Bodega 4"],"Cluster 2":["Bodega 5","Bodega 6","Bodega 7","Bodega 8"],"Cluster 3":["Bodega 9","Bodega 10","Bodega 11","Bodega 12"],"Cluster 4":["Bodega 13","Bodega 14","Bodega 15","Bodega 16"],"Cluster 5":["Bodega 17","Bodega 18","Bodega 19","Bodega 20"]}
+};
+const OG_DB = {
+"Distrito A|Cluster 1|Bodega 33":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-22","f":"2026-06-24","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-25","f":"2026-06-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"4. Relleno","i":"2026-06-29","f":"2026-06-29","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-06-30","f":"2026-07-12","d":1},{"p":"2. Instalación de placas","i":"2026-07-13","f":"2026-07-16","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-17","f":"2026-07-18","d":5},{"p":"2. Levantado posterior","i":"2026-07-19","f":"2026-07-20","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-26","f":"2026-06-26","d":2},{"p":"2. Colocación de Electromalla","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"3. Fundición de contrapiso","i":"2026-06-29","f":"2026-06-30","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-01","f":"2026-07-02","d":20}],
+},
+"Distrito A|Cluster 1|Bodega 34":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-19","f":"2026-07-20","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-26","f":"2026-06-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"4. Relleno","i":"2026-06-29","f":"2026-06-30","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-01","f":"2026-07-02","d":1},{"p":"2. Instalación de placas","i":"2026-06-22","f":"2026-06-24","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-06-25","f":"2026-06-26","d":5},{"p":"2. Levantado posterior","i":"2026-06-27","f":"2026-06-28","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-29","f":"2026-06-29","d":2},{"p":"2. Colocación de Electromalla","i":"2026-06-30","f":"2026-07-12","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-13","f":"2026-07-16","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-17","f":"2026-07-18","d":20}],
+},
+"Distrito A|Cluster 1|Bodega 32":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-22","f":"2026-06-24","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-25","f":"2026-06-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"4. Relleno","i":"2026-06-29","f":"2026-06-29","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-06-26","f":"2026-06-26","d":1},{"p":"2. Instalación de placas","i":"2026-06-27","f":"2026-06-28","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-06-29","f":"2026-06-30","d":5},{"p":"2. Levantado posterior","i":"2026-07-01","f":"2026-07-02","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-30","f":"2026-07-12","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-13","f":"2026-07-16","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-17","f":"2026-07-18","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-19","f":"2026-07-20","d":20}],
+},
+"Distrito A|Cluster 1|Bodega 31":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-22","f":"2026-06-24","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-25","f":"2026-06-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"4. Relleno","i":"2026-06-29","f":"2026-06-29","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-06-26","f":"2026-06-26","d":1},{"p":"2. Instalación de placas","i":"2026-06-27","f":"2026-06-28","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-06-29","f":"2026-06-30","d":5},{"p":"2. Levantado posterior","i":"2026-07-01","f":"2026-07-02","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-30","f":"2026-07-12","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-13","f":"2026-07-16","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-17","f":"2026-07-18","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-19","f":"2026-07-20","d":20}],
+},
+"Distrito A|Cluster 2|Bodega 30":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-24","f":"2026-06-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"4. Relleno","i":"2026-07-01","f":"2026-07-01","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-06-29","f":"2026-06-29","d":1},{"p":"2. Instalación de placas","i":"2026-06-30","f":"2026-07-01","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-02","f":"2026-07-03","d":5},{"p":"2. Levantado posterior","i":"2026-07-04","f":"2026-07-05","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-30","f":"2026-07-12","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-13","f":"2026-07-16","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-17","f":"2026-07-18","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-19","f":"2026-07-20","d":20}],
+},
+"Distrito A|Cluster 2|Bodega 29":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-24","f":"2026-06-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"4. Relleno","i":"2026-07-01","f":"2026-07-01","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-06-29","f":"2026-06-29","d":1},{"p":"2. Instalación de placas","i":"2026-06-30","f":"2026-07-01","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-02","f":"2026-07-03","d":5},{"p":"2. Levantado posterior","i":"2026-07-04","f":"2026-07-05","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-30","f":"2026-07-12","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-13","f":"2026-07-16","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-17","f":"2026-07-18","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-19","f":"2026-07-20","d":20}],
+},
+"Distrito A|Cluster 2|Bodega 28":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-24","f":"2026-06-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"4. Relleno","i":"2026-07-01","f":"2026-07-01","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-06-29","f":"2026-06-29","d":1},{"p":"2. Instalación de placas","i":"2026-06-30","f":"2026-07-01","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-02","f":"2026-07-03","d":5},{"p":"2. Levantado posterior","i":"2026-07-04","f":"2026-07-05","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-30","f":"2026-07-12","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-13","f":"2026-07-16","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-17","f":"2026-07-18","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-19","f":"2026-07-20","d":20}],
+},
+"Distrito A|Cluster 2|Bodega 27":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-24","f":"2026-06-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-27","f":"2026-06-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"4. Relleno","i":"2026-07-01","f":"2026-07-01","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-06-29","f":"2026-06-29","d":1},{"p":"2. Instalación de placas","i":"2026-06-30","f":"2026-07-01","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-02","f":"2026-07-03","d":5},{"p":"2. Levantado posterior","i":"2026-07-04","f":"2026-07-05","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-06-30","f":"2026-07-12","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-13","f":"2026-07-16","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-17","f":"2026-07-18","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-07-19","f":"2026-07-20","d":20}],
+},
+"Distrito A|Cluster 3|Bodega 26":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-26","f":"2026-06-28","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-01","f":"2026-07-02","d":2},{"p":"4. Relleno","i":"2026-07-03","f":"2026-07-03","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-02","f":"2026-07-02","d":1},{"p":"2. Instalación de placas","i":"2026-07-03","f":"2026-07-04","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-05","f":"2026-07-06","d":5},{"p":"2. Levantado posterior","i":"2026-07-07","f":"2026-07-08","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-28","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-29","f":"2026-08-01","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-02","f":"2026-08-03","d":20}],
+},
+"Distrito A|Cluster 3|Bodega 25":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-26","f":"2026-06-28","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-01","f":"2026-07-02","d":2},{"p":"4. Relleno","i":"2026-07-03","f":"2026-07-03","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-02","f":"2026-07-02","d":1},{"p":"2. Instalación de placas","i":"2026-07-03","f":"2026-07-04","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-05","f":"2026-07-06","d":5},{"p":"2. Levantado posterior","i":"2026-07-07","f":"2026-07-08","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-28","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-29","f":"2026-08-01","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-02","f":"2026-08-03","d":20}],
+},
+"Distrito A|Cluster 3|Bodega 24":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-26","f":"2026-06-28","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-01","f":"2026-07-02","d":2},{"p":"4. Relleno","i":"2026-07-03","f":"2026-07-03","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-02","f":"2026-07-02","d":1},{"p":"2. Instalación de placas","i":"2026-07-03","f":"2026-07-04","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-05","f":"2026-07-06","d":5},{"p":"2. Levantado posterior","i":"2026-07-07","f":"2026-07-08","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-28","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-29","f":"2026-08-01","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-02","f":"2026-08-03","d":20}],
+},
+"Distrito A|Cluster 3|Bodega 23":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-26","f":"2026-06-28","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-29","f":"2026-06-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-01","f":"2026-07-02","d":2},{"p":"4. Relleno","i":"2026-07-03","f":"2026-07-03","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-02","f":"2026-07-02","d":1},{"p":"2. Instalación de placas","i":"2026-07-03","f":"2026-07-04","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-05","f":"2026-07-06","d":5},{"p":"2. Levantado posterior","i":"2026-07-07","f":"2026-07-08","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-28","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-29","f":"2026-08-01","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-02","f":"2026-08-03","d":20}],
+},
+"Distrito A|Cluster 4|Bodega 21":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-28","f":"2026-06-30","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-01","f":"2026-07-02","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-03","f":"2026-07-04","d":2},{"p":"4. Relleno","i":"2026-07-05","f":"2026-07-05","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-05","f":"2026-07-05","d":1},{"p":"2. Instalación de placas","i":"2026-07-06","f":"2026-07-07","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-08","f":"2026-07-09","d":5},{"p":"2. Levantado posterior","i":"2026-07-10","f":"2026-07-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-29","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-30","f":"2026-07-31","d":1}],
+},
+"Distrito A|Cluster 4|Bodega 20":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-26","f":"2026-06-27","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-06-28","f":"2026-06-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-01","f":"2026-07-03","d":2},{"p":"4. Relleno","i":"2026-07-03","f":"2026-07-05","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-08","f":"2153-01-14","d":1},{"p":"2. Instalación de placas","i":"2026-07-06","f":"2026-07-07","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-08","f":"2026-07-09","d":5},{"p":"2. Levantado posterior","i":"2026-07-10","f":"2026-07-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-29","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-30","f":"2026-07-31","d":1}],
+},
+"Distrito A|Cluster 4|Bodega 19":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-28","f":"2026-06-30","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-01","f":"2026-07-02","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-03","f":"2026-07-04","d":2},{"p":"4. Relleno","i":"2026-07-05","f":"2026-07-05","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-05","f":"2026-07-05","d":1},{"p":"2. Instalación de placas","i":"2026-07-06","f":"2026-07-07","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-08","f":"2026-07-09","d":5},{"p":"2. Levantado posterior","i":"2026-07-10","f":"2026-07-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-29","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-30","f":"2026-07-31","d":1}],
+},
+"Distrito A|Cluster 4|Bodega 22":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-28","f":"2026-06-30","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-01","f":"2026-07-02","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-03","f":"2026-07-04","d":2},{"p":"4. Relleno","i":"2026-07-05","f":"2026-07-05","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-05","f":"2026-07-05","d":1},{"p":"2. Instalación de placas","i":"2026-07-06","f":"2026-07-07","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-08","f":"2026-07-09","d":5},{"p":"2. Levantado posterior","i":"2026-07-10","f":"2026-07-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-13","f":"2026-07-25","d":2},{"p":"2. Colocación de Electromalla","i":"2026-07-26","f":"2026-07-29","d":2},{"p":"3. Fundición de contrapiso","i":"2026-07-30","f":"2026-07-31","d":1}],
+},
+"Distrito A|Cluster 5|Bodega 18":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-30","f":"2026-07-02","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-03","f":"2026-07-04","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"4. Relleno","i":"2026-07-07","f":"2026-07-07","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-08","f":"2026-07-08","d":1},{"p":"2. Instalación de placas","i":"2026-07-09","f":"2026-07-10","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-11","f":"2026-07-12","d":5},{"p":"2. Levantado posterior","i":"2026-07-13","f":"2026-07-14","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 5|Bodega 17":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-30","f":"2026-07-02","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-03","f":"2026-07-04","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"4. Relleno","i":"2026-07-07","f":"2026-07-07","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-08","f":"2026-07-08","d":1},{"p":"2. Instalación de placas","i":"2026-07-09","f":"2026-07-10","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-11","f":"2026-07-12","d":5},{"p":"2. Levantado posterior","i":"2026-07-13","f":"2026-07-14","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 5|Bodega 16":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-30","f":"2026-07-02","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-03","f":"2026-07-04","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"4. Relleno","i":"2026-07-07","f":"2026-07-07","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-08","f":"2026-07-08","d":1},{"p":"2. Instalación de placas","i":"2026-07-09","f":"2026-07-10","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-11","f":"2026-07-12","d":5},{"p":"2. Levantado posterior","i":"2026-07-13","f":"2026-07-14","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 5|Bodega 15":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-06-30","f":"2026-07-02","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-03","f":"2026-07-04","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"4. Relleno","i":"2026-07-07","f":"2026-07-07","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-08","f":"2026-07-08","d":1},{"p":"2. Instalación de placas","i":"2026-07-09","f":"2026-07-10","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-11","f":"2026-07-12","d":5},{"p":"2. Levantado posterior","i":"2026-07-13","f":"2026-07-14","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 6|Bodega 14":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-02","f":"2026-07-04","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"4. Relleno","i":"2026-07-09","f":"2026-07-09","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-11","f":"2026-07-11","d":1},{"p":"2. Instalación de placas","i":"2026-07-12","f":"2026-07-13","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-14","f":"2026-07-15","d":5},{"p":"2. Levantado posterior","i":"2026-07-16","f":"2026-07-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 6|Bodega 13":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-02","f":"2026-07-04","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"4. Relleno","i":"2026-07-09","f":"2026-07-09","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-11","f":"2026-07-11","d":1},{"p":"2. Instalación de placas","i":"2026-07-12","f":"2026-07-13","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-14","f":"2026-07-15","d":5},{"p":"2. Levantado posterior","i":"2026-07-16","f":"2026-07-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 6|Bodega 12":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-02","f":"2026-07-04","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"4. Relleno","i":"2026-07-09","f":"2026-07-09","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-11","f":"2026-07-11","d":1},{"p":"2. Instalación de placas","i":"2026-07-12","f":"2026-07-13","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-14","f":"2026-07-15","d":5},{"p":"2. Levantado posterior","i":"2026-07-16","f":"2026-07-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 6|Bodega 11":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-02","f":"2026-07-04","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-05","f":"2026-07-06","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"4. Relleno","i":"2026-07-09","f":"2026-07-09","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-11","f":"2026-07-11","d":1},{"p":"2. Instalación de placas","i":"2026-07-12","f":"2026-07-13","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-14","f":"2026-07-15","d":5},{"p":"2. Levantado posterior","i":"2026-07-16","f":"2026-07-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-07-26","f":"2026-08-07","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-08","f":"2026-08-11","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-12","f":"2026-08-13","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-14","f":"2026-08-15","d":20}],
+},
+"Distrito A|Cluster 7|Bodega 10":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-04","f":"2026-07-06","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"4. Relleno","i":"2026-07-11","f":"2026-07-11","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-14","f":"2026-07-14","d":1},{"p":"2. Instalación de placas","i":"2026-07-15","f":"2026-07-16","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-17","f":"2026-07-18","d":5},{"p":"2. Levantado posterior","i":"2026-07-19","f":"2026-07-20","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 7|Bodega 9":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-04","f":"2026-07-06","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"4. Relleno","i":"2026-07-11","f":"2026-07-11","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-14","f":"2026-07-14","d":1},{"p":"2. Instalación de placas","i":"2026-07-15","f":"2026-07-16","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-17","f":"2026-07-18","d":5},{"p":"2. Levantado posterior","i":"2026-07-19","f":"2026-07-20","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 7|Bodega 8":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-04","f":"2026-07-06","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"4. Relleno","i":"2026-07-11","f":"2026-07-11","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-14","f":"2026-07-14","d":1},{"p":"2. Instalación de placas","i":"2026-07-15","f":"2026-07-16","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-17","f":"2026-07-18","d":5},{"p":"2. Levantado posterior","i":"2026-07-19","f":"2026-07-20","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 7|Bodega 7":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-04","f":"2026-07-06","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-07","f":"2026-07-08","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"4. Relleno","i":"2026-07-11","f":"2026-07-11","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-14","f":"2026-07-14","d":1},{"p":"2. Instalación de placas","i":"2026-07-15","f":"2026-07-16","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-17","f":"2026-07-18","d":5},{"p":"2. Levantado posterior","i":"2026-07-19","f":"2026-07-20","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 8|Bodega 6":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-06","f":"2026-07-08","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"4. Relleno","i":"2026-07-13","f":"2026-07-13","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-17","f":"2026-07-17","d":1},{"p":"2. Instalación de placas","i":"2026-07-18","f":"2026-07-19","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-20","f":"2026-07-21","d":5},{"p":"2. Levantado posterior","i":"2026-07-22","f":"2026-07-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 8|Bodega 5":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-06","f":"2026-07-08","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"4. Relleno","i":"2026-07-13","f":"2026-07-13","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-17","f":"2026-07-17","d":1},{"p":"2. Instalación de placas","i":"2026-07-18","f":"2026-07-19","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-20","f":"2026-07-21","d":5},{"p":"2. Levantado posterior","i":"2026-07-22","f":"2026-07-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 8|Bodega 4":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-06","f":"2026-07-08","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"4. Relleno","i":"2026-07-13","f":"2026-07-13","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-17","f":"2026-07-17","d":1},{"p":"2. Instalación de placas","i":"2026-07-18","f":"2026-07-19","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-20","f":"2026-07-21","d":5},{"p":"2. Levantado posterior","i":"2026-07-22","f":"2026-07-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 8|Bodega 3":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-06","f":"2026-07-08","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-09","f":"2026-07-10","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"4. Relleno","i":"2026-07-13","f":"2026-07-13","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-17","f":"2026-07-17","d":1},{"p":"2. Instalación de placas","i":"2026-07-18","f":"2026-07-19","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-20","f":"2026-07-21","d":5},{"p":"2. Levantado posterior","i":"2026-07-22","f":"2026-07-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 9|Bodega 2":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-08","f":"2026-07-10","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-13","f":"2026-07-14","d":2},{"p":"4. Relleno","i":"2026-07-15","f":"2026-07-15","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-20","f":"2026-07-20","d":1},{"p":"2. Instalación de placas","i":"2026-07-21","f":"2026-07-22","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-23","f":"2026-07-24","d":5},{"p":"2. Levantado posterior","i":"2026-07-25","f":"2026-07-26","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 9|Bodega 1":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-08","f":"2026-07-10","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-13","f":"2026-07-14","d":2},{"p":"4. Relleno","i":"2026-07-15","f":"2026-07-15","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-20","f":"2026-07-20","d":1},{"p":"2. Instalación de placas","i":"2026-07-21","f":"2026-07-22","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-23","f":"2026-07-24","d":5},{"p":"2. Levantado posterior","i":"2026-07-25","f":"2026-07-26","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 9|Bodega 36":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-08","f":"2026-07-10","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-13","f":"2026-07-14","d":2},{"p":"4. Relleno","i":"2026-07-15","f":"2026-07-15","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-20","f":"2026-07-20","d":1},{"p":"2. Instalación de placas","i":"2026-07-21","f":"2026-07-22","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-23","f":"2026-07-24","d":5},{"p":"2. Levantado posterior","i":"2026-07-25","f":"2026-07-26","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito A|Cluster 9|Bodega 35":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-08","f":"2026-07-10","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-11","f":"2026-07-12","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-13","f":"2026-07-14","d":2},{"p":"4. Relleno","i":"2026-07-15","f":"2026-07-15","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-20","f":"2026-07-20","d":1},{"p":"2. Instalación de placas","i":"2026-07-21","f":"2026-07-22","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-23","f":"2026-07-24","d":5},{"p":"2. Levantado posterior","i":"2026-07-25","f":"2026-07-26","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-08","f":"2026-08-20","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-21","f":"2026-08-24","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-25","f":"2026-08-26","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-27","f":"2026-08-28","d":20}],
+},
+"Distrito B|Cluster 1|Bodega 1":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-13","f":"2026-07-18","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-19","f":"2026-07-22","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-23","f":"2026-07-24","d":2},{"p":"4. Relleno","i":"2026-07-25","f":"2026-07-25","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-21","f":"2026-07-24","d":1},{"p":"2. Instalación de placas","i":"2026-07-25","f":"2026-07-28","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-29","f":"2026-07-31","d":5},{"p":"2. Levantado posterior","i":"2026-08-01","f":"2026-08-05","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-04","f":"2026-08-18","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-19","f":"2026-08-22","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-23","f":"2026-08-24","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-25","f":"2026-08-26","d":20}],
+},
+"Distrito B|Cluster 1|Bodega 2":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-13","f":"2026-07-18","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-19","f":"2026-07-22","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-23","f":"2026-07-24","d":2},{"p":"4. Relleno","i":"2026-07-25","f":"2026-07-25","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-21","f":"2026-07-24","d":1},{"p":"2. Instalación de placas","i":"2026-07-25","f":"2026-07-28","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-29","f":"2026-07-31","d":5},{"p":"2. Levantado posterior","i":"2026-08-01","f":"2026-08-05","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-04","f":"2026-08-18","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-19","f":"2026-08-22","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-23","f":"2026-08-24","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-25","f":"2026-08-26","d":20}],
+},
+"Distrito B|Cluster 1|Bodega 3":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-13","f":"2026-07-18","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-19","f":"2026-07-22","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-23","f":"2026-07-24","d":2},{"p":"4. Relleno","i":"2026-07-25","f":"2026-07-25","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-21","f":"2026-07-24","d":1},{"p":"2. Instalación de placas","i":"2026-07-25","f":"2026-07-28","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-07-29","f":"2026-07-31","d":5},{"p":"2. Levantado posterior","i":"2026-08-01","f":"2026-08-05","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-04","f":"2026-08-18","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-19","f":"2026-08-22","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-23","f":"2026-08-24","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-25","f":"2026-08-26","d":20}],
+},
+"Distrito B|Cluster 1|Bodega 4":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Montaje de estructura","i":"2026-07-13","f":"2026-07-18","d":6},{"p":"2. Instalacion de Losacero","i":"2026-07-19","f":"2026-07-22","d":4},{"p":"3. Armado de Electromalla","i":"2026-07-23","f":"2026-07-24","d":2},{"p":"4. Fundicion","i":"2026-07-25","f":"2026-07-25","d":1}],
+"Contrapisos interiores bodegas":[{"p":"1. Montaje de tijeras","i":"2026-07-21","f":"2026-07-24","d":4},{"p":"2. Costaneras","i":"2026-07-25","f":"2026-07-28","d":4},{"p":"3. Canales","i":"2026-07-29","f":"2026-07-31","d":3},{"p":"4. Enlaminado","i":"2026-08-01","f":"2026-08-05","d":5}],
+"Levantado de block en Fachadas":[{"p":"1. Tablayeso + ventanas","i":"2026-08-04","f":"2026-08-18","d":15},{"p":"2. Piso","i":"2026-08-19","f":"2026-08-22","d":4},{"p":"3. Pintura","i":"2026-08-23","f":"2026-08-24","d":2},{"p":"4. Puertas","i":"2026-08-25","f":"2026-08-26","d":2}],
+},
+"Distrito B|Cluster 2|Bodega 5":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-15","f":"2026-07-20","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-21","f":"2026-07-24","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-25","f":"2026-07-26","d":2},{"p":"4. Relleno","i":"2026-07-27","f":"2026-07-27","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-27","f":"2026-07-30","d":1},{"p":"2. Instalación de placas","i":"2026-07-31","f":"2026-08-03","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-04","f":"2026-08-06","d":5},{"p":"2. Levantado posterior","i":"2026-08-07","f":"2026-08-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-04","f":"2026-08-18","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-19","f":"2026-08-22","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-23","f":"2026-08-24","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-25","f":"2026-08-26","d":20}],
+},
+"Distrito B|Cluster 2|Bodega 6":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-15","f":"2026-07-20","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-21","f":"2026-07-24","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-25","f":"2026-07-26","d":2},{"p":"4. Relleno","i":"2026-07-27","f":"2026-07-27","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-27","f":"2026-07-30","d":1},{"p":"2. Instalación de placas","i":"2026-07-31","f":"2026-08-03","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-04","f":"2026-08-06","d":5},{"p":"2. Levantado posterior","i":"2026-08-07","f":"2026-08-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-04","f":"2026-08-18","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-19","f":"2026-08-22","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-23","f":"2026-08-24","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-25","f":"2026-08-26","d":20}],
+},
+"Distrito B|Cluster 2|Bodega 7":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-15","f":"2026-07-20","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-21","f":"2026-07-24","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-25","f":"2026-07-26","d":2},{"p":"4. Relleno","i":"2026-07-27","f":"2026-07-27","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-27","f":"2026-07-30","d":1},{"p":"2. Instalación de placas","i":"2026-07-31","f":"2026-08-03","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-04","f":"2026-08-06","d":5},{"p":"2. Levantado posterior","i":"2026-08-07","f":"2026-08-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-04","f":"2026-08-18","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-19","f":"2026-08-22","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-23","f":"2026-08-24","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-25","f":"2026-08-26","d":20}],
+},
+"Distrito B|Cluster 2|Bodega 8":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-15","f":"2026-07-20","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-21","f":"2026-07-24","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-25","f":"2026-07-26","d":2},{"p":"4. Relleno","i":"2026-07-27","f":"2026-07-27","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-07-27","f":"2026-07-30","d":1},{"p":"2. Instalación de placas","i":"2026-07-31","f":"2026-08-03","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-04","f":"2026-08-06","d":5},{"p":"2. Levantado posterior","i":"2026-08-07","f":"2026-08-11","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-04","f":"2026-08-18","d":2},{"p":"2. Colocación de Electromalla","i":"2026-08-19","f":"2026-08-22","d":2},{"p":"3. Fundición de contrapiso","i":"2026-08-23","f":"2026-08-24","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-08-25","f":"2026-08-26","d":20}],
+},
+"Distrito B|Cluster 3|Bodega 9":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-17","f":"2026-07-22","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-23","f":"2026-07-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-27","f":"2026-07-28","d":2},{"p":"4. Relleno","i":"2026-07-29","f":"2026-07-29","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-02","f":"2026-08-05","d":1},{"p":"2. Instalación de placas","i":"2026-08-06","f":"2026-08-09","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-10","f":"2026-08-12","d":5},{"p":"2. Levantado posterior","i":"2026-08-13","f":"2026-08-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 3|Bodega 10":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-17","f":"2026-07-22","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-23","f":"2026-07-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-27","f":"2026-07-28","d":2},{"p":"4. Relleno","i":"2026-07-29","f":"2026-07-29","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-02","f":"2026-08-05","d":1},{"p":"2. Instalación de placas","i":"2026-08-06","f":"2026-08-09","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-10","f":"2026-08-12","d":5},{"p":"2. Levantado posterior","i":"2026-08-13","f":"2026-08-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 3|Bodega 11":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-17","f":"2026-07-22","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-23","f":"2026-07-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-27","f":"2026-07-28","d":2},{"p":"4. Relleno","i":"2026-07-29","f":"2026-07-29","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-02","f":"2026-08-05","d":1},{"p":"2. Instalación de placas","i":"2026-08-06","f":"2026-08-09","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-10","f":"2026-08-12","d":5},{"p":"2. Levantado posterior","i":"2026-08-13","f":"2026-08-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 3|Bodega 12":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-17","f":"2026-07-22","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-23","f":"2026-07-26","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-27","f":"2026-07-28","d":2},{"p":"4. Relleno","i":"2026-07-29","f":"2026-07-29","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-02","f":"2026-08-05","d":1},{"p":"2. Instalación de placas","i":"2026-08-06","f":"2026-08-09","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-10","f":"2026-08-12","d":5},{"p":"2. Levantado posterior","i":"2026-08-13","f":"2026-08-17","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 4|Bodega 13":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-19","f":"2026-07-24","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-25","f":"2026-07-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-29","f":"2026-07-30","d":2},{"p":"4. Relleno","i":"2026-07-31","f":"2026-07-31","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-08","f":"2026-08-11","d":1},{"p":"2. Instalación de placas","i":"2026-08-12","f":"2026-08-15","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-16","f":"2026-08-18","d":5},{"p":"2. Levantado posterior","i":"2026-08-19","f":"2026-08-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 4|Bodega 14":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-19","f":"2026-07-24","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-25","f":"2026-07-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-29","f":"2026-07-30","d":2},{"p":"4. Relleno","i":"2026-07-31","f":"2026-07-31","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-08","f":"2026-08-11","d":1},{"p":"2. Instalación de placas","i":"2026-08-12","f":"2026-08-15","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-16","f":"2026-08-18","d":5},{"p":"2. Levantado posterior","i":"2026-08-19","f":"2026-08-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 4|Bodega 15":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-19","f":"2026-07-24","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-25","f":"2026-07-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-29","f":"2026-07-30","d":2},{"p":"4. Relleno","i":"2026-07-31","f":"2026-07-31","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-08","f":"2026-08-11","d":1},{"p":"2. Instalación de placas","i":"2026-08-12","f":"2026-08-15","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-16","f":"2026-08-18","d":5},{"p":"2. Levantado posterior","i":"2026-08-19","f":"2026-08-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 4|Bodega 16":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-19","f":"2026-07-24","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-25","f":"2026-07-28","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-29","f":"2026-07-30","d":2},{"p":"4. Relleno","i":"2026-07-31","f":"2026-07-31","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-08","f":"2026-08-11","d":1},{"p":"2. Instalación de placas","i":"2026-08-12","f":"2026-08-15","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-16","f":"2026-08-18","d":5},{"p":"2. Levantado posterior","i":"2026-08-19","f":"2026-08-23","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-08-19","f":"2026-09-02","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-03","f":"2026-09-06","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-07","f":"2026-09-08","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-09","f":"2026-09-10","d":20}],
+},
+"Distrito B|Cluster 5|Bodega 17":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-21","f":"2026-07-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-27","f":"2026-07-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-31","f":"2026-08-01","d":2},{"p":"4. Relleno","i":"2026-08-02","f":"2026-08-02","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-14","f":"2026-08-17","d":1},{"p":"2. Instalación de placas","i":"2026-08-18","f":"2026-08-21","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-22","f":"2026-08-24","d":5},{"p":"2. Levantado posterior","i":"2026-08-25","f":"2026-08-29","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-09-03","f":"2026-09-17","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-18","f":"2026-09-21","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-22","f":"2026-09-23","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-24","f":"2026-09-25","d":20}],
+},
+"Distrito B|Cluster 5|Bodega 18":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-21","f":"2026-07-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-27","f":"2026-07-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-31","f":"2026-08-01","d":2},{"p":"4. Relleno","i":"2026-08-02","f":"2026-08-02","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-14","f":"2026-08-17","d":1},{"p":"2. Instalación de placas","i":"2026-08-18","f":"2026-08-21","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-22","f":"2026-08-24","d":5},{"p":"2. Levantado posterior","i":"2026-08-25","f":"2026-08-29","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-09-03","f":"2026-09-17","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-18","f":"2026-09-21","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-22","f":"2026-09-23","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-24","f":"2026-09-25","d":20}],
+},
+"Distrito B|Cluster 5|Bodega 19":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-21","f":"2026-07-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-27","f":"2026-07-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-31","f":"2026-08-01","d":2},{"p":"4. Relleno","i":"2026-08-02","f":"2026-08-02","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-14","f":"2026-08-17","d":1},{"p":"2. Instalación de placas","i":"2026-08-18","f":"2026-08-21","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-22","f":"2026-08-24","d":5},{"p":"2. Levantado posterior","i":"2026-08-25","f":"2026-08-29","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-09-03","f":"2026-09-17","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-18","f":"2026-09-21","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-22","f":"2026-09-23","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-24","f":"2026-09-25","d":20}],
+},
+"Distrito B|Cluster 5|Bodega 20":{
+"Cimentación (excavación, zapatas y pedestales)":[{"p":"1. Excavación","i":"2026-07-21","f":"2026-07-26","d":1},{"p":"2. Armado y Fundición Zapatas","i":"2026-07-27","f":"2026-07-30","d":2},{"p":"3. Armado y fundición pedestales","i":"2026-07-31","f":"2026-08-01","d":2},{"p":"4. Relleno","i":"2026-08-02","f":"2026-08-02","d":2}],
+"Muro Cifa":[{"p":"1. Instalación de anclajes","i":"2026-08-14","f":"2026-08-17","d":1},{"p":"2. Instalación de placas","i":"2026-08-18","f":"2026-08-21","d":8}],
+"Levantado de block en Fachadas":[{"p":"1. Levantado frontal","i":"2026-08-22","f":"2026-08-24","d":5},{"p":"2. Levantado posterior","i":"2026-08-25","f":"2026-08-29","d":5}],
+"Contrapisos interiores bodegas":[{"p":"1. Preparación de Base","i":"2026-09-03","f":"2026-09-17","d":2},{"p":"2. Colocación de Electromalla","i":"2026-09-18","f":"2026-09-21","d":2},{"p":"3. Fundición de contrapiso","i":"2026-09-22","f":"2026-09-23","d":1}],
+"Instalaciones eléctricas":[{"p":"1. Instalaciones eléctricas bodega","i":"2026-09-24","f":"2026-09-25","d":20}],
+},
+};
+let liveData={},sfFilter='all',curView='dist',curDist=null,curCluster=null,curBodega=null,curUrba='A';
+let barChart=null,curvaChart=null;
+
+function dt(s){return new Date(s+'T00:00:00');}
+
+function getStepStatus(ini,fin,av){
+  const f=dt(fin),i=dt(ini);
+  if(av>=100) return 'done';
+  if(TODAY<i) return 'pend';
+  if(TODAY>f) return 'late';
+  const el=(TODAY-i)/(f-i);
+  const exp=Math.round(Math.min(100,el*100));
+  if(av>=exp) return 'ok';
+  if(av>=exp*0.65) return 'risk';
+  return 'late';
+}
+
+function getLiveRows(d,cl,b,procKey){
+  if(!liveData.filas) return [];
+  return liveData.filas.filter(r=>r['Distrito']===d&&r['Cluster']===cl&&r['Bodega']===b&&(r['Proceso']||'').includes(procKey));
+}
+function getProcAvg(d,cl,b,pi){
+  const rows=getLiveRows(d,cl,b,PROC_KEYS[pi]);
+  if(!rows.length) return 0;
+  return Math.round(rows.reduce((s,r)=>s+parseFloat(r['% Avance']||0),0)/rows.length);
+}
+function getOGProcAvg(d,cl,b,ogProcName){
+  if(!liveData.filas) return 0;
+  const rows=liveData.filas.filter(r=>r['Distrito']===d&&r['Cluster']===cl&&r['Bodega']===b&&(r['Proceso']||'').includes(ogProcName));
+  if(!rows.length) return 0;
+  return Math.round(rows.reduce((s,r)=>s+parseFloat(r['% Avance']||0),0)/rows.length);
+}
+function getWHPct(d,cl,b){
+  const mez=getProcAvg(d,cl,b,0),est=getProcAvg(d,cl,b,1),acab=getProcAvg(d,cl,b,2);
+  return Math.round((mez+est+acab)/3);
+}
+function getClPct(d,cl){
+  const bs=DB[d][cl];
+  return Math.round(bs.reduce((s,b)=>s+getWHPct(d,cl,b),0)/bs.length);
+}
+function getDistPct(d){
+  const cls=Object.keys(DB[d]);
+  return Math.round(cls.reduce((s,cl)=>s+getClPct(d,cl),0)/cls.length);
+}
+function getTotalPct(){
+  return Math.round((getDistPct('Distrito A')*36+getDistPct('Distrito B')*20)/56);
+}
+function countDone(){
+  let n=0;
+  for(const d of ['Distrito A','Distrito B'])
+    for(const cl of Object.keys(DB[d]))
+      for(const b of DB[d][cl])
+        if(getWHPct(d,cl,b)===100) n++;
+  return n;
+}
+function countLate(){
+  let n=0;
+  if(!liveData.filas) return 0;
+  liveData.filas.forEach(r=>{
+    const av=parseFloat(r['% Avance']||0);
+    const ini=r['Inicio Proyectado']||r['Inicio Real']||'';
+    const fin=r['Fin Proyectado']||r['Fin Real']||'';
+    if(ini&&fin&&getStepStatus(ini,fin,av)==='late') n++;
+  });
+  return n;
+}
+function getWHStatus(d,cl,b){
+  let late=0,risk=0,ok=0;
+  if(!liveData.filas) return 'pend';
+  liveData.filas.filter(r=>r['Distrito']===d&&r['Cluster']===cl&&r['Bodega']===b).forEach(r=>{
+    const av=parseFloat(r['% Avance']||0);
+    const ini=r['Inicio Proyectado']||'';const fin=r['Fin Proyectado']||'';
+    if(!ini||!fin) return;
+    const s=getStepStatus(ini,fin,av);
+    if(s==='late')late++;else if(s==='risk')risk++;else if(s==='ok'||s==='done')ok++;
+  });
+  if(late>0)return 'late';if(risk>0)return 'risk';if(ok>0)return 'ok';return 'pend';
+}
+
+// ── RESUMEN ──
+function renderResumen(){
+  document.getElementById('k-total').textContent=getTotalPct()+'%';
+  document.getElementById('k-done').textContent=countDone()+'/56';
+  document.getElementById('k-late').textContent=countLate();
+  ['A','B'].forEach(d=>{
+    const dd='Distrito '+d,pct=getDistPct(dd);
+    document.getElementById('dpct-'+d).textContent=pct+'%';
+    document.getElementById('dbar-'+d).style.width=pct+'%';
+  });
+  // Barras promedio por proceso
+  const cont=document.getElementById('proc-avg-bars');
+  const allProcs=[...PROC_NAMES.map((n,i)=>({n,c:PROC_COLORS[i],pi:i,type:'mez'})),
+    ...OG_PROC_NAMES.map((n,i)=>({n,c:OG_COLORS[i],pi:i,type:'og'}))];
+  cont.innerHTML=allProcs.map(({n,c,pi,type})=>{
+    let tot=0,cnt=0;
+    for(const d of ['Distrito A','Distrito B'])
+      for(const cl of Object.keys(DB[d]))
+        for(const b of DB[d][cl]){
+          const avg=type==='og'?getOGProcAvg(d,cl,b,['Cimentación','Muro Cifa','Levantado de block','Contrapisos','Instalaciones eléctrica'][pi]):getProcAvg(d,cl,b,pi);
+          tot+=avg;cnt++;
+        }
+    const avg=cnt?Math.round(tot/cnt):0;
+    return `<div class="proc-stat-row">
+      <span class="proc-stat-name">${n}</span>
+      <div class="proc-stat-bar"><div style="height:100%;width:${avg}%;background:${c};border-radius:4px;"></div></div>
+      <span class="proc-stat-pct" style="color:${c};">${avg}%</span>
+    </div>`;
+  }).join('');
+}
+
+function toggleDist(d){
+  const cl=document.getElementById('cl-'+d);
+  const chv=document.getElementById('chv-'+d);
+  const open=cl.style.display==='block';
+  cl.style.display=open?'none':'block';
+  chv.classList.toggle('open',!open);
+  if(!open){
+    const dd='Distrito '+d,color=d==='A'?'var(--or)':'var(--blue)';
+    cl.innerHTML=Object.keys(DB[dd]).map(cluster=>{
+      const pct=getClPct(dd,cluster);
+      return `<div class="cl-row" onclick="openCluster('${dd}','${cluster}')">
+        <span class="cl-name">${cluster}</span>
+        <div class="cl-bar-w">
+          <div class="cl-pct">${pct}%</div>
+          <div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;">
+            <div style="height:100%;width:${pct}%;background:${color};border-radius:2px;"></div>
+          </div>
+        </div>
+        <i class="ti ti-chevron-right" style="font-size:12px;color:var(--txt3);margin-left:4px;"></i>
+      </div>`;
+    }).join('');
+  }
+}
+
+// ── BODEGAS ──
+function openCluster(d,cl){curDist=d;curCluster=cl;curView='cluster';showTab('bodegas');}
+function openBodega(d,cl,b){curDist=d;curCluster=cl;curBodega=b;curView='bodega';showTab('bodegas');}
+
+function renderBodegas(){
+  const cont=document.getElementById('bodegas-content');
+  if(curView==='dist'){cont.innerHTML='<p style="font-size:13px;color:var(--txt2);padding:20px;text-align:center;">Selecciona un distrito desde Resumen</p>';return;}
+  if(curView==='cluster'){
+    const bods=DB[curDist][curCluster];
+    cont.innerHTML=`<div class="back-btn" onclick="curView='dist';showTab('resumen')">
+      <i class="ti ti-arrow-left"></i>${curDist} — ${curCluster}</div>
+    <div class="bodegas-grid">${bods.map(b=>{
+      const pct=getWHPct(curDist,curCluster,b);
+      const bc=pct===100?'bd-done':pct>0?'bd-prog':'bd-pend';
+      const lbl=pct===100?'Completa':pct>0?pct+'%':'Pendiente';
+      const mbars=[0,1,2].map(i=>{
+        const avg=getProcAvg(curDist,curCluster,b,i);
+        return `<div class="proc-bar-row"><span class="proc-bar-lbl">${i+1}</span><div class="proc-bar-track"><div style="height:100%;width:${avg}%;background:${PROC_COLORS[i]};border-radius:2px;"></div></div><span class="proc-bar-pct">${avg}%</span></div>`;
+      }).join('');
+      return `<div class="bod-card" onclick="openBodega('${curDist}','${curCluster}','${b}')">
+        <div class="bod-top"><span class="bod-name">${b}</span><span class="bod-badge ${bc}">${lbl}</span></div>
+        <div class="proc-bars">${mbars}</div>
+      </div>`;
+    }).join('')}</div>`;
+    return;
+  }
+  if(curView==='bodega'){
+    const pct=getWHPct(curDist,curCluster,curBodega);
+    const col=pct===100?'var(--green)':pct>0?'var(--or)':'var(--txt2)';
+    const ogKey=`${curDist}|${curCluster}|${curBodega}`;
+    const ogProcs=OG_DB[ogKey]||{};
+    const OG_PROC_KEYS=['Cimentación (excavación, zapatas y pedestales)','Muro Cifa','Levantado de block en Fachadas','Contrapisos interiores bodegas','Instalaciones eléctricas'];
+
+    // Build standard process cards
+    let procHtml='';
+    [0,1,2].forEach(pi=>{
+      const avg=getProcAvg(curDist,curCluster,curBodega,pi);
+      const c=PROC_COLORS[pi];
+      const rows=getLiveRows(curDist,curCluster,curBodega,PROC_KEYS[pi]);
+      const steps=STEP_LABELS[pi].map((sname,si)=>{
+        const row=rows[si]||{};
+        const av=parseFloat(row['% Avance']||0);
+        const ini=row['Inicio Proyectado']||'';
+        const fin=row['Fin Proyectado']||'';
+        const iniR=row['Inicio Real']||'';
+        const finR=row['Fin Real']||'';
+        const nota=row['Notas']||'';
+        const st=ini&&fin?getStepStatus(ini,fin,av):'pend';
+        const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
+        const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
+        const datesHtml=(iniR||finR)?`<div class="step-meta"><span class="step-date"><i class="ti ti-calendar" style="font-size:10px;"></i> Inicio real: ${iniR||'—'}</span><span class="step-date"><i class="ti ti-calendar-check" style="font-size:10px;"></i> Fin real: ${finR||'—'}</span></div>`:'';
+        const notaHtml=nota?`<div class="step-nota"><i class="ti ti-note" style="font-size:10px;"></i> ${nota}</div>`:'';
+        return `<div class="step-item">
+          <div class="step-top">
+            <span class="step-name">${sname}</span>
+            <div class="step-pct-wrap">
+              <div class="step-track"><div style="height:100%;width:${av}%;background:${c};border-radius:2px;"></div></div>
+              <span class="step-pct" style="color:${c};">${av}%</span>
+              <span class="step-tag ${tagClass}">${tagLabel}</span>
+            </div>
+          </div>
+          ${datesHtml}${notaHtml}${fotoHtml}
+        </div>`;
+      }).join('');
+      procHtml+=`<div class="proc-card">
+        <div class="proc-hdr" onclick="toggleProc(this)">
+          <div class="proc-num" style="background:${c}22;color:${c};">${pi+1}</div>
+          <span class="proc-title">${PROC_NAMES[pi]}</span>
+          <span class="proc-pct" style="color:${c};">${avg}%</span>
+          <i class="ti ti-chevron-down" style="font-size:14px;color:var(--txt3);transition:transform .2s;margin-left:8px;"></i>
+        </div>
+        <div class="proc-mini-bar"><div style="height:100%;width:${avg}%;background:${c};border-radius:2px;"></div></div>
+        <div class="step-list" style="display:none;">${steps}</div>
+      </div>`;
+    });
+
+    // Build Obra Gris process cards
+    let ogHtml='';
+    OG_PROC_KEYS.forEach((ogKey2,ogi)=>{
+      const ogPasos=ogProcs[ogKey2]||[];
+      if(!ogPasos.length) return;
+      const c=OG_COLORS[ogi];
+      const rows=(liveData.filas||[]).filter(r=>r['Distrito']===curDist&&r['Cluster']===curCluster&&r['Bodega']===curBodega&&(r['Proceso']||'').includes(ogKey2.split(' ')[0]));
+      let tot=0;
+      const steps=ogPasos.map((paso,si)=>{
+        const row=rows[si]||{};
+        const av=parseFloat(row['% Avance']||0);
+        tot+=av;
+        const ini=paso.i||'';const fin=paso.f||'';
+        const iniR=row['Inicio Real']||'';const finR=row['Fin Real']||'';
+        const st=ini&&fin?getStepStatus(ini,fin,av):'pend';
+        const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
+        const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
+        const notaHtml=nota?`<div class="step-nota"><i class="ti ti-note" style="font-size:10px;"></i> ${nota}</div>`:'';
+        return `<div class="step-item">
+          <div class="step-top">
+            <span class="step-name">${paso.p}</span>
+            <div class="step-pct-wrap">
+              <div class="step-track"><div style="height:100%;width:${av}%;background:${c};border-radius:2px;"></div></div>
+              <span class="step-pct" style="color:${c};">${av}%</span>
+              <span class="step-tag ${tagClass}">${tagLabel}</span>
+            </div>
+          </div>
+          ${notaHtml}${fotoHtml}
+        </div>`;
+      }).join('');
+      const avg=ogPasos.length?Math.round(tot/ogPasos.length):0;
+      ogHtml+=`<div class="proc-card">
+        <div class="proc-hdr" onclick="toggleProc(this)">
+          <div class="proc-num" style="background:${c}22;color:${c};">${ogi+4}</div>
+          <span class="proc-title">${OG_PROC_NAMES[ogi]}</span>
+          <span class="proc-pct" style="color:${c};">${avg}%</span>
+          <i class="ti ti-chevron-down" style="font-size:14px;color:var(--txt3);transition:transform .2s;margin-left:8px;"></i>
+        </div>
+        <div class="proc-mini-bar"><div style="height:100%;width:${avg}%;background:${c};border-radius:2px;"></div></div>
+        <div class="step-list" style="display:none;">${steps}</div>
+      </div>`;
+    });
+
+    cont.innerHTML=`<div class="back-btn" onclick="curView='cluster';renderBodegas()">
+      <i class="ti ti-arrow-left"></i>${curCluster}</div>
+    <div class="wh-detail-hdr">
+      <div class="wh-name">${curBodega}</div>
+      <div class="wh-sub">${curDist} · ${curCluster}</div>
+      <div class="wh-pct" style="color:${col};">${pct}%</div>
+      <div class="pbar" style="margin-top:8px;"><div class="pfill" style="width:${pct}%;background:${col};"></div></div>
+    </div>
+    <div style="font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px;">Mezanines y Acabados</div>
+    ${procHtml}
+    ${ogHtml?'<div style="font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px;">Obra Gris</div>'+ogHtml:''}`;
+  }
+}
+
+function toggleProc(hdr){
+  const list=hdr.parentElement.querySelector('.step-list');
+  const chv=hdr.querySelector('.ti-chevron-down');
+  const open=list.style.display==='block';
+  list.style.display=open?'none':'block';
+  if(chv)chv.style.transform=open?'':'rotate(180deg)';
+}
+
+// ── URBANIZACIÓN ──
+function setUrba(d){
+  curUrba=d;
+  ['A','B'].forEach(x=>document.getElementById('ub-'+x).classList.toggle('active',x===d));
+  renderUrba();
+}
+
+function renderUrba(){
+  const pasos=curUrba==='A'?URBA_A:URBA_B;
+  const rows=(liveData.filas||[]).filter(r=>r['Proceso']==='Urbanización'&&r['Distrito']===('Distrito '+curUrba));
+  const cont=document.getElementById('urba-content');
+  let totalAvg=0;
+  const items=pasos.map((paso,i)=>{
+    const row=rows.find(r=>r['Paso']===paso.n)||{};
+    const av=parseFloat(row['% Avance']||0);
+    totalAvg+=av;
+    const st=getStepStatus(paso.i,paso.f,av);
+    const tagClass={'done':'tag-done','ok':'tag-ok','risk':'tag-risk','late':'tag-late','pend':'tag-pend'}[st];
+    const tagLabel={'done':'Listo','ok':'En tiempo','risk':'En riesgo','late':'Atrasado','pend':'Pendiente'}[st];
+    const nota=row['Notas']||'';
+    const notaHtml=nota?`<div class="step-nota" style="margin-top:5px;"><i class="ti ti-note" style="font-size:10px;"></i> ${nota}</div>`:'';
+    return `<div class="proc-card" style="margin-bottom:8px;">
+      <div style="padding:10px 13px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:#185FA522;color:#185FA5;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i+1}</div>
+          <span style="font-size:12px;font-weight:500;flex:1;">${paso.n}</span>
+          <span class="step-tag ${tagClass}">${tagLabel}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;"><div style="height:100%;width:${av}%;background:#185FA5;border-radius:3px;"></div></div>
+          <span style="font-size:12px;font-weight:600;color:#185FA5;width:28px;text-align:right;">${av}%</span>
+        </div>
+        <div style="font-size:10px;color:var(--txt3);margin-top:2px;">Plan: ${paso.i} → ${paso.f}</div>
+        ${notaHtml}${fotoHtml}
+      </div>
+    </div>`;
+  }).join('');
+  const avg=pasos.length?Math.round(totalAvg/pasos.length):0;
+  cont.innerHTML=`<div class="kpi" style="margin-bottom:14px;">
+    <div class="kpi-icon" style="color:#185FA5;"><i class="ti ti-road"></i></div>
+    <div class="kpi-val" style="color:#185FA5;">${avg}%</div>
+    <div class="kpi-lbl">Avance urbanización Distrito ${curUrba}</div>
+  </div>${items}`;
+}
+
+// ── SEMÁFORO ──
+function setSF(f){
+  sfFilter=f;
+  document.querySelectorAll('.ec').forEach(b=>b.classList.remove('sel'));
+  const map={all:'.ec-all',late:'.ec-late',risk:'.ec-risk',ok:'.ec-ok'};
+  document.querySelector(map[f]).classList.add('sel');
+  renderSemaforo();
+}
+function renderSemaforo(){
+  const items=[];
+  for(const d of ['Distrito A','Distrito B'])
+    for(const cl of Object.keys(DB[d]))
+      for(const b of DB[d][cl]){
+        const pct=getWHPct(d,cl,b);
+        const status=getWHStatus(d,cl,b);
+        if(sfFilter!=='all'&&sfFilter!==status) continue;
+        const dotColor=status==='late'?'var(--red)':status==='risk'?'var(--amber)':status==='ok'?'var(--green)':'var(--txt3)';
+        const badgeClass=status==='late'?'sb-crit':status==='risk'?'sb-risk':status==='ok'?'sb-ok':'sb-pend';
+        const badgeLabel=status==='late'?'Atrasado':status==='risk'?'En riesgo':status==='ok'?'Al día':'Sin iniciar';
+        items.push({d,cl,b,pct,status,dotColor,badgeClass,badgeLabel});
+      }
+  items.sort((a,b)=>{const o={late:0,risk:1,ok:2,pend:3};return(o[a.status]||3)-(o[b.status]||3)||b.pct-a.pct;});
+  document.getElementById('semaforo-list').innerHTML=items.map(it=>`
+    <div class="sem-card" onclick="openBodega('${it.d}','${it.cl}','${it.b}');showTab('bodegas');">
+      <div class="sem-dot" style="background:${it.dotColor};"></div>
+      <div class="sem-info"><div class="sem-name">${it.b}</div><div class="sem-sub">${it.d.replace('Distrito ','D')} · ${it.cl}</div></div>
+      <span class="sem-badge ${it.badgeClass}">${it.badgeLabel}</span>
+      <span class="sem-pct" style="color:${it.dotColor};">${it.pct}%</span>
+      <i class="ti ti-chevron-right" style="font-size:13px;color:var(--txt3);"></i>
+    </div>`).join('');
+}
+
+// ── REPORTE — CURVA S ──
+function renderReporte(){
+  renderCurvaS();
+  renderBarChart();
+  renderRanking();
+}
+
+function renderCurvaS(){
+  // Fechas del plan completo del proyecto
+  const startDate=new Date('2026-06-22');
+  const endDate=new Date('2026-09-24');
+  const totalDays=Math.ceil((endDate-startDate)/(1000*60*60*24));
+  const INTERVAL=7;
+  const labels=[],projected=[],real=[];
+
+  // ── CURVA PROYECTADA FIJA ──
+  // Basada en el cronograma original: distribución lineal por clusters
+  // Distrito A: 9 clusters arrancando escalonado desde junio
+  // Distrito B: 5 clusters arrancando desde julio
+  // Total: 56 bodegas × 3 procesos × 4 pasos = 672 pasos
+  // Distribuimos los pasos según las fechas del plan en DB_PLAN embebido
+  const PLAN_START_A='2026-06-22', PLAN_END_A='2026-08-28';
+  const PLAN_START_B='2026-07-22', PLAN_END_B='2026-09-24';
+  const totalPasos=672; // 56 bodegas × 12 pasos
+
+  function projPctAtDate(d){
+    // Pasos de Distrito A completados a fecha d
+    const dA=new Date(PLAN_START_A+'T00:00:00');
+    const fA=new Date(PLAN_END_A+'T00:00:00');
+    const dB=new Date(PLAN_START_B+'T00:00:00');
+    const fB=new Date(PLAN_END_B+'T00:00:00');
+    // 36 bodegas × 12 pasos = 432 de DA, 20×12=240 de DB
+    let pA=0;
+    if(d>=dA){
+      const tA=Math.min(1,(d-dA)/(fA-dA));
+      pA=Math.round(tA*432);
+    }
+    let pB=0;
+    if(d>=dB){
+      const tB=Math.min(1,(d-dB)/(fB-dB));
+      pB=Math.round(tB*240);
+    }
+    return Math.min(100,Math.round((pA+pB)/totalPasos*100));
+  }
+
+  // ── CURVA REAL ACUMULADA ──
+  // Solo hasta hoy; usa los % de avance registrados en data.json
+  const allRows=liveData.filas||[];
+
+  // Pre-calcular avance real total actual
+  let realTotalPasos=0,realAvancePasos=0;
+  allRows.forEach(r=>{
+    const av=parseFloat(r['% Avance']||0);
+    realTotalPasos++;
+    realAvancePasos+=av/100;
+  });
+  const realPctActual=realTotalPasos?Math.round(realAvancePasos/realTotalPasos*100):0;
+
+  for(let day=0;day<=totalDays;day+=INTERVAL){
+    const d=new Date(startDate.getTime()+day*86400000);
+    labels.push(d.toLocaleDateString('es-GT',{day:'2-digit',month:'short'}));
+    projected.push(projPctAtDate(d));
+
+    if(d<=TODAY){
+      // Interpolamos la curva real: asumimos crecimiento proporcional
+      // desde 0 hasta el valor actual conocido
+      const elapsed=(d-startDate)/(TODAY-startDate);
+      const interpolated=Math.round(Math.min(1,elapsed)*realPctActual);
+      real.push(Math.max(0,interpolated));
+    } else {
+      real.push(null); // futuro: no dibuja
+    }
+  }
+
+  const ctx=document.getElementById('curva-s').getContext('2d');
+  if(curvaChart) curvaChart.destroy();
+  curvaChart=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels,
+      datasets:[
+        {label:'Avance real',data:real,borderColor:'#E07B2A',backgroundColor:'rgba(224,123,42,.12)',borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#E07B2A',fill:true,tension:.4,spanGaps:false},
+        {label:'Curva proyectada',data:projected,borderColor:'#185FA5',backgroundColor:'transparent',borderWidth:2,borderDash:[5,4],pointRadius:0,fill:false,tension:.4}
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+Math.round(c.raw||0)+'%'}}},
+      scales:{
+        y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:10},color:'#ABABAB'},grid:{color:'rgba(0,0,0,0.04)'},border:{display:false}},
+        x:{ticks:{font:{size:9},color:'#ABABAB',maxRotation:45,maxTicksLimit:10},grid:{display:false},border:{display:false}}
+      }
+    }
+  });
+}
+
+function renderBarChart(){
+  const labels=[],data=[],colors=[];
+  for(const d of ['Distrito A','Distrito B'])
+    for(const cl of Object.keys(DB[d])){
+      labels.push(`${d.slice(-1)}·${cl.replace('Cluster ','C')}`);
+      data.push(getClPct(d,cl));
+      colors.push(d==='Distrito A'?'#E07B2A':'#185FA5');
+    }
+  const ctx=document.getElementById('bar-chart').getContext('2d');
+  if(barChart) barChart.destroy();
+  barChart=new Chart(ctx,{type:'bar',data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:5,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%',font:{size:10},color:'#ABABAB'},grid:{color:'rgba(0,0,0,0.04)'},border:{display:false}},x:{ticks:{font:{size:9},color:'#ABABAB',maxRotation:45},grid:{display:false},border:{display:false}}}}});
+}
+
+function renderRanking(){
+  const entries=[];
+  for(const d of ['Distrito A','Distrito B'])
+    for(const cl of Object.keys(DB[d]))
+      for(const b of DB[d][cl])
+        entries.push({label:`${d.replace('Distrito ','D')} · ${cl.replace('Cluster ','C')} · ${b}`,pct:getWHPct(d,cl,b)});
+  entries.sort((a,b)=>b.pct-a.pct);
+  const colFn=p=>p===100?'var(--green)':p>0?'var(--amber)':'var(--txt3)';
+  document.getElementById('ranking-list').innerHTML=entries.map((e,i)=>`<div class="rnk-row"><span class="rnk-n">${i+1}</span><span class="rnk-name">${e.label}</span><div class="rnk-bar-w"><div class="rnk-bar"><div style="height:100%;width:${e.pct}%;background:${colFn(e.pct)};border-radius:2px;"></div></div><div class="rnk-pct" style="color:${colFn(e.pct)};">${e.pct}%</div></div></div>`).join('');
+}
+
+// ── FOTOS ──
+}
+
+// ── NAV ──
+function showTab(tab){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('s-'+tab).classList.add('on');
+  document.getElementById('nb-'+tab).classList.add('active');
+  if(tab==='resumen') renderResumen();
+  else if(tab==='bodegas') renderBodegas();
+  else if(tab==='urba') renderUrba();
+  else if(tab==='semaforo') renderSemaforo();
+  else if(tab==='reporte') renderReporte();
+}
+
+// ── CARGA INICIAL ──
+async function loadData(){
+  try{
+    const res=await fetch(DATA_URL+'?t='+Date.now());
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    liveData=await res.json();
+    const upd=liveData.ultima_actualizacion;
+    if(upd){
+      const d=new Date(upd);
+      document.getElementById('update-val').textContent=
+        d.toLocaleDateString('es-GT',{day:'2-digit',month:'short'})+' '+
+        d.toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'});
+    }
+  }catch(e){liveData={filas:[]};document.getElementById('update-val').textContent='Sin datos';}
+  document.getElementById('loading').style.display='none';
+  showTab('resumen');
+  setUrba('A');
+  setTimeout(()=>location.reload(),5*60*1000);
+}
+
+
+loadData();
+</script>
+</body>
+</html>
