@@ -1,5 +1,5 @@
 {
-  "ultima_actualizacion": "2026-07-01T21:33:03.156Z",
+  "ultima_actualizacion": "2026-07-01T21:33:32.003Z",
   "filas": [
     {
       "Distrito": "Distrito A",
@@ -20,7 +20,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
       "Proceso": "Mezaninne y Techados",
-      "Paso": "InstalaciÃÂÃÂÃÂÃÂ³n de losacero",
+      "Paso": "InstalaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n de losacero",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -48,7 +48,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
       "Proceso": "Mezaninne y Techados",
-      "Paso": "FundiciÃÂÃÂÃÂÃÂ³n",
+      "Paso": "FundiciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -173,8 +173,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
-      "Proceso": "CimentaciÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
-      "Paso": "1. ExcavaciÃÂÃÂÃÂÃÂ³n",
+      "Proceso": "CimentaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
+      "Paso": "1. ExcavaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -187,8 +187,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
-      "Proceso": "CimentaciÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
-      "Paso": "2. Armado y FundiciÃÂÃÂÃÂÃÂ³n Zapatas",
+      "Proceso": "CimentaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
+      "Paso": "2. Armado y FundiciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n Zapatas",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -201,8 +201,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
-      "Proceso": "CimentaciÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
-      "Paso": "3. Armado y fundiciÃÂÃÂÃÂÃÂ³n pedestales",
+      "Proceso": "CimentaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
+      "Paso": "3. Armado y fundiciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n pedestales",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -215,7 +215,7 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
-      "Proceso": "CimentaciÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
+      "Proceso": "CimentaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n (excavaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, zapatas y pedestales)",
       "Paso": "4. Relleno",
       "% Avance": "100",
       "Inicio Real": "",
@@ -230,7 +230,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
       "Proceso": "Muro Cifa",
-      "Paso": "1. InstalaciÃÂÃÂÃÂÃÂ³n de anclajes",
+      "Paso": "1. InstalaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n de anclajes",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -244,7 +244,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
       "Proceso": "Muro Cifa",
-      "Paso": "2. InstalaciÃÂÃÂÃÂÃÂ³n de placas",
+      "Paso": "2. InstalaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n de placas",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -286,7 +286,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
       "Proceso": "Contrapisos interiores bodegas",
-      "Paso": "1. PreparaciÃÂÃÂÃÂÃÂ³n de Base",
+      "Paso": "1. PreparaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n de Base",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -300,7 +300,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
       "Proceso": "Contrapisos interiores bodegas",
-      "Paso": "2. ColocaciÃÂÃÂÃÂÃÂ³n de Electromalla",
+      "Paso": "2. ColocaciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n de Electromalla",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -314,7 +314,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
       "Proceso": "Contrapisos interiores bodegas",
-      "Paso": "3. FundiciÃÂÃÂÃÂÃÂ³n de contrapiso",
+      "Paso": "3. FundiciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n de contrapiso",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -327,8 +327,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 34",
-      "Proceso": "Instalaciones elÃÂÃÂÃÂÃÂ©ctricas",
-      "Paso": "1. Instalaciones elÃÂÃÂÃÂÃÂ©ctricas bodega",
+      "Proceso": "Instalaciones elÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©ctricas",
+      "Paso": "1. Instalaciones elÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©ctricas bodega",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -356,7 +356,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
       "Proceso": "Mezaninne y Techados",
-      "Paso": "InstalaciÃÂ³n de losacero",
+      "Paso": "InstalaciÃÂÃÂ³n de losacero",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -384,7 +384,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
       "Proceso": "Mezaninne y Techados",
-      "Paso": "FundiciÃÂ³n",
+      "Paso": "FundiciÃÂÃÂ³n",
       "% Avance": "85",
       "Inicio Real": "",
       "Fin Real": "",
@@ -509,8 +509,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
-      "Proceso": "CimentaciÃÂ³n (excavaciÃÂ³n, zapatas y pedestales)",
-      "Paso": "1. ExcavaciÃÂ³n",
+      "Proceso": "CimentaciÃÂÃÂ³n (excavaciÃÂÃÂ³n, zapatas y pedestales)",
+      "Paso": "1. ExcavaciÃÂÃÂ³n",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -523,8 +523,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
-      "Proceso": "CimentaciÃÂ³n (excavaciÃÂ³n, zapatas y pedestales)",
-      "Paso": "2. Armado y FundiciÃÂ³n Zapatas",
+      "Proceso": "CimentaciÃÂÃÂ³n (excavaciÃÂÃÂ³n, zapatas y pedestales)",
+      "Paso": "2. Armado y FundiciÃÂÃÂ³n Zapatas",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -537,8 +537,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
-      "Proceso": "CimentaciÃÂ³n (excavaciÃÂ³n, zapatas y pedestales)",
-      "Paso": "3. Armado y fundiciÃÂ³n pedestales",
+      "Proceso": "CimentaciÃÂÃÂ³n (excavaciÃÂÃÂ³n, zapatas y pedestales)",
+      "Paso": "3. Armado y fundiciÃÂÃÂ³n pedestales",
       "% Avance": "85",
       "Inicio Real": "",
       "Fin Real": "",
@@ -551,7 +551,7 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
-      "Proceso": "CimentaciÃÂ³n (excavaciÃÂ³n, zapatas y pedestales)",
+      "Proceso": "CimentaciÃÂÃÂ³n (excavaciÃÂÃÂ³n, zapatas y pedestales)",
       "Paso": "4. Relleno",
       "% Avance": "100",
       "Inicio Real": "",
@@ -566,7 +566,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
       "Proceso": "Muro Cifa",
-      "Paso": "1. InstalaciÃÂ³n de anclajes",
+      "Paso": "1. InstalaciÃÂÃÂ³n de anclajes",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -580,7 +580,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
       "Proceso": "Muro Cifa",
-      "Paso": "2. InstalaciÃÂ³n de placas",
+      "Paso": "2. InstalaciÃÂÃÂ³n de placas",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -622,7 +622,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
       "Proceso": "Contrapisos interiores bodegas",
-      "Paso": "1. PreparaciÃÂ³n de Base",
+      "Paso": "1. PreparaciÃÂÃÂ³n de Base",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -636,7 +636,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
       "Proceso": "Contrapisos interiores bodegas",
-      "Paso": "2. ColocaciÃÂ³n de Electromalla",
+      "Paso": "2. ColocaciÃÂÃÂ³n de Electromalla",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -650,7 +650,7 @@
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
       "Proceso": "Contrapisos interiores bodegas",
-      "Paso": "3. FundiciÃÂ³n de contrapiso",
+      "Paso": "3. FundiciÃÂÃÂ³n de contrapiso",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -663,8 +663,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 1",
       "Bodega": "Bodega 32",
-      "Proceso": "Instalaciones elÃÂ©ctricas",
-      "Paso": "1. Instalaciones elÃÂ©ctricas bodega",
+      "Proceso": "Instalaciones elÃÂÃÂ©ctricas",
+      "Paso": "1. Instalaciones elÃÂÃÂ©ctricas bodega",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -672,6 +672,160 @@
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
       "Ultima actualizacion": "2026-07-01T21:32:26.834Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "FinalizaciÃÂ³n base suelo cemento",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Contrapiso de calles",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Banquetas",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Muro perimetral Cifarreja",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Muros de contenciÃÂ³n",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Pintura y seÃÂ±alizaciÃÂ³n en calles",
+      "% Avance": "90",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Garita",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Trabajos de herrerÃÂ­a",
+      "% Avance": "75",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Planta de tratamiento",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Cisterna",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+    },
+    {
+      "Distrito": "Distrito A",
+      "Cluster": "UrbanizaciÃÂ³n",
+      "Bodega": "UrbanizaciÃÂ³n",
+      "Proceso": "UrbanizaciÃÂ³n",
+      "Paso": "Pozo mecÃÂ¡nico",
+      "% Avance": "100",
+      "Inicio Real": "",
+      "Fin Real": "",
+      "Notas": "",
+      "Supervisor": "Juan Ferando Solares",
+      "Rol": "Director de proyecto",
+      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
     },
     {
       "Distrito": "Distrito A",
@@ -685,7 +839,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -699,7 +853,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -713,7 +867,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -727,7 +881,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -741,7 +895,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -755,7 +909,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -769,7 +923,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -783,7 +937,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -797,7 +951,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -811,7 +965,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -825,7 +979,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:32:47.409Z"
+      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
     },
     {
       "Distrito": "Distrito A",
@@ -839,7 +993,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.200Z"
     },
     {
       "Distrito": "Distrito A",
@@ -853,7 +1007,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -867,7 +1021,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -881,7 +1035,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -895,7 +1049,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -909,7 +1063,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -923,7 +1077,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -937,7 +1091,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -951,7 +1105,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -965,7 +1119,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     },
     {
       "Distrito": "Distrito A",
@@ -979,7 +1133,7 @@
       "Notas": "",
       "Supervisor": "Juan Ferando Solares",
       "Rol": "Director de proyecto",
-      "Ultima actualizacion": "2026-07-01T21:33:02.259Z"
+      "Ultima actualizacion": "2026-07-01T21:33:31.201Z"
     }
   ]
 }
