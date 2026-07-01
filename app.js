@@ -280,6 +280,9 @@ document.addEventListener("click",function(e){
   // Semaforo filter chips
   var ep=e.target.closest(".ep");
   if(ep){var sid=ep.id;if(sid)SF(sid.replace("sf-",""));return;}
+  // Cluster row — check BEFORE district toggle to avoid parent catching it
+  var cr=e.target.closest(".cl-r");
+  if(cr){OC2(cr.getAttribute("data-d"),cr.getAttribute("data-cl"));return;}
   // District toggle
   var td=e.target.closest("[data-td]");
   if(td){TD(td.getAttribute("data-td"));return;}
@@ -302,9 +305,7 @@ document.addEventListener("click",function(e){
   // Bodega card (has data-b)
   var bc=e.target.closest("[data-b]");
   if(bc){OB(bc.getAttribute("data-d"),bc.getAttribute("data-cl"),bc.getAttribute("data-b"));return;}
-  // Cluster row (has data-cl but not data-b)
-  var cr=e.target.closest("[data-cl]");
-  if(cr&&!cr.getAttribute("data-b")){OC2(cr.getAttribute("data-d"),cr.getAttribute("data-cl"));return;}
+  // Cluster rows handled above by .cl-r class
 });
 
 LD3();
