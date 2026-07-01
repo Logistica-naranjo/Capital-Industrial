@@ -261,30 +261,50 @@ async function LD3(){
     LD2=await res.json();
     var upd=LD2.ultima_actualizacion;
     if(upd){var d2=new Date(upd);ge("upd").textContent=d2.toLocaleDateString("es-GT",{day:"2-digit",month:"short"})+" "+d2.toLocaleTimeString("es-GT",{hour:"2-digit",minute:"2-digit"});}
-  }catch(e){LD2={filas:[]};ge("upd").textContent="Sin datos";}
+    else{ge("upd").textContent="Pendiente de datos";}
+  }catch(e){LD2={filas:[]};ge("upd").textContent="Sin datos aún";}
   ge("LD").style.display="none";
   ST("r");
   SU("A");
   setTimeout(function(){location.reload();},5*60*1000);
 }
 
-// Global click delegation — no inline handlers needed
+// Global click delegation
 document.addEventListener("click",function(e){
-  var el=e.target.closest("[data-td]");
-  if(el){TD(el.getAttribute("data-td"));return;}
-  el=e.target.closest("[data-go]");
-  if(el){
-    var go=el.getAttribute("data-go");
-    if(go==="home"){CV="dist";ST("r");return;}
-    if(go==="cluster"){CV="cluster";RB();return;}
-    if(go==="obs"){OB(el.getAttribute("data-d"),el.getAttribute("data-cl"),el.getAttribute("data-b"));ST("b");return;}
+  // Nav buttons
+  var nb=e.target.closest(".nb");
+  if(nb){var id=nb.id;if(id)ST(id.replace("bn-",""));return;}
+  // Urbanizacion buttons
+  var ub=e.target.closest(".ub");
+  if(ub){SU(ub.id==="bu-A"?"A":"B");return;}
+  // Semaforo filter chips
+  var ep=e.target.closest(".ep");
+  if(ep){var sid=ep.id;if(sid)SF(sid.replace("sf-",""));return;}
+  // District toggle
+  var td=e.target.closest("[data-td]");
+  if(td){TD(td.getAttribute("data-td"));return;}
+  // Back buttons
+  var go=e.target.closest("[data-go]");
+  if(go){
+    var g=go.getAttribute("data-go");
+    if(g==="home"){CV="dist";ST("r");return;}
+    if(g==="cluster"){CV="cluster";RB();return;}
+    if(g==="obs"){OB(go.getAttribute("data-d"),go.getAttribute("data-cl"),go.getAttribute("data-b"));ST("b");return;}
   }
-  el=e.target.closest("[data-d][data-cl][data-b]");
-  if(el&&!el.getAttribute("data-go")){OB(el.getAttribute("data-d"),el.getAttribute("data-cl"),el.getAttribute("data-b"));return;}
-  el=e.target.closest("[data-d][data-cl]");
-  if(el&&!el.getAttribute("data-td")){OC2(el.getAttribute("data-d"),el.getAttribute("data-cl"));return;}
-  el=e.target.closest("[data-tog]");
-  if(el){var sl=el.parentElement.querySelector(".sl3"),ch=el.querySelector(".ti-chevron-down"),op=sl.style.display==="block";sl.style.display=op?"none":"block";if(ch)ch.style.transform=op?"":"rotate(180deg)";return;}
+  // Process header toggle
+  var tog=e.target.closest("[data-tog]");
+  if(tog){
+    var sl=tog.parentElement.querySelector(".sl3");
+    var ch=tog.querySelector(".ti-chevron-down");
+    if(sl){var op=sl.style.display==="block";sl.style.display=op?"none":"block";if(ch)ch.style.transform=op?"":"rotate(180deg)";}
+    return;
+  }
+  // Bodega card (has data-b)
+  var bc=e.target.closest("[data-b]");
+  if(bc){OB(bc.getAttribute("data-d"),bc.getAttribute("data-cl"),bc.getAttribute("data-b"));return;}
+  // Cluster row (has data-cl but not data-b)
+  var cr=e.target.closest("[data-cl]");
+  if(cr&&!cr.getAttribute("data-b")){OC2(cr.getAttribute("data-d"),cr.getAttribute("data-cl"));return;}
 });
 
 LD3();
