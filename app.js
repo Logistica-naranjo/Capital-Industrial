@@ -302,9 +302,12 @@ document.addEventListener("click",function(e){
     if(sl){var op=sl.style.display==="block";sl.style.display=op?"none":"block";if(ch)ch.style.transform=op?"":"rotate(180deg)";}
     return;
   }
-  // Bodega card (has data-b)
-  var bc=e.target.closest("[data-b]");
+  // Bodega card
+  var bc=e.target.closest(".bc3");
   if(bc){OB(bc.getAttribute("data-d"),bc.getAttribute("data-cl"),bc.getAttribute("data-b"));return;}
+  // Semaforo card
+  var sm=e.target.closest(".sm2");
+  if(sm){OB(sm.getAttribute("data-d"),sm.getAttribute("data-cl"),sm.getAttribute("data-b"));ST("b");return;}
   // Cluster rows handled above by .cl-r class
 });
 

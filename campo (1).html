@@ -698,7 +698,7 @@ function skUrba(){return 'URBA|'+curUrbaD;}
 function loadStateForBodega(){
   const k=sk();
   if(state[k]) return;
-  const ogKey=`${curDist}|${curCluster}|${curBodega}`;
+  const ogKey=curDist+"|"+curCluster+"|"+curBodega;
   const ogProcs=OG_DB[ogKey]||{};
   const emptyOG={};
   Object.keys(ogProcs).forEach(proc=>{
@@ -751,7 +751,7 @@ function buildBodegaRegistro(){
   const k=sk();const s=state[k];
   const pct=getWHPct(curDist,curCluster,curBodega);
   const col=pct===100?'var(--green)':pct>0?'var(--or)':'var(--txt2)';
-  const ogKey=`${curDist}|${curCluster}|${curBodega}`;
+  const ogKey=curDist+"|"+curCluster+"|"+curBodega;
   const ogProcs=OG_DB[ogKey]||{};
 
   let procHtml='';
@@ -760,7 +760,7 @@ function buildBodegaRegistro(){
     const c=PROC_COLORS[pi];
     const steps=STEP_LABELS[pi].map((sname,si)=>{
       const pct2=s['p'+pi][si];
-      const pKey=`bod|${pi}|${si}`;
+      var pKey="bod|"+pi+"|"+si;
       return buildStepBlock(sname,pKey,pct2,s['ini'+pi][si],s['fin'+pi][si],s['notas'+pi][si],c,
         (val)=>{s['p'+pi][si]=parseInt(val);updateBodHdr();},
         (val)=>{s['ini'+pi][si]=val;},
@@ -779,7 +779,7 @@ function buildBodegaRegistro(){
     const c=OG_COLORS[ogi];
     const steps=pasos.map((paso,si)=>{
       const ps=stateOG[si]||{av:0,ini:'',fin:'',nota:''};
-      const pKey=`og|${ogi}|${si}`;
+      var pKey="og|"+ogi+"|"+si;
       return buildStepBlock(paso.p,pKey,ps.av,ps.ini,ps.fin,ps.nota,c,
         (val)=>{if(s.og[proc]&&s.og[proc][si])s.og[proc][si].av=parseInt(val);},
         (val)=>{if(s.og[proc]&&s.og[proc][si])s.og[proc][si].ini=val;},
@@ -789,63 +789,63 @@ function buildBodegaRegistro(){
     ogHtml+=buildProcCard(ogi+4,OG_PROC_NAMES[ogi],avg,c,steps);
   });
 
-  document.getElementById('registro-content').innerHTML=`
-    <div class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i>${curCluster} — ${curDist.replace('Distrito ','D')}</div>
+  document.getElementById('registro-content').innerHTML="
+    <div class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i>"+(curCluster)+" — "+(curDist.replace('Distrito ','D'))+"</div>
     <div class="bod-detail-card">
-      <div style="font-size:16px;font-weight:600;">${curBodega}</div>
-      <div style="font-size:12px;color:var(--txt2);">${curDist} · ${curCluster}</div>
-      <div style="font-size:30px;font-weight:600;color:${col};margin-top:8px;" id="bod-pct-hdr">${pct}%</div>
-      <div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px;"><div id="bod-pct-bar" style="height:100%;width:${pct}%;background:${col};border-radius:3px;transition:width .3s;"></div></div>
-      <div style="margin-top:8px;font-size:11px;color:var(--txt2);"><i class="ti ti-user" style="font-size:11px;"></i> ${supervisor} · ${supRol}</div>
+      <div style="font-size:16px;font-weight:600;">"+(curBodega)+"</div>
+      <div style="font-size:12px;color:var(--txt2);">"+(curDist)+" · "+(curCluster)+"</div>
+      <div style="font-size:30px;font-weight:600;color:"+(col)+";margin-top:8px;" id="bod-pct-hdr">"+(pct)+"%</div>
+      <div style="height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px;"><div id="bod-pct-bar" style="height:100%;width:"+(pct)+"%;background:"+(col)+";border-radius:3px;transition:width .3s;"></div></div>
+      <div style="margin-top:8px;font-size:11px;color:var(--txt2);"><i class="ti ti-user" style="font-size:11px;"></i> "+(supervisor)+" · "+(supRol)+"</div>
     </div>
     <div style="font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 8px;">Mezanines y Acabados</div>
-    ${procHtml}
-    ${ogHtml?'<div style="font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px;">Obra Gris</div>'+ogHtml:''}`;
+    "+(procHtml)+"
+    "+(ogHtml?'<div style="font-size:11px;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px;">Obra Gris</div>'+ogHtml:'')+"";
 }
 
 function buildStepBlock(name,pKey,pct,ini,fin,nota,color,onPct,onIni,onFin,onNota){
   const tagClass=pct>=100?'tag-done':pct>0?'tag-prog':'tag-pend';
   const tagLabel=pct>=100?'Listo':pct>0?pct+'%':'Pendiente';
   const id=pKey.replace(/\|/g,'_');
-  return `<div class="step-block">
+  return "<div class="step-block">
     <div class="step-name-row">
-      <span>${name}</span>
-      <span class="tag ${tagClass}" id="tag_${id}">${tagLabel}</span>
+      <span>"+(name)+"</span>
+      <span class="tag "+(tagClass)+"" id="tag_"+(id)+"">"+(tagLabel)+"</span>
     </div>
     <div class="step-dates">
-      <div class="date-field"><div class="date-lbl">Inicio real</div><input class="date-inp" type="date" value="${ini}" onchange="(${onIni.toString()})(this.value)"/></div>
-      <div class="date-field"><div class="date-lbl">Fin real</div><input class="date-inp" type="date" value="${fin}" onchange="(${onFin.toString()})(this.value)"/></div>
+      <div class="date-field"><div class="date-lbl">Inicio real</div><input class="date-inp" type="date" value=""+(ini)+"" onchange="("+(onIni.toString())+")(this.value)"/></div>
+      <div class="date-field"><div class="date-lbl">Fin real</div><input class="date-inp" type="date" value=""+(fin)+"" onchange="("+(onFin.toString())+")(this.value)"/></div>
     </div>
     <div class="pct-row">
       <span class="pct-lbl">Avance</span>
-      <input class="pct-slider" type="range" min="0" max="100" step="5" value="${pct}" id="sl_${id}"
-        oninput="onSl(this,'${id}','${color.replace(/'/g,'"')}',${onPct.toString()})"
-        style="background:linear-gradient(to right,${color} 0%,${color} ${pct}%,#EFEFED ${pct}%,#EFEFED 100%)"/>
-      <span class="pct-val" id="pv_${id}" style="color:${color};">${pct}%</span>
+      <input class="pct-slider" type="range" min="0" max="100" step="5" value=""+(pct)+"" id="sl_"+(id)+""
+        oninput="onSl(this,'"+(id)+"','"+(color.replace(/'/g,'"'))+"',"+(onPct.toString())+")"
+        style="background:linear-gradient(to right,"+(color)+" 0%,"+(color)+" "+(pct)+"%,#EFEFED "+(pct)+"%,#EFEFED 100%)"/>
+      <span class="pct-val" id="pv_"+(id)+"" style="color:"+(color)+";">"+(pct)+"%</span>
     </div>
-    <textarea class="notes-inp" rows="2" placeholder="Notas del paso…" oninput="(${onNota.toString()})(this.value)">${nota}</textarea>
+    <textarea class="notes-inp" rows="2" placeholder="Notas del paso…" oninput="("+(onNota.toString())+")(this.value)">"+(nota)+"</textarea>
       <i class="ti ti-camera"></i>
     </button>
     </div>
-  </div>`;
+  </div>";
 }
 
 function buildProcCard(num,title,avg,color,stepsHtml){
-  return `<div class="proc-card">
+  return "<div class="proc-card">
     <div class="proc-hdr" onclick="toggleProc(this)">
-      <div class="proc-num" style="background:${color}22;color:${color};">${num}</div>
-      <span class="proc-title">${title}</span>
-      <span class="proc-pct-lbl" style="color:${color};">${avg}%</span>
+      <div class="proc-num" style="background:"+(color)+"22;color:"+(color)+";">"+(num)+"</div>
+      <span class="proc-title">"+(title)+"</span>
+      <span class="proc-pct-lbl" style="color:"+(color)+";">"+(avg)+"%</span>
       <i class="ti ti-chevron-down" style="font-size:14px;color:var(--txt3);transition:transform .2s;margin-left:8px;"></i>
     </div>
-    <div class="proc-mini-bar"><div style="height:100%;width:${avg}%;background:${color};border-radius:2px;"></div></div>
-    <div class="proc-steps">${stepsHtml}</div>
-  </div>`;
+    <div class="proc-mini-bar"><div style="height:100%;width:"+(avg)+"%;background:"+(color)+";border-radius:2px;"></div></div>
+    <div class="proc-steps">"+(stepsHtml)+"</div>
+  </div>";
 }
 
 function onSl(el,id,color,cb){
   const val=parseInt(el.value);
-  el.style.background=`linear-gradient(to right,${color} 0%,${color} ${val}%,#EFEFED ${val}%,#EFEFED 100%)`;
+  el.style.background="linear-gradient(to right,"+color+" 0%,"+color+" "+val+"%,#EFEFED "+val+"%,#EFEFED 100%)";
   document.getElementById('pv_'+id).textContent=val+'%';
   const tag=document.getElementById('tag_'+id);
   if(tag){tag.className='tag '+(val>=100?'tag-done':val>0?'tag-prog':'tag-pend');tag.textContent=val>=100?'Listo':val>0?val+'%':'Pendiente';}
@@ -875,46 +875,46 @@ function buildUrbaRegistro(){
   const pasos=curUrbaD==='A'?URBA_A:URBA_B;
   const steps=pasos.map((paso,i)=>{
     const ps=s[i]||{av:0,ini:'',fin:'',nota:''};
-    const pKey=`urba|${curUrbaD}|${i}`;
+    var pKey="urba|"+curUrbaD+"|"+i;
     const id=pKey.replace(/\|/g,'_');
     const tagClass=ps.av>=100?'tag-done':ps.av>0?'tag-prog':'tag-pend';
     const tagLabel=ps.av>=100?'Listo':ps.av>0?ps.av+'%':'Pendiente';
-    return `<div class="urba-step">
-      <div class="urba-step-name">${i+1}. ${paso.n}</div>
+    return "<div class="urba-step">
+      <div class="urba-step-name">"+(i+1)+". "+(paso.n)+"</div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-        <span class="tag ${tagClass}" id="tag_${id}">${tagLabel}</span>
-        <span style="font-size:10px;color:var(--txt3);">Plan: ${paso.i} → ${paso.f}</span>
+        <span class="tag "+(tagClass)+"" id="tag_"+(id)+"">"+(tagLabel)+"</span>
+        <span style="font-size:10px;color:var(--txt3);">Plan: "+(paso.i)+" → "+(paso.f)+"</span>
       </div>
       <div class="step-dates" style="margin-bottom:8px;">
-        <div class="date-field"><div class="date-lbl">Inicio real</div><input class="date-inp" type="date" value="${ps.ini}" onchange="state['${k}'][${i}].ini=this.value"/></div>
-        <div class="date-field"><div class="date-lbl">Fin real</div><input class="date-inp" type="date" value="${ps.fin}" onchange="state['${k}'][${i}].fin=this.value"/></div>
+        <div class="date-field"><div class="date-lbl">Inicio real</div><input class="date-inp" type="date" value=""+(ps.ini)+"" onchange="state['"+(k)+"']["+(i)+"].ini=this.value"/></div>
+        <div class="date-field"><div class="date-lbl">Fin real</div><input class="date-inp" type="date" value=""+(ps.fin)+"" onchange="state['"+(k)+"']["+(i)+"].fin=this.value"/></div>
       </div>
       <div class="pct-row">
         <span class="pct-lbl">Avance</span>
-        <input class="pct-slider" type="range" min="0" max="100" step="5" value="${ps.av}" id="sl_${id}"
-          oninput="onSlUrba(this,'${id}','${k}',${i})"
-          style="background:linear-gradient(to right,#185FA5 0%,#185FA5 ${ps.av}%,#EFEFED ${ps.av}%,#EFEFED 100%)"/>
-        <span class="pct-val" id="pv_${id}" style="color:#185FA5;">${ps.av}%</span>
+        <input class="pct-slider" type="range" min="0" max="100" step="5" value=""+(ps.av)+"" id="sl_"+(id)+""
+          oninput="onSlUrba(this,'"+(id)+"','"+(k)+"',"+(i)+")"
+          style="background:linear-gradient(to right,#185FA5 0%,#185FA5 "+(ps.av)+"%,#EFEFED "+(ps.av)+"%,#EFEFED 100%)"/>
+        <span class="pct-val" id="pv_"+(id)+"" style="color:#185FA5;">"+(ps.av)+"%</span>
       </div>
-      <textarea class="notes-inp" rows="2" placeholder="Notas…" oninput="state['${k}'][${i}].nota=this.value">${ps.nota}</textarea>
+      <textarea class="notes-inp" rows="2" placeholder="Notas…" oninput="state['"+(k)+"']["+(i)+"].nota=this.value">"+(ps.nota)+"</textarea>
         <i class="ti ti-camera"></i>
       </button>
       </div>
-    </div>`;
+    </div>";
   }).join('');
-  document.getElementById('registro-content').innerHTML=`
-    <div class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i>Urbanización Distrito ${curUrbaD}</div>
+  document.getElementById('registro-content').innerHTML="
+    <div class="back-btn" onclick="goBack()"><i class="ti ti-arrow-left"></i>Urbanización Distrito "+(curUrbaD)+"</div>
     <div class="bod-detail-card" style="margin-bottom:12px;">
-      <div style="font-size:15px;font-weight:600;">Urbanización — Distrito ${curUrbaD}</div>
-      <div style="font-size:12px;color:var(--txt2);margin-top:2px;">${pasos.length} pasos a registrar</div>
-      <div style="margin-top:8px;font-size:11px;color:var(--txt2);"><i class="ti ti-user" style="font-size:11px;"></i> ${supervisor} · ${supRol}</div>
+      <div style="font-size:15px;font-weight:600;">Urbanización — Distrito "+(curUrbaD)+"</div>
+      <div style="font-size:12px;color:var(--txt2);margin-top:2px;">"+(pasos.length)+" pasos a registrar</div>
+      <div style="margin-top:8px;font-size:11px;color:var(--txt2);"><i class="ti ti-user" style="font-size:11px;"></i> "+(supervisor)+" · "+(supRol)+"</div>
     </div>
-    ${steps}`;
+    "+(steps)+"";
 }
 
 function onSlUrba(el,id,stateKey,idx){
   const val=parseInt(el.value);
-  el.style.background=`linear-gradient(to right,#185FA5 0%,#185FA5 ${val}%,#EFEFED ${val}%,#EFEFED 100%)`;
+  el.style.background="linear-gradient(to right,#185FA5 0%,#185FA5 "+val+"%,#EFEFED "+val+"%,#EFEFED 100%)";
   document.getElementById('pv_'+id).textContent=val+'%';
   const tag=document.getElementById('tag_'+id);
   if(tag){tag.className='tag '+(val>=100?'tag-done':val>0?'tag-prog':'tag-pend');tag.textContent=val>=100?'Listo':val>0?val+'%':'Pendiente';}
@@ -972,11 +972,11 @@ async function guardar(){
     if(curMode==='bodegas'){
       const k=sk();const s=state[k];
       distrito=curDist;cluster=curCluster;bodega=curBodega;
-      const ogKey=`${curDist}|${curCluster}|${curBodega}`;
+      const ogKey=curDist+"|"+curCluster+"|"+curBodega;
       const ogProcs=OG_DB[ogKey]||{};
       [0,1,2].forEach(pi=>{
         [0,1,2,3].forEach(si=>{
-          const pKey=`bod|${pi}|${si}`;
+          var pKey="bod|"+pi+"|"+si;
           filas.push({
             'Distrito':curDist,'Cluster':curCluster,'Bodega':curBodega,
             'Proceso':PROC_KEYS[pi],'Paso':['Montaje de estructura','Instalación de losacero','Armado de electromalla','Fundición','Montaje de tijeras','Costaneras','Canales','Enlaminado','Tablayeso + ventanas','Piso','Pintura','Puertas'][pi*4+si],
@@ -992,7 +992,7 @@ async function guardar(){
         const stateOG=s.og[proc]||[];
         pasos.forEach((paso,si)=>{
           const ps=stateOG[si]||{av:0,ini:'',fin:'',nota:''};
-          const pKey=`og|${ogi}|${si}`;
+          var pKey="og|"+ogi+"|"+si;
           filas.push({
             'Distrito':curDist,'Cluster':curCluster,'Bodega':curBodega,
             'Proceso':proc,'Paso':paso.p,
@@ -1010,7 +1010,7 @@ async function guardar(){
       distrito='Distrito '+curUrbaD;cluster='Urbanización';bodega='Urbanización';
       pasos.forEach((paso,i)=>{
         const ps=s[i]||{av:0,ini:'',fin:'',nota:''};
-        const pKey=`urba|${curUrbaD}|${i}`;
+        var pKey="urba|"+curUrbaD+"|"+i;
         filas.push({
           'Distrito':'Distrito '+curUrbaD,'Cluster':'Urbanización','Bodega':'Urbanización',
           'Proceso':'Urbanización','Paso':paso.n,
@@ -1053,7 +1053,7 @@ function stepCb(pKey,type,val){
 }
 function onSl2(el,id,color,pKey){
   const val=parseInt(el.value);
-  el.style.background=`linear-gradient(to right,${color} 0%,${color} ${val}%,#EFEFED ${val}%,#EFEFED 100%)`;
+  el.style.background="linear-gradient(to right,"+color+" 0%,"+color+" "+val+"%,#EFEFED "+val+"%,#EFEFED 100%)";
   document.getElementById('pv_'+id).textContent=val+'%';
   const tag=document.getElementById('tag_'+id);
   if(tag){tag.className='tag '+(val>=100?'tag-done':val>0?'tag-prog':'tag-pend');tag.textContent=val>=100?'Listo':val>0?val+'%':'Pendiente';}
