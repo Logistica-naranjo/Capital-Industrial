@@ -44,21 +44,37 @@ function CD2(){
   return n;
 }
 function CL(){
+  // Count bodegas that are behind schedule
   var n=0;
-  if(!LD2.filas)return 0;
-  LD2.filas.forEach(function(r){var av=parseFloat(r["% Avance"]||0),ini=r["Inicio Proyectado"]||"",fin=r["Fin Proyectado"]||"";if(ini&&fin&&SS(ini,fin,av)==="late")n++;});
+  ["Distrito A","Distrito B"].forEach(function(d){
+    Object.keys(DB[d]).forEach(function(cl){
+      DB[d][cl].forEach(function(b){
+        if(WS(d,cl,b)==="late")n++;
+      });
+    });
+  });
   return n;
 }
 function WS(d,cl,b){
-  var late=0,risk=0,ok=0;
-  if(!LD2.filas)return "pend";
-  LD2.filas.filter(function(r){return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b;}).forEach(function(r){
-    var av=parseFloat(r["% Avance"]||0),ini=r["Inicio Proyectado"]||"",fin=r["Fin Proyectado"]||"";
-    if(!ini||!fin)return;
-    var s=SS(ini,fin,av);
-    if(s==="late")late++;else if(s==="risk")risk++;else if(s==="ok"||s==="done")ok++;
-  });
-  if(late>0)return "late";if(risk>0)return "risk";if(ok>0)return "ok";return "pend";
+  // Use overall project timeline to determine expected progress
+  // Project: Jun 22 - Sep 24, 2026
+  // Distrito A clusters started earlier, B started later
+  var projStart=d==="Distrito A"?new Date("2026-06-22T00:00:00"):new Date("2026-07-22T00:00:00");
+  var projEnd=d==="Distrito A"?new Date("2026-08-28T00:00:00"):new Date("2026-09-24T00:00:00");
+  var totalMs=projEnd-projStart;
+  var elapsed=TODAY-projStart;
+  if(elapsed<0)return "pend"; // project hasn't started
+  var expectedPct=Math.min(100,Math.round(Math.max(0,elapsed/totalMs)*100));
+  var actualPct=WP(d,cl,b);
+  // No data yet
+  if(actualPct===0&&expectedPct<10)return "pend";
+  // Determine status based on gap
+  var gap=expectedPct-actualPct;
+  if(actualPct>=100)return "ok";
+  if(gap>=30)return "late";
+  if(gap>=15)return "risk";
+  if(actualPct>0||expectedPct>0)return "ok";
+  return "pend";
 }
 function ge(id){return document.getElementById(id);}
 function ce(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html)e.innerHTML=html;return e;}
