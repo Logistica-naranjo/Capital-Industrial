@@ -116,14 +116,35 @@ function RR(){
       "<div class=\"cl-l\" id=\"clb\"></div></div>"+
     "<div class=\"sec\">Avance por proceso</div><div class=\"cc2\">"+PAB()+"</div>";
 }
+function OGAvg(procKey){
+  // Calculate average % for an OG process across all bodegas
+  if(!LD2.filas)return 0;
+  var rows=LD2.filas.filter(function(r){return (r["Proceso"]||"").indexOf(procKey)>=0;});
+  if(!rows.length)return 0;
+  var tot=0;
+  rows.forEach(function(r){tot+=parseFloat(r["% Avance"]||0);});
+  return Math.round(tot/rows.length);
+}
+
 function PAB(){
   var h="";
+  // Standard processes
   PN.forEach(function(n,pi){
     var tot=0,cnt=0;
     ["Distrito A","Distrito B"].forEach(function(d){Object.keys(DB[d]).forEach(function(cl){DB[d][cl].forEach(function(b){tot+=PA(d,cl,b,pi);cnt++;});});});
     var avg=cnt?Math.round(tot/cnt):0;
-    h+="<div class=\"psr\"><span class=\"psn\">"+n+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg+"%;background:"+PC[pi]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+PC[pi]+"\">"+avg+"%</span></div>";
+    h+="<div class=\"psr\"><span class=\"psn\">"+n+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg+"%;background:"+PC[pi]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+PC[pi]+"\">" +avg+"%</span></div>";
   });
+  // Obra Gris processes
+  var ogKeys=["Cimentación","Muro Cifa","Levantado de block","Contrapisos","Instalaciones"];
+  for(var i=0;i<ON.length;i++){
+    var avg2=OGAvg(ogKeys[i]);
+    h+="<div class=\"psr\"><span class=\"psn\">"+ON[i]+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg2+"%;background:"+OC[i]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+OC[i]+"\">" +avg2+"%</span></div>";
+  }
+  // Urbanizacion
+  var urbaRows=(LD2.filas||[]).filter(function(r){return r["Proceso"]==="Urbanización";});
+  var urbaAvg=urbaRows.length?Math.round(urbaRows.reduce(function(s,r){return s+parseFloat(r["% Avance"]||0);},0)/urbaRows.length):0;
+  h+="<div class=\"psr\"><span class=\"psn\">Urbanización</span><div class=\"psb\"><div style=\"height:100%;width:"+urbaAvg+"%;background:#185FA5;border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:#185FA5\">"+urbaAvg+"%</span></div>";
   return h;
 }
 function TD(d){
