@@ -2,10 +2,10 @@
   "filas": [
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
-      "Paso": "FinalizaciÃÂ³n base suelo cemento",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
+      "Paso": "FinalizaciÃÂÃÂ³n base suelo cemento",
       "% Avance": "25",
       "Inicio Real": "",
       "Fin Real": "",
@@ -16,9 +16,9 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
       "Paso": "Contrapiso de calles",
       "% Avance": "40",
       "Inicio Real": "",
@@ -30,9 +30,9 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
       "Paso": "Banquetas",
       "% Avance": "50",
       "Inicio Real": "",
@@ -44,9 +44,9 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
       "Paso": "Muro perimetral Cifarreja",
       "% Avance": "60",
       "Inicio Real": "",
@@ -58,10 +58,10 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
-      "Paso": "Muros de contenciÃÂ³n",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
+      "Paso": "Muros de contenciÃÂÃÂ³n",
       "% Avance": "55",
       "Inicio Real": "",
       "Fin Real": "",
@@ -72,10 +72,10 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
-      "Paso": "Pintura y seÃÂ±alizaciÃÂ³n en calles",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
+      "Paso": "Pintura y seÃÂÃÂ±alizaciÃÂÃÂ³n en calles",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -86,9 +86,9 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
       "Paso": "Garita",
       "% Avance": "0",
       "Inicio Real": "",
@@ -100,10 +100,10 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
-      "Paso": "Trabajos de herrerÃÂ­a",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
+      "Paso": "Trabajos de herrerÃÂÃÂ­a",
       "% Avance": "40",
       "Inicio Real": "",
       "Fin Real": "",
@@ -114,9 +114,9 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
       "Paso": "Planta de tratamiento",
       "% Avance": "0",
       "Inicio Real": "",
@@ -128,9 +128,9 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
       "Paso": "Cisterna",
       "% Avance": "0",
       "Inicio Real": "",
@@ -142,10 +142,10 @@
     },
     {
       "Distrito": "Distrito A",
-      "Cluster": "UrbanizaciÃÂ³n",
-      "Bodega": "UrbanizaciÃÂ³n",
-      "Proceso": "UrbanizaciÃÂ³n",
-      "Paso": "Pozo mecÃÂ¡nico",
+      "Cluster": "UrbanizaciÃÂÃÂ³n",
+      "Bodega": "UrbanizaciÃÂÃÂ³n",
+      "Proceso": "UrbanizaciÃÂÃÂ³n",
+      "Paso": "Pozo mecÃÂÃÂ¡nico",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -173,7 +173,7 @@
       "Cluster": "Cluster 2",
       "Bodega": "Bodega 29",
       "Proceso": "Mezaninne y Techados",
-      "Paso": "InstalaciÃ³n de losacero",
+      "Paso": "InstalaciÃÂ³n de losacero",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -201,7 +201,7 @@
       "Cluster": "Cluster 2",
       "Bodega": "Bodega 29",
       "Proceso": "Mezaninne y Techados",
-      "Paso": "FundiciÃ³n",
+      "Paso": "FundiciÃÂ³n",
       "% Avance": "0",
       "Inicio Real": "",
       "Fin Real": "",
@@ -326,8 +326,8 @@
       "Distrito": "Distrito A",
       "Cluster": "Cluster 2",
       "Bodega": "Bodega 29",
-      "Proceso": "CimentaciÃ³n",
-      "Paso": "CimentaciÃ³n",
+      "Proceso": "CimentaciÃÂ³n",
+      "Paso": "CimentaciÃÂ³n",
       "% Avance": "100",
       "Inicio Real": "",
       "Fin Real": "",
@@ -404,7 +404,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -418,7 +418,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -432,7 +432,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -446,7 +446,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -460,7 +460,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -474,7 +474,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -488,7 +488,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -502,7 +502,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -516,7 +516,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -530,7 +530,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -544,7 +544,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -558,7 +558,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -572,7 +572,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -586,7 +586,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -600,7 +600,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -614,7 +614,7 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     },
     {
       "Distrito": "Distrito A",
@@ -628,8 +628,8 @@
       "Notas": "",
       "Supervisor": "Saul Mendez",
       "Rol": "Residente de obra",
-      "Ultima actualizacion": "2026-07-03T21:59:42.640Z"
+      "Ultima actualizacion": "2026-07-03T22:00:18.375Z"
     }
   ],
-  "ultima_actualizacion": "2026-07-03T21:59:43.875Z"
+  "ultima_actualizacion": "2026-07-03T22:00:19.266Z"
 }
