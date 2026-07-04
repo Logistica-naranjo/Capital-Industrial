@@ -513,9 +513,10 @@ async function guardar(){
   btn.classList.add("saving");
   btn.innerHTML="<i class=\"ti ti-loader\" style=\"animation:spin .8s linear infinite;\"></i> Guardando…";
   // Refresh liveData before saving to prevent overwriting concurrent changes
+  console.log("Refrescando datos antes de guardar...");
   try{
     var freshRes=await fetch(DATA_URL+"?t="+Date.now());
-    if(freshRes.ok)liveData=await freshRes.json();
+    if(freshRes.ok){liveData=await freshRes.json();console.log("Datos refrescados, filas:",liveData.filas?liveData.filas.length:0);}
   }catch(e){console.log("No se pudo refrescar datos, continuando...");}
   var filas=[];
   var distrito="",cluster="",bodega="";
@@ -547,12 +548,15 @@ async function guardar(){
       filas.push({"Distrito":"Distrito "+curUrbaD,"Cluster":"Urbanización","Bodega":"Urbanización","Proceso":"Urbanización","Paso":pasos3[i].n,"% Avance":String(ps3.av||0),"Inicio Real":ps3.ini||"","Fin Real":ps3.fin||"","Notas":ps3.nota||"","Supervisor":sup,"Rol":supRol,"Ultima actualizacion":new Date().toISOString()});
     }
   }
+  console.log("Enviando a Worker:", distrito, cluster, bodega, filas.length, "filas");
   try{
     var res=await fetch(WORKER,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({distrito:distrito,cluster:cluster,bodega:bodega,filas:filas})});
+    console.log("Worker respondió status:", res.status);
     var result=await res.json();
+    console.log("Worker resultado:", JSON.stringify(result));
     if(result.ok){toast("Avances guardados","ok");setTimeout(function(){goBack();},1500);}
-    else{toast("Error al guardar","err");console.log(result.error);}
-  }catch(e){toast("Error de conexión","err");console.log(e);}
+    else{toast("Error al guardar","err");console.log("Error Worker:",result.error);}
+  }catch(e){toast("Error de conexión","err");console.log("Exception:",e.message,e);}
   btn.classList.remove("saving");
   btn.innerHTML="<i class=\"ti ti-device-floppy\"></i> Guardar avances";
 }
