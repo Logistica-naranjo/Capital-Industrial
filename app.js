@@ -25,7 +25,9 @@ function SS(ini,fin,av){
 }
 function GR2(d,cl,b,pk){
   if(!LD2.filas)return [];
-  return LD2.filas.filter(function(r){return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&(r["Proceso"]||"").indexOf(pk)>=0;});
+  return LD2.filas.filter(function(r){
+    return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&normProc(r["Proceso"]||"").indexOf(pk)>=0;
+  });
 }
 function PA(d,cl,b,pi){
   var rows=GR2(d,cl,b,PK[pi]);
@@ -116,10 +118,17 @@ function RR(){
       "<div class=\"cl-l\" id=\"clb\"></div></div>"+
     "<div class=\"sec\">Avance por proceso</div><div class=\"cc2\">"+PAB()+"</div>";
 }
+function normProc(s){
+  // Normalize process name to handle encoding variants
+  if(!s)return "";
+  return s.replace(/Ã³/g,"ó").replace(/Ã©/g,"é").replace(/Ã/g,"í").replace(/Ã±/g,"ñ").replace(/Ã¡/g,"á").replace(/Ã¼/g,"ü");
+}
 function OGAvg(procKey){
-  // Calculate average % for an OG process across all bodegas
   if(!LD2.filas)return 0;
-  var rows=LD2.filas.filter(function(r){return (r["Proceso"]||"").indexOf(procKey)>=0;});
+  var rows=LD2.filas.filter(function(r){
+    var p=normProc(r["Proceso"]||"");
+    return p.indexOf(procKey)>=0;
+  });
   if(!rows.length)return 0;
   var tot=0;
   rows.forEach(function(r){tot+=parseFloat(r["% Avance"]||0);});
