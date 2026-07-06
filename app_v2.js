@@ -627,8 +627,7 @@ function PAB(){
   var ogKeys=["Cimentacion","Muro Cifa","Levantado de Block","Contrapisos","Inst. Electricas"];
   for(var i=0;i<ON.length;i++){
     var avg2=OGAvg(ogKeys[i]);
-    var completed2=Math.round(avg2*56/100);
-    h+="<div class=\"psr\"><span class=\"psn\">"+ON[i]+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg2+"%;background:"+OC[i]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+OC[i]+"\">"+completed2+"/56</span></div>";
+    h+="<div class=\"psr\"><span class=\"psn\">"+ON[i]+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg2+"%;background:"+OC[i]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+OC[i]+"\">" +avg2+"%</span></div>";
   }
   // Urbanizacion
   var urbaRows=(LD2.filas||[]).filter(function(r){return r["Proceso"]==="Urbanización";});
