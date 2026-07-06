@@ -1,4 +1,4 @@
-var DU="https://raw.githubusercontent.com/Logistica-naranjo/Capital-Industrial/main/data.json";
+var DU="https://logistica-naranjo-api.j-solares.workers.dev/data";
 var TODAY=new Date();
 var PN=["Mezanines y Techados","Estructura Principal","Acabados"];
 var PC=["#E07B2A","#185FA5","#1D9E75"];
@@ -771,7 +771,7 @@ function RRK2(){
 }
 async function LD3(){
   try{
-    var res=await fetch(DU+"?t="+Date.now());
+    var res=await fetch(DU+"?t="+Date.now(),{cache:"no-store"});
     if(!res.ok)throw new Error("HTTP "+res.status);
     LD2=await res.json();
     var upd=LD2.ultima_actualizacion;
