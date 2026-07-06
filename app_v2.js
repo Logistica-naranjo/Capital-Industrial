@@ -592,16 +592,26 @@ function normProc(s){
   return r;
 }
 function OGAvg(procKey){
+  // % of bodegas with 100% completion in this process out of 56 total
   if(!LD2.filas)return 0;
   var normKey=normProc(procKey);
-  var rows=LD2.filas.filter(function(r){
+  var TOTAL_BODEGAS=56;
+  // Group by bodega and get average per bodega
+  var bodMap={};
+  LD2.filas.forEach(function(r){
     var p=normProc(r["Proceso"]||"");
-    return p.indexOf(normKey)>=0;
+    if(p.indexOf(normKey)<0)return;
+    var k=r["Distrito"]+"|"+r["Cluster"]+"|"+r["Bodega"];
+    if(!bodMap[k]){bodMap[k]={tot:0,cnt:0};}
+    bodMap[k].tot+=parseFloat(r["% Avance"]||0);
+    bodMap[k].cnt++;
   });
-  if(!rows.length)return 0;
-  var tot=0;
-  rows.forEach(function(r){tot+=parseFloat(r["% Avance"]||0);});
-  return Math.round(tot/rows.length);
+  var completed=0;
+  Object.keys(bodMap).forEach(function(k){
+    var avg=bodMap[k].cnt?Math.round(bodMap[k].tot/bodMap[k].cnt):0;
+    if(avg>=100)completed++;
+  });
+  return Math.round(completed/TOTAL_BODEGAS*100);
 }
 
 function PAB(){
@@ -617,7 +627,8 @@ function PAB(){
   var ogKeys=["Cimentacion","Muro Cifa","Levantado de Block","Contrapisos","Inst. Electricas"];
   for(var i=0;i<ON.length;i++){
     var avg2=OGAvg(ogKeys[i]);
-    h+="<div class=\"psr\"><span class=\"psn\">"+ON[i]+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg2+"%;background:"+OC[i]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+OC[i]+"\">" +avg2+"%</span></div>";
+    var completed2=Math.round(avg2*56/100);
+    h+="<div class=\"psr\"><span class=\"psn\">"+ON[i]+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg2+"%;background:"+OC[i]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+OC[i]+"\">"+completed2+"/56</span></div>";
   }
   // Urbanizacion
   var urbaRows=(LD2.filas||[]).filter(function(r){return r["Proceso"]==="Urbanización";});
