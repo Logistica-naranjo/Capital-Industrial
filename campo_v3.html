@@ -234,15 +234,29 @@ function setUrbaD(d){
   ge("ub-B").classList.toggle("on",d==="B");
 }
 
+function getOGBod(d,cl,b,procKey){
+  if(!liveData.filas)return 0;
+  var rows=liveData.filas.filter(function(r){
+    return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&
+      (r["Proceso"]||"").toLowerCase().indexOf(procKey.toLowerCase())>=0;
+  });
+  if(!rows.length)return 0;
+  return Math.round(rows.reduce(function(s,r){return s+parseFloat(r["% Avance"]||0);},0)/rows.length);
+}
 function getWHPct(d,cl,b){
   if(!liveData.filas)return 0;
-  var tot=0;
+  var mez=0,est=0,acab=0;
   for(var pi=0;pi<3;pi++){
     var rows=liveData.filas.filter(function(r){return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&(r["Proceso"]||"").indexOf(PK[pi])>=0;});
     var avg=rows.length?Math.round(rows.reduce(function(s,r){return s+parseFloat(r["% Avance"]||0);},0)/rows.length):0;
-    tot+=avg;
+    if(pi===0)mez=avg;else if(pi===1)est=avg;else acab=avg;
   }
-  return Math.round(tot/3);
+  var cim=getOGBod(d,cl,b,"Cimentacion");
+  var cifa=getOGBod(d,cl,b,"Muro Cifa");
+  var block=getOGBod(d,cl,b,"Levantado de Block");
+  var contra=getOGBod(d,cl,b,"Contrapisos");
+  var elec=getOGBod(d,cl,b,"Inst. Electricas");
+  return Math.round(mez*0.15+est*0.15+acab*0.10+cim*0.12+cifa*0.10+block*0.05+contra*0.12+elec*0.05);
 }
 
 function buildClusters(){
@@ -375,13 +389,22 @@ function getWHPctState(){
   var k=sk();
   var s=state[k];
   if(!s)return 0;
-  var tot=0;
-  for(var pi=0;pi<3;pi++){
-    var sum=0;
-    for(var si=0;si<4;si++){sum+=s.p[pi][si];}
-    tot+=Math.round(sum/4);
+  // Standard processes avg per process
+  var mez=Math.round((s.p[0][0]+s.p[0][1]+s.p[0][2]+s.p[0][3])/4);
+  var est=Math.round((s.p[1][0]+s.p[1][1]+s.p[1][2]+s.p[1][3])/4);
+  var acab=Math.round((s.p[2][0]+s.p[2][1]+s.p[2][2]+s.p[2][3])/4);
+  // OG processes avg
+  var ogKeys=["Cimentacion","Muro Cifa","Levantado de Block","Contrapisos","Inst. Electricas"];
+  var ogWeights=[0.12,0.10,0.05,0.12,0.05];
+  var ogTotal=0;
+  for(var i=0;i<ogKeys.length;i++){
+    var proc=Object.keys(s.og||{}).find(function(p){return p.toLowerCase().indexOf(ogKeys[i].toLowerCase())>=0;});
+    if(proc&&s.og[proc]&&s.og[proc].length){
+      var ogAvg=Math.round(s.og[proc].reduce(function(a,p){return a+(p.av||0);},0)/s.og[proc].length);
+      ogTotal+=ogAvg*ogWeights[i];
+    }
   }
-  return Math.round(tot/3);
+  return Math.round(mez*0.15+est*0.15+acab*0.10+ogTotal);
 }
 
 function buildBodegaReg(){
