@@ -484,7 +484,34 @@ function PA(d,cl,b,pi){
   rows.forEach(function(r){s+=parseFloat(r["% Avance"]||0);});
   return Math.round(s/rows.length);
 }
-function WP(d,cl,b){return Math.round((PA(d,cl,b,0)+PA(d,cl,b,1)+PA(d,cl,b,2))/3);}
+function OGBod(d,cl,b,procKey){
+  // Get OG process % for a specific bodega
+  if(!LD2.filas)return 0;
+  var normKey=normProc(procKey);
+  var rows=LD2.filas.filter(function(r){
+    return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&
+      normProc(r["Proceso"]||"").indexOf(normKey)>=0;
+  });
+  if(!rows.length)return 0;
+  return Math.round(rows.reduce(function(s,r){return s+parseFloat(r["% Avance"]||0);},0)/rows.length);
+}
+function WP(d,cl,b){
+  // Weighted average per bodega using same weights as total project
+  var mez=PA(d,cl,b,0);
+  var est=PA(d,cl,b,1);
+  var acab=PA(d,cl,b,2);
+  var cim=OGBod(d,cl,b,"Cimentacion");
+  var cifa=OGBod(d,cl,b,"Muro Cifa");
+  var block=OGBod(d,cl,b,"Levantado de Block");
+  var contra=OGBod(d,cl,b,"Contrapisos");
+  var elec=OGBod(d,cl,b,"Inst. Electricas");
+  return Math.round(
+    mez*0.15 + est*0.15 + acab*0.10 +
+    cim*0.12 + cifa*0.10 + block*0.05 +
+    contra*0.12 + elec*0.05
+  );
+  // Note: Urbanización is not per-bodega so not included here
+}
 function CP(d,cl){var bs=DB[d][cl];return Math.round(bs.reduce(function(s,b){return s+WP(d,cl,b);},0)/bs.length);}
 function DP(d){var cls=Object.keys(DB[d]);return Math.round(cls.reduce(function(s,cl){return s+CP(d,cl);},0)/cls.length);}
 function TP(){
