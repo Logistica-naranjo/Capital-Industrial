@@ -487,7 +487,39 @@ function PA(d,cl,b,pi){
 function WP(d,cl,b){return Math.round((PA(d,cl,b,0)+PA(d,cl,b,1)+PA(d,cl,b,2))/3);}
 function CP(d,cl){var bs=DB[d][cl];return Math.round(bs.reduce(function(s,b){return s+WP(d,cl,b);},0)/bs.length);}
 function DP(d){var cls=Object.keys(DB[d]);return Math.round(cls.reduce(function(s,cl){return s+CP(d,cl);},0)/cls.length);}
-function TP(){return Math.round((DP("Distrito A")*36+DP("Distrito B")*20)/56);}
+function TP(){
+  // Weighted average across all processes
+  // Standard processes: avg across all 56 bodegas
+  var mez=0,est=0,acab=0,tot=0,cnt=0;
+  ["Distrito A","Distrito B"].forEach(function(d){
+    Object.keys(DB[d]).forEach(function(cl){
+      DB[d][cl].forEach(function(b){
+        mez+=PA(d,cl,b,0);
+        est+=PA(d,cl,b,1);
+        acab+=PA(d,cl,b,2);
+        cnt++;
+      });
+    });
+  });
+  var avgMez=cnt?Math.round(mez/cnt):0;
+  var avgEst=cnt?Math.round(est/cnt):0;
+  var avgAcab=cnt?Math.round(acab/cnt):0;
+  // OG processes
+  var avgCim=OGAvg("Cimentacion");
+  var avgCifa=OGAvg("Muro Cifa");
+  var avgBlock=OGAvg("Levantado de Block");
+  var avgContra=OGAvg("Contrapisos");
+  var avgElec=OGAvg("Inst. Electricas");
+  // Urbanización: average of all urba rows
+  var urbaRows=(LD2.filas||[]).filter(function(r){return r["Proceso"]==="Urbanización";});
+  var avgUrba=urbaRows.length?Math.round(urbaRows.reduce(function(s,r){return s+parseFloat(r["% Avance"]||0);},0)/urbaRows.length):0;
+  // Weighted total
+  return Math.round(
+    avgMez*0.15 + avgEst*0.15 + avgAcab*0.10 +
+    avgCim*0.12 + avgCifa*0.10 + avgBlock*0.05 +
+    avgContra*0.12 + avgElec*0.05 + avgUrba*0.16
+  );
+}
 function CD2(){
   var n=0;
   ["Distrito A","Distrito B"].forEach(function(d){Object.keys(DB[d]).forEach(function(cl){DB[d][cl].forEach(function(b){if(WP(d,cl,b)===100)n++;});});});
@@ -562,7 +594,7 @@ function RR(){
   var pA=DP("Distrito A"),pB=DP("Distrito B");
   ge("s-r").innerHTML=
     "<div class=\"kg\">"+
-    "<div class=\"kc\"><div class=\"ki\" style=\"color:var(--or)\"><i class=\"ti ti-trending-up\"></i></div><div class=\"kv\" style=\"color:var(--or)\">"+TP()+"%</div><div class=\"kl\">Avance total</div></div>"+
+    "<div class=\"kc\"><div class=\"ki\" style=\"color:var(--or)\"><i class=\"ti ti-trending-up\"></i></div><div class=\"kv\" style=\"color:var(--or)\">"+TP()+"%</div><div class=\"kl\">Avance total ponderado</div></div>"+
     "<div class=\"kc\"><div class=\"ki\" style=\"color:var(--green)\"><i class=\"ti ti-circle-check\"></i></div><div class=\"kv\" style=\"color:var(--green)\">"+CD2()+"/56</div><div class=\"kl\">Bodegas completas</div></div>"+
     "<div class=\"kc\"><div class=\"ki\" style=\"color:var(--blue)\"><i class=\"ti ti-building-warehouse\"></i></div><div class=\"kv\" style=\"color:var(--blue)\">56</div><div class=\"kl\">Total bodegas</div></div>"+
     "<div class=\"kc\"><div class=\"ki\" style=\"color:var(--red)\"><i class=\"ti ti-alert-circle\"></i></div><div class=\"kv\" style=\"color:var(--red)\">"+CL()+"</div><div class=\"kl\">Pasos atrasados</div></div>"+
