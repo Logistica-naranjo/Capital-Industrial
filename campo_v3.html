@@ -651,6 +651,7 @@ document.addEventListener("input",function(e){
     if(state[k3].og[proc]&&state[k3].og[proc][si3]){state[k3].og[proc][si3].av=val2;}
     el.style.background="linear-gradient(to right,"+color2+" 0%,"+color2+" "+val2+"%,#EFEFED "+val2+"%,#EFEFED 100%)";
     var pv2=ge("pv-og-"+ogi+"-"+si3);if(pv2){pv2.textContent=val2+"%";}
+    updatePctHdr();
   } else if(type==="og-nota"){
     var ogi2=parseInt(el.getAttribute("data-ogi"));
     var si4=parseInt(el.getAttribute("data-si"));
