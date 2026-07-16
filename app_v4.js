@@ -135,19 +135,35 @@ function procStatus(ini,fin,av){
 }
 function WS(d,cl,b){
   var late=0,risk=0,ok=0,pend=0;
-  var allProcs=["Cimentacion","Muro Cifa","Levantado de Block en Fachadas","Contrapisos","Inst. Electricas Bodegas","Mezanines y Techados","Estructura Principal","Acabados"];
+  // All processes in new cronograma
+  var allProcs=[
+    "Cimentacion","Muro Cifa","Levantado de Block en Fachada",
+    "Contrapisos","Inst. Electricas","Mezanines y Techados",
+    "Estructura Principal","Acabados","Muro Nailing",
+    "Fundicion de Piso","Muro de Contencion","Muro de Culata"
+  ];
   var filas=LD2.filas||[];
   for(var pi=0;pi<allProcs.length;pi++){
     var proc=allProcs[pi];
     var normP=normProc(proc);
-    // Get actual % from data.json
-    var rows=filas.filter(function(r){return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&normProc(r["Proceso"]||"").indexOf(normP)>=0;});
+    // Get actual % from live data
+    var rows=filas.filter(function(r){
+      return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&
+        normProc(r["Proceso"]||"").indexOf(normP)>=0;
+    });
     var av=rows.length?Math.round(rows.reduce(function(s,r){return s+parseFloat(r["% Avance"]||0);},0)/rows.length):0;
-    // Get plan dates — direct key lookup
-    var planKey=d+"|"+cl+"|"+b+"|"+proc;
+    // PLAN key format: "Distrito A|Cluster 1|Bodega 34|Cimentacion|Cimentacion"
+    var planKey=d+"|"+cl+"|Bodega "+b.replace("Bodega ","")+"|"+proc+"|"+proc;
     var planEntry=PLAN[planKey];
+    // If not found try without paso (OG processes use same name for proceso and paso)
+    if(!planEntry){
+      // Search all PLAN keys matching distrito+cluster+bodega+proceso
+      var prefix=d+"|"+cl+"|Bodega "+b.replace("Bodega ","")+"|"+proc+"|";
+      var found=Object.keys(PLAN).find(function(k){return k.indexOf(prefix)===0;});
+      if(found)planEntry=PLAN[found];
+    }
     if(!planEntry){pend++;continue;}
-    var st=procStatus(planEntry.i,planEntry.f,av);
+    var st=procStatus(planEntry.ini,planEntry.fin,av);
     if(st==="late")late++;
     else if(st==="risk")risk++;
     else if(st==="ok")ok++;
