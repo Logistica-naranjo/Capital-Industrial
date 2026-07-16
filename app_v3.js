@@ -231,14 +231,25 @@ function OGAvg(procKey){
 
 function PAB(){
   var h="";
-  // Standard processes
-  var SN=["Mezanines y Techados","Estructura Principal","Acabados"];
-  var SC=[["#E07B2A","#C4621A"],["#185FA5","#0E3F73"],["#1D9E75","#145F47"]];
-  for(var i=0;i<3;i++){
-    var avg=Math.round((DP2(SN[i],0)+DP2(SN[i],1))/2);
-    h+="<div class=\"psr\"><span class=\"psn\">"+SN[i]+"</span><div class=\"psb\"><div style=\"height:100%;width:"+avg+"%;background:"+SC[i][0]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+SC[i][0]+"\">"+avg+"%</span></div>";
+  // Standard processes: average across all bodegas using PA()
+  var SN=[["Mezanines y Techados",0],["Estructura Principal",1],["Acabados",2]];
+  var SL=["Mezanines y Techados","Estructura Principal","Acabados"];
+  var SW=["15%","15%","10%"];
+  var SC=["#E07B2A","#185FA5","#1D9E75"];
+  for(var i=0;i<SN.length;i++){
+    var tot=0,cnt=0;
+    ["Distrito A","Distrito B"].forEach(function(d){
+      Object.keys(DB[d]).forEach(function(cl){
+        DB[d][cl].forEach(function(b){
+          tot+=PA(d,cl,b,SN[i][1]);
+          cnt++;
+        });
+      });
+    });
+    var avg=cnt?Math.round(tot/cnt):0;
+    h+="<div class=\"psr\"><span class=\"psn\">"+SL[i]+" <small style=\"opacity:.6\">("+SW[i]+")</small></span><div class=\"psb\"><div style=\"height:100%;width:"+avg+"%;background:"+SC[i]+";border-radius:4px;\"></div></div><span class=\"psp\" style=\"color:"+SC[i]+"\">"+avg+"%</span></div>";
   }
-  // OG processes with weights
+  // OG processes
   var ON=["Cimentacion","Muro Cifa","Levantado de Block en Fachada","Contrapisos","Inst. Electricas","Muro Nailing","Fundicion de Piso","Muro de Contencion","Muro de Culata"];
   var OL=["Cimentación","Muro Cifa","Block en Fachada","Contrapisos","Inst. Eléctricas","Muro Nailing","Fundición de Piso","Muro de Contención","Muro de Culata"];
   var OW=["10%","8%","5%","11%","5%","2%","5%","1%","1%"];
