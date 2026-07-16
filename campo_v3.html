@@ -272,7 +272,7 @@ function buildClusters(){
   for(var i=0;i<cls.length;i++){
     var cl=cls[i];
     var on=cl===curCluster?" on":"";
-    h+="<div class=\"cl-chip"+on+"\" onclick=\"selectCluster('"+cl+"')\">";
+    h+="<div class=\"cl-chip"+on+"\" data-cl=\""+cl+"\">";
     h+="<div class=\"cl-chip-n\">"+cl+"</div>";
     h+="</div>";
   }
