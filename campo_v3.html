@@ -185,7 +185,7 @@ function toast(msg,type){
   setTimeout(function(){t.classList.remove("on");},2800);
 }
 
-function login(){
+async function login(){
   var name=ge("login-name").value.trim();
   var rol=ge("login-rol").value;
   if(!name){toast("Ingresa tu nombre","err");return;}
@@ -193,7 +193,8 @@ function login(){
   sup=name; supRol=rol;
   ge("sup-badge").style.display="flex";
   ge("sup-name").textContent=name.split(" ")[0];
-  loadData();
+  toast("Cargando datos...","ok");
+  await loadData();
   showScr("sel");
   setDist("A");
 }
@@ -300,8 +301,9 @@ function buildBodegas(){
   ge("bod-grid").innerHTML=h;
 }
 
-function openBodega(b){
+async function openBodega(b){
   curBodega=b;
+  await loadData();
   initStateBodega();
   buildBodegaReg();
   showScr("reg");
