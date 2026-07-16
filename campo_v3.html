@@ -253,30 +253,15 @@ function getWHPct(d,cl,b){
   }
   var cim=getOGBod(d,cl,b,"Cimentacion");
   var cifa=getOGBod(d,cl,b,"Muro Cifa");
-  var block=getOGBod(d,cl,b,"Levantado de Block");
+  var block=getOGBod(d,cl,b,"Levantado de Block en Fachada");
   var contra=getOGBod(d,cl,b,"Contrapisos");
   var elec=getOGBod(d,cl,b,"Inst. Electricas");
-  return Math.round(mez*0.15+est*0.15+acab*0.10+cim*0.12+cifa*0.10+block*0.05+contra*0.12+elec*0.05);
+  var nailing=getOGBod(d,cl,b,"Muro Nailing");
+  var fund=getOGBod(d,cl,b,"Fundicion de Piso");
+  var contMur=getOGBod(d,cl,b,"Muro de Contencion");
+  var culata=getOGBod(d,cl,b,"Muro de Culata");
+  return Math.round(mez*0.15+est*0.15+acab*0.10+cim*0.10+cifa*0.08+block*0.05+contra*0.11+elec*0.05+nailing*0.02+fund*0.05+contMur*0.01+culata*0.01);
 }
-
-function buildClusters(){
-  var h="";
-  var cls=Object.keys(DB[curDist]);
-  for(var i=0;i<cls.length;i++){
-    var cl=cls[i];
-    var bods=DB[curDist][cl];
-    var tot=0;
-    for(var j=0;j<bods.length;j++){tot+=getWHPct(curDist,cl,bods[j]);}
-    var avg=Math.round(tot/bods.length);
-    var ac=cl===curCluster?" on":"";
-    h+="<div class=\"cl-chip"+ac+"\" data-cl=\""+cl+"\">";
-    h+="<div class=\"cl-chip-n\">"+cl.replace("Cluster ","C")+"</div>";
-    h+="<div style=\"font-size:10px;color:var(--txt3);margin-top:2px;\">"+avg+"%</div>";
-    h+="</div>";
-  }
-  ge("cl-grid").innerHTML=h;
-}
-
 function selectCluster(cl){
   curCluster=cl;
   buildClusters();
@@ -389,13 +374,11 @@ function getWHPctState(){
   var k=sk();
   var s=state[k];
   if(!s)return 0;
-  // Standard processes avg per process
   var mez=Math.round((s.p[0][0]+s.p[0][1]+s.p[0][2]+s.p[0][3])/4);
   var est=Math.round((s.p[1][0]+s.p[1][1]+s.p[1][2]+s.p[1][3])/4);
   var acab=Math.round((s.p[2][0]+s.p[2][1]+s.p[2][2]+s.p[2][3])/4);
-  // OG processes avg
-  var ogKeys=["Cimentacion","Muro Cifa","Levantado de Block","Contrapisos","Inst. Electricas"];
-  var ogWeights=[0.12,0.10,0.05,0.12,0.05];
+  var ogKeys=["Cimentacion","Muro Cifa","Levantado de Block en Fachada","Contrapisos","Inst. Electricas","Muro Nailing","Fundicion de Piso","Muro de Contencion","Muro de Culata"];
+  var ogWeights=[0.10,0.08,0.05,0.11,0.05,0.02,0.05,0.01,0.01];
   var ogTotal=0;
   for(var i=0;i<ogKeys.length;i++){
     var proc=Object.keys(s.og||{}).find(function(p){return p.toLowerCase().indexOf(ogKeys[i].toLowerCase())>=0;});
@@ -406,7 +389,6 @@ function getWHPctState(){
   }
   return Math.round(mez*0.15+est*0.15+acab*0.10+ogTotal);
 }
-
 function buildBodegaReg(){
   var k=sk();
   var s=state[k];
