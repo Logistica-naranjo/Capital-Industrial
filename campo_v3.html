@@ -262,6 +262,19 @@ function getWHPct(d,cl,b){
   var culata=getOGBod(d,cl,b,"Muro de Culata");
   return Math.round(mez*0.15+est*0.15+acab*0.10+cim*0.10+cifa*0.08+block*0.05+contra*0.11+elec*0.05+nailing*0.02+fund*0.05+contMur*0.01+culata*0.01);
 }
+function buildClusters(){
+  if(!curDist||!DB[curDist])return;
+  var cls=Object.keys(DB[curDist]);
+  var h="";
+  for(var i=0;i<cls.length;i++){
+    var cl=cls[i];
+    var on=cl===curCluster?" on":"";
+    h+="<div class=\"cl-chip"+on+"\" onclick=\"selectCluster('"+cl+"')\">";
+    h+="<div class=\"cl-chip-n\">"+cl+"</div>";
+    h+="</div>";
+  }
+  ge("cl-grid").innerHTML=h;
+}
 function selectCluster(cl){
   curCluster=cl;
   buildClusters();
