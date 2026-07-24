@@ -48,24 +48,48 @@ function OGBod(d,cl,b,procKey){
   return Math.round(rows.reduce(function(s,r){return s+parseFloat(r["% Avance"]||0);},0)/rows.length);
 }
 function WP(d,cl,b){
-  var mez=PA(d,cl,b,0);
-  var est=PA(d,cl,b,1);
-  var acab=PA(d,cl,b,2);
-  var cim=OGBod(d,cl,b,"Cimentacion");
-  var cifa=OGBod(d,cl,b,"Muro Cifa");
-  var block=OGBod(d,cl,b,"Levantado de Block en Fachada");
-  var contra=OGBod(d,cl,b,"Contrapisos");
-  var elec=OGBod(d,cl,b,"Inst. Electricas");
-  var nailing=OGBod(d,cl,b,"Muro Nailing");
-  var fund=OGBod(d,cl,b,"Fundicion de Piso");
-  var contMur=OGBod(d,cl,b,"Muro de Contencion");
-  var culata=OGBod(d,cl,b,"Muro de Culata");
-  return Math.round(
-    mez*0.15+est*0.15+acab*0.10+
-    cim*0.10+cifa*0.08+block*0.05+
-    contra*0.11+elec*0.05+
-    nailing*0.02+fund*0.05+contMur*0.01+culata*0.01
-  );
+  // Dynamic normalization: only include processes that exist for this bodega
+  // Each process has a defined weight; sum only weights of processes present in KV data
+  var procDefs=[
+    {k:"Mezanines y Techados",  fn:function(){return PA(d,cl,b,0);}, w:15, std:true},
+    {k:"Estructura Principal",  fn:function(){return PA(d,cl,b,1);}, w:15, std:true},
+    {k:"Acabados",              fn:function(){return PA(d,cl,b,2);}, w:10, std:true},
+    {k:"Cimentacion",           fn:function(){return OGBod(d,cl,b,"Cimentacion");},           w:10, std:false},
+    {k:"Muro Cifa",             fn:function(){return OGBod(d,cl,b,"Muro Cifa");},             w:8,  std:false},
+    {k:"Levantado de Block",    fn:function(){return OGBod(d,cl,b,"Levantado de Block");},    w:5,  std:false},
+    {k:"Contrapisos",           fn:function(){return OGBod(d,cl,b,"Contrapisos");},           w:11, std:false},
+    {k:"Inst. Electricas",      fn:function(){return OGBod(d,cl,b,"Inst. Electricas");},      w:5,  std:false},
+    {k:"Muro Nailing",          fn:function(){return OGBod(d,cl,b,"Muro Nailing");},          w:2,  std:false},
+    {k:"Fundicion de Piso",     fn:function(){return OGBod(d,cl,b,"Fundicion de Piso");},     w:5,  std:false},
+    {k:"Muro de Contencion",    fn:function(){return OGBod(d,cl,b,"Muro de Contencion");},    w:1,  std:false},
+    {k:"Muro de Culata",        fn:function(){return OGBod(d,cl,b,"Muro de Culata");},        w:1,  std:false},
+  ];
+  var filas=LD2.filas||[];
+  var totalW=0,weightedSum=0;
+  for(var i=0;i<procDefs.length;i++){
+    var pd=procDefs[i];
+    // Check if this process has any data for this bodega
+    var hasData=false;
+    if(pd.std){
+      // Standard process: check if rows exist in KV
+      var normK=normProc(pd.k);
+      hasData=filas.some(function(r){
+        return r["Distrito"]===d&&r["Cluster"]===cl&&r["Bodega"]===b&&
+          normProc(r["Proceso"]||"").indexOf(normK)>=0;
+      });
+    } else {
+      // OG process: check PLAN keys for this bodega
+      var bodNum=b.replace("Bodega ","");
+      var prefix=d+"|"+cl+"|Bodega "+bodNum+"|"+pd.k;
+      hasData=Object.keys(PLAN).some(function(k){return k.indexOf(prefix)===0;});
+    }
+    if(!hasData)continue;
+    var av=pd.fn();
+    weightedSum+=pd.w*av;
+    totalW+=pd.w;
+  }
+  if(!totalW)return 0;
+  return Math.round(weightedSum/totalW);
 }
 function CP(d,cl){var bs=DB[d][cl];return Math.round(bs.reduce(function(s,b){return s+WP(d,cl,b);},0)/bs.length);}
 function DP(d){var cls=Object.keys(DB[d]);return Math.round(cls.reduce(function(s,cl){return s+CP(d,cl);},0)/cls.length);}
@@ -298,7 +322,7 @@ function TD(d){
 function OC2(d,cl){CD=d;CC=cl;CV="cluster";ST("b");}
 function OB(d,cl,b){CD=d;CC=cl;CB=b;CV="bodega";ST("b");}
 function RB(){
-  var cont=ge("bc4");
+  var cont=ge("cs");
   if(CV==="dist"){cont.innerHTML="<p style=\"font-size:13px;color:var(--txt2);padding:20px;text-align:center;\">Selecciona un distrito desde Resumen</p>";return;}
   if(CV==="cluster"){
     var h="<div class=\"bk\" data-go=\"home\"><i class=\"ti ti-arrow-left\"></i>"+CD+" — "+CC+"</div><div class=\"bg2\">";
@@ -437,7 +461,7 @@ function RC2(){
     var trendVal=Math.min(100,Math.round(Math.round((pA*36+pB*20)/56)*ratio));
     trend.push(trendVal);
   }
-  var ctx=ge("bc4").getContext("2d");
+  var ctx=ge("cs").getContext("2d");
   if(sch)sch.destroy();
   sch=new Chart(ctx,{type:"line",data:{labels:lab,datasets:[
     {label:"Plan",data:proj,borderColor:"#185FA5",backgroundColor:"#185FA520",borderWidth:2,pointRadius:2,fill:true,tension:0.4},
