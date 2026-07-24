@@ -322,7 +322,7 @@ function TD(d){
 function OC2(d,cl){CD=d;CC=cl;CV="cluster";ST("b");}
 function OB(d,cl,b){CD=d;CC=cl;CB=b;CV="bodega";ST("b");}
 function RB(){
-  var cont=ge("cs");
+  var cont=ge("bc4");
   if(CV==="dist"){cont.innerHTML="<p style=\"font-size:13px;color:var(--txt2);padding:20px;text-align:center;\">Selecciona un distrito desde Resumen</p>";return;}
   if(CV==="cluster"){
     var h="<div class=\"bk\" data-go=\"home\"><i class=\"ti ti-arrow-left\"></i>"+CD+" — "+CC+"</div><div class=\"bg2\">";
