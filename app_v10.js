@@ -76,39 +76,17 @@ function CP(d,cl){var bs=DB[d][cl];return Math.round(bs.reduce(function(s,b){ret
 function DP(d){
   var filas=LD2.filas||[];
   var totalDur=0,weightedSum=0;
-  filas.filter(function(r){return r["Distrito"]===d;}).forEach(function(r){
-    var av=parseFloat(r["% Avance"]||0);
+  filas.forEach(function(r){
+    if(r["Distrito"]!==d)return;
     var proc=r["Proceso"]||"";
-    if(proc==="Urbanizacion"||proc==="Urbanizacion"||proc==="Urbanización")return;
-    var bod=r["Bodega"]||"",cl=r["Cluster"]||"";
-    var paso=r["Paso"]||"";
+    if(proc==="Urbanizacion"||proc==="Urbanización")return;
+    var av=parseFloat(r["% Avance"]||0);
+    var bod=r["Bodega"]||"",cl=r["Cluster"]||"",paso=r["Paso"]||"";
     var bodNum=bod.replace("Bodega ","");
-    var dur=0;
-    if(paso){
-      var key=d+"|"+cl+"|Bodega "+bodNum+"|"+paso;
-      var e=PLAN[key];
-      dur=e?e.dur||0:0;
-    }
-    if(!dur){
-      // Try finding total duration for this proceso+bodega across all pasos
-      var prefix2=d+"|"+cl+"|Bodega "+bodNum+"|";
-      var normP=normProc(proc);
-      Object.keys(PLAN).forEach(function(k){
-        if(k.indexOf(prefix2)!==0)return;
-        dur+=PLAN[k].dur||0;
-      });
-      if(dur>0){
-        // Use average % across all pasos for this bodega's proceso
-        var procRows=filas.filter(function(r2){
-          return r2["Distrito"]===d&&r2["Cluster"]===cl&&r2["Bodega"]===bod&&
-            normProc(r2["Proceso"]||"").indexOf(normP)>=0;
-        });
-        var avgAv=procRows.length?procRows.reduce(function(s,r2){return s+parseFloat(r2["% Avance"]||0);},0)/procRows.length:av;
-        weightedSum+=dur*avgAv;
-        totalDur+=dur;
-        return;
-      }
-    }
+    if(!paso)return;
+    var key=d+"|"+cl+"|Bodega "+bodNum+"|"+paso;
+    var e=PLAN[key];
+    var dur=e?e.dur||0:0;
     if(!dur)return;
     weightedSum+=dur*av;
     totalDur+=dur;
@@ -118,44 +96,16 @@ function DP(d){
 function TP(){
   var filas=LD2.filas||[];
   var totalDur=0,weightedSum=0;
-  // Group by distrito+cluster+bodega+proceso to avoid double counting
-  var groups={};
   filas.forEach(function(r){
     var proc=r["Proceso"]||"";
     if(proc==="Urbanizacion"||proc==="Urbanización")return;
-    var d=r["Distrito"]||"",cl=r["Cluster"]||"",bod=r["Bodega"]||"";
-    var paso=r["Paso"]||"";
     var av=parseFloat(r["% Avance"]||0);
+    var d=r["Distrito"]||"",cl=r["Cluster"]||"",bod=r["Bodega"]||"",paso=r["Paso"]||"";
     var bodNum=bod.replace("Bodega ","");
-    var dur=0;
-    if(paso){
-      var key=d+"|"+cl+"|Bodega "+bodNum+"|"+paso;
-      var e=PLAN[key];
-      dur=e?e.dur||0:0;
-    }
-    if(!dur&&proc){
-      // Aggregate by proceso: find total duration for this bodega's proceso
-      var gkey=d+"|"+cl+"|"+bod+"|"+proc;
-      if(groups[gkey])return; // already processed
-      var prefix2=d+"|"+cl+"|Bodega "+bodNum+"|";
-      var normP=normProc(proc);
-      var procDur=0;
-      Object.keys(PLAN).forEach(function(k){
-        if(k.indexOf(prefix2)!==0)return;
-        procDur+=PLAN[k].dur||0;
-      });
-      if(procDur>0){
-        var procRows=filas.filter(function(r2){
-          return r2["Distrito"]===d&&r2["Cluster"]===cl&&r2["Bodega"]===bod&&
-            normProc(r2["Proceso"]||"").indexOf(normP)>=0;
-        });
-        var avgAv=procRows.length?procRows.reduce(function(s,r2){return s+parseFloat(r2["% Avance"]||0);},0)/procRows.length:av;
-        weightedSum+=procDur*avgAv;
-        totalDur+=procDur;
-        groups[gkey]=true;
-      }
-      return;
-    }
+    if(!paso)return;
+    var key=d+"|"+cl+"|Bodega "+bodNum+"|"+paso;
+    var e=PLAN[key];
+    var dur=e?e.dur||0:0;
     if(!dur)return;
     weightedSum+=dur*av;
     totalDur+=dur;
